@@ -1,0 +1,468 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FF9072D222BB04CD0052428E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9072D122BB04CD0052428E /* AppDelegate.swift */; };
+		FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */; };
+		FF9072D722BB04CE0052428E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF9072D622BB04CE0052428E /* Assets.xcassets */; };
+		FF9072DA22BB04CE0052428E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF9072D822BB04CE0052428E /* MainMenu.xib */; };
+		FF9072E622BB04CE0052428E /* maya_macosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9072E522BB04CE0052428E /* maya_macosTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FF9072E222BB04CE0052428E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF9072C622BB04CD0052428E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF9072CD22BB04CD0052428E;
+			remoteInfo = "maya-macos";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FF9072CE22BB04CD0052428E /* maya-macos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "maya-macos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF9072D122BB04CD0052428E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FF9072D422BB04CD0052428E /* maya_macos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = maya_macos.xcdatamodel; sourceTree = "<group>"; };
+		FF9072D622BB04CE0052428E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FF9072D922BB04CE0052428E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		FF9072DB22BB04CE0052428E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF9072DC22BB04CE0052428E /* maya_macos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = maya_macos.entitlements; sourceTree = "<group>"; };
+		FF9072E122BB04CE0052428E /* maya-macosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "maya-macosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF9072E522BB04CE0052428E /* maya_macosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = maya_macosTests.swift; sourceTree = "<group>"; };
+		FF9072E722BB04CE0052428E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FF9072CB22BB04CD0052428E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF9072DE22BB04CE0052428E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FF9072C522BB04CD0052428E = {
+			isa = PBXGroup;
+			children = (
+				FF9072D022BB04CD0052428E /* maya-macos */,
+				FF9072E422BB04CE0052428E /* maya-macosTests */,
+				FF9072CF22BB04CD0052428E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FF9072CF22BB04CD0052428E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF9072CE22BB04CD0052428E /* maya-macos.app */,
+				FF9072E122BB04CE0052428E /* maya-macosTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FF9072D022BB04CD0052428E /* maya-macos */ = {
+			isa = PBXGroup;
+			children = (
+				FF9072D122BB04CD0052428E /* AppDelegate.swift */,
+				FF9072D622BB04CE0052428E /* Assets.xcassets */,
+				FF9072D822BB04CE0052428E /* MainMenu.xib */,
+				FF9072DB22BB04CE0052428E /* Info.plist */,
+				FF9072DC22BB04CE0052428E /* maya_macos.entitlements */,
+				FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */,
+			);
+			path = "maya-macos";
+			sourceTree = "<group>";
+		};
+		FF9072E422BB04CE0052428E /* maya-macosTests */ = {
+			isa = PBXGroup;
+			children = (
+				FF9072E522BB04CE0052428E /* maya_macosTests.swift */,
+				FF9072E722BB04CE0052428E /* Info.plist */,
+			);
+			path = "maya-macosTests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FF9072CD22BB04CD0052428E /* maya-macos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF9072EA22BB04CF0052428E /* Build configuration list for PBXNativeTarget "maya-macos" */;
+			buildPhases = (
+				FF9072CA22BB04CD0052428E /* Sources */,
+				FF9072CB22BB04CD0052428E /* Frameworks */,
+				FF9072CC22BB04CD0052428E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "maya-macos";
+			productName = "maya-macos";
+			productReference = FF9072CE22BB04CD0052428E /* maya-macos.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FF9072E022BB04CE0052428E /* maya-macosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF9072ED22BB04CF0052428E /* Build configuration list for PBXNativeTarget "maya-macosTests" */;
+			buildPhases = (
+				FF9072DD22BB04CE0052428E /* Sources */,
+				FF9072DE22BB04CE0052428E /* Frameworks */,
+				FF9072DF22BB04CE0052428E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF9072E322BB04CE0052428E /* PBXTargetDependency */,
+			);
+			name = "maya-macosTests";
+			productName = "maya-macosTests";
+			productReference = FF9072E122BB04CE0052428E /* maya-macosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FF9072C622BB04CD0052428E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+				ORGANIZATIONNAME = KK;
+				TargetAttributes = {
+					FF9072CD22BB04CD0052428E = {
+						CreatedOnToolsVersion = 11.0;
+					};
+					FF9072E022BB04CE0052428E = {
+						CreatedOnToolsVersion = 11.0;
+						TestTargetID = FF9072CD22BB04CD0052428E;
+					};
+				};
+			};
+			buildConfigurationList = FF9072C922BB04CD0052428E /* Build configuration list for PBXProject "maya-macos" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FF9072C522BB04CD0052428E;
+			productRefGroup = FF9072CF22BB04CD0052428E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FF9072CD22BB04CD0052428E /* maya-macos */,
+				FF9072E022BB04CE0052428E /* maya-macosTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FF9072CC22BB04CD0052428E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF9072D722BB04CE0052428E /* Assets.xcassets in Resources */,
+				FF9072DA22BB04CE0052428E /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF9072DF22BB04CE0052428E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FF9072CA22BB04CD0052428E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF9072D222BB04CD0052428E /* AppDelegate.swift in Sources */,
+				FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF9072DD22BB04CE0052428E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF9072E622BB04CE0052428E /* maya_macosTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FF9072E322BB04CE0052428E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF9072CD22BB04CD0052428E /* maya-macos */;
+			targetProxy = FF9072E222BB04CE0052428E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FF9072D822BB04CE0052428E /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF9072D922BB04CE0052428E /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FF9072E822BB04CF0052428E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FF9072E922BB04CF0052428E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		FF9072EB22BB04CF0052428E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "maya-macos/maya_macos.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "maya-macos/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya.maya-macos";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		FF9072EC22BB04CF0052428E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "maya-macos/maya_macos.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "maya-macos/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya.maya-macos";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		FF9072EE22BB04CF0052428E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "maya-macosTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya.maya-macosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/maya-macos.app/Contents/MacOS/maya-macos";
+			};
+			name = Debug;
+		};
+		FF9072EF22BB04CF0052428E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "maya-macosTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya.maya-macosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/maya-macos.app/Contents/MacOS/maya-macos";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FF9072C922BB04CD0052428E /* Build configuration list for PBXProject "maya-macos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF9072E822BB04CF0052428E /* Debug */,
+				FF9072E922BB04CF0052428E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF9072EA22BB04CF0052428E /* Build configuration list for PBXNativeTarget "maya-macos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF9072EB22BB04CF0052428E /* Debug */,
+				FF9072EC22BB04CF0052428E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF9072ED22BB04CF0052428E /* Build configuration list for PBXNativeTarget "maya-macosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF9072EE22BB04CF0052428E /* Debug */,
+				FF9072EF22BB04CF0052428E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FF9072D422BB04CD0052428E /* maya_macos.xcdatamodel */,
+			);
+			currentVersion = FF9072D422BB04CD0052428E /* maya_macos.xcdatamodel */;
+			path = maya_macos.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = FF9072C622BB04CD0052428E /* Project object */;
+}
