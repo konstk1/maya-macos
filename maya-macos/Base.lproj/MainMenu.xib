@@ -14,5 +14,27 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="maya_macos" customModuleProvider="target"/>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <customObject id="Z2C-Po-7RN" customClass="StatusMenuController" customModule="maya_macos" customModuleProvider="target">
+            <connections>
+                <outlet property="statusMenu" destination="oLX-DL-IQq" id="IKZ-xW-Ubt"/>
+            </connections>
+        </customObject>
+        <menu id="oLX-DL-IQq">
+            <items>
+                <menuItem title="Item 1" id="BbW-Wz-WbC">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Item 2" id="9YY-4D-Imp">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Quit" id="1Y8-0A-PHl">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="quitClicked:" target="Z2C-Po-7RN" id="ovt-8J-iUa"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-701" y="229"/>
+        </menu>
     </objects>
 </document>

@@ -11,7 +11,14 @@
 		FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */; };
 		FF9072D722BB04CE0052428E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF9072D622BB04CE0052428E /* Assets.xcassets */; };
 		FF9072DA22BB04CE0052428E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF9072D822BB04CE0052428E /* MainMenu.xib */; };
-		FF9072E622BB04CE0052428E /* maya_macosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9072E522BB04CE0052428E /* maya_macosTests.swift */; };
+		FF9072F122BBD9230052428E /* Todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = FF9072F022BBD9230052428E /* Todo.txt */; };
+		FF90731E22BBFF4D0052428E /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90731D22BBFF4D0052428E /* StatusMenuController.swift */; };
+		FF90732022BC12670052428E /* PhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90731F22BC12670052428E /* PhotoProvider.swift */; };
+		FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */; };
+		FF90732422BC13840052428E /* PhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732322BC13840052428E /* PhotoProviderTests.swift */; };
+		FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */; };
+		FF90732922BD4E9D0052428E /* PhotoFrameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732722BD4E9D0052428E /* PhotoFrameController.swift */; };
+		FF90732A22BD4E9D0052428E /* PhotoFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF90732822BD4E9D0052428E /* PhotoFrameController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,8 +40,15 @@
 		FF9072DB22BB04CE0052428E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF9072DC22BB04CE0052428E /* maya_macos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = maya_macos.entitlements; sourceTree = "<group>"; };
 		FF9072E122BB04CE0052428E /* maya-macosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "maya-macosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF9072E522BB04CE0052428E /* maya_macosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = maya_macosTests.swift; sourceTree = "<group>"; };
 		FF9072E722BB04CE0052428E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF9072F022BBD9230052428E /* Todo.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Todo.txt; sourceTree = "<group>"; };
+		FF90731D22BBFF4D0052428E /* StatusMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuController.swift; sourceTree = "<group>"; };
+		FF90731F22BC12670052428E /* PhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProvider.swift; sourceTree = "<group>"; };
+		FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudPhotoProvider.swift; sourceTree = "<group>"; };
+		FF90732322BC13840052428E /* PhotoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProviderTests.swift; sourceTree = "<group>"; };
+		FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderPhotoProvider.swift; sourceTree = "<group>"; };
+		FF90732722BD4E9D0052428E /* PhotoFrameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameController.swift; sourceTree = "<group>"; };
+		FF90732822BD4E9D0052428E /* PhotoFrameController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoFrameController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,11 +91,18 @@
 			isa = PBXGroup;
 			children = (
 				FF9072D122BB04CD0052428E /* AppDelegate.swift */,
+				FF90731D22BBFF4D0052428E /* StatusMenuController.swift */,
+				FF90732722BD4E9D0052428E /* PhotoFrameController.swift */,
+				FF90731F22BC12670052428E /* PhotoProvider.swift */,
+				FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */,
+				FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */,
 				FF9072D622BB04CE0052428E /* Assets.xcassets */,
 				FF9072D822BB04CE0052428E /* MainMenu.xib */,
+				FF90732822BD4E9D0052428E /* PhotoFrameController.xib */,
 				FF9072DB22BB04CE0052428E /* Info.plist */,
 				FF9072DC22BB04CE0052428E /* maya_macos.entitlements */,
 				FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */,
+				FF9072F022BBD9230052428E /* Todo.txt */,
 			);
 			path = "maya-macos";
 			sourceTree = "<group>";
@@ -89,7 +110,7 @@
 		FF9072E422BB04CE0052428E /* maya-macosTests */ = {
 			isa = PBXGroup;
 			children = (
-				FF9072E522BB04CE0052428E /* maya_macosTests.swift */,
+				FF90732322BC13840052428E /* PhotoProviderTests.swift */,
 				FF9072E722BB04CE0052428E /* Info.plist */,
 			);
 			path = "maya-macosTests";
@@ -178,6 +199,8 @@
 			files = (
 				FF9072D722BB04CE0052428E /* Assets.xcassets in Resources */,
 				FF9072DA22BB04CE0052428E /* MainMenu.xib in Resources */,
+				FF90732A22BD4E9D0052428E /* PhotoFrameController.xib in Resources */,
+				FF9072F122BBD9230052428E /* Todo.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,8 +218,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF90731E22BBFF4D0052428E /* StatusMenuController.swift in Sources */,
+				FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */,
 				FF9072D222BB04CD0052428E /* AppDelegate.swift in Sources */,
+				FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */,
+				FF90732922BD4E9D0052428E /* PhotoFrameController.swift in Sources */,
 				FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */,
+				FF90732022BC12670052428E /* PhotoProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,7 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF9072E622BB04CE0052428E /* maya_macosTests.swift in Sources */,
+				FF90732422BC13840052428E /* PhotoProviderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

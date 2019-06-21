@@ -1,0 +1,10 @@
+Bugs:
+
+
+Next:
+- menu bar icon
+- design icon
+- popup/frame view
+- icloud photos (photokit)
+
+Features:

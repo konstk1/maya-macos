@@ -1,15 +1,15 @@
 //
-//  maya_macosTests.swift
+//  PhotoProviderTests.swift
 //  maya-macosTests
 //
-//  Created by Konstantin Klitenik on 6/19/19.
+//  Created by Konstantin Klitenik on 6/20/19.
 //  Copyright © 2019 KK. All rights reserved.
 //
 
 import XCTest
 @testable import maya_macos
 
-class maya_macosTests: XCTestCase {
+class PhotoProviderTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -19,7 +19,7 @@ class maya_macosTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
+    func testICloud() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
