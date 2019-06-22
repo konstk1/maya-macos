@@ -41,16 +41,12 @@ class StatusMenuController: NSObject {
         
         var blockEvent = false      // indicates if intercepted event should be propagaged
         
-        button.isHighlighted = true
-        
         // close popover if clicked on status item or outside the photo frame
         // don't close and forward event if clicked inside photo frame window
         if event.type == .leftMouseDown && event.window != photoFrame.window {
             togglePopover()
             blockEvent = true       // don't propagate this any further
         }
-        
-        button.isHighlighted = false
         
         return blockEvent ? nil : event
     }
@@ -64,14 +60,15 @@ class StatusMenuController: NSObject {
     }
     
     func showPopover() {
-        if let button = statusItem.button {
-            photoFrame.window?.makeKeyAndOrderFront(nil)
-            globalEventMonitor = NSEvent.addGlobalMonitorForEvents(matching: mouseEventMask, handler: globalEventHandler)
-        }
+        photoFrame.window?.makeKeyAndOrderFront(nil)
+        photoFrame.window?.orderFrontRegardless()
+        statusItem.button?.isHighlighted = true
+        globalEventMonitor = NSEvent.addGlobalMonitorForEvents(matching: mouseEventMask, handler: globalEventHandler)
     }
     
     func closePopover() {
         photoFrame.close()
+        statusItem.button?.isHighlighted = false
         if let globalEventMonitor = globalEventMonitor {
             NSEvent.removeMonitor(globalEventMonitor)
         }
