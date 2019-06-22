@@ -1,5 +1,5 @@
 //
-//  PhotoFrameController.swift
+//  PhotoFrameWindowController.swift
 //  maya-macos
 //
 //  Created by Konstantin Klitenik on 6/21/19.
@@ -8,11 +8,12 @@
 
 import Cocoa
 
-class PhotoFrameController: NSViewController {
+class PhotoFrameWindowController: NSWindowController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
+    override func windowDidLoad() {
+        super.windowDidLoad()
+
+        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }
     
 }

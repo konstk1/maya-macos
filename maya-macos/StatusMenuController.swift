@@ -12,7 +12,7 @@ class StatusMenuController: NSObject {
     
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     
-    let popover = NSPopover()
+    let photoFrame = PhotoFrameWindowController(windowNibName: "PhotoFrameController")
     
     let mouseEventMask: NSEvent.EventTypeMask = [.leftMouseDown, .rightMouseDown]
     
@@ -26,25 +26,26 @@ class StatusMenuController: NSObject {
             button.title = "Maya"
         }
         statusItem.menu = statusMenu
-        
-        popover.contentViewController = PhotoFrameController(nibName: "PhotoFrameController", bundle: nil)
 
         NSEvent.addLocalMonitorForEvents(matching: mouseEventMask, handler: localEventHandler)
     }
     
     func globalEventHandler(event: NSEvent) {
+        print("Global \(event.debugDescription)")
         closePopover()
     }
     
     func localEventHandler(event: NSEvent) -> NSEvent? {
-//        print("Event \(event.debugDescription)")
+        print("Event \(event) \(event.locationInWindow)")
         guard let button = statusItem.button else { return event }
         
         var blockEvent = false      // indicates if intercepted event should be propagaged
         
         button.isHighlighted = true
         
-        if event.type == .leftMouseDown {
+        // close popover if clicked on status item or outside the photo frame
+        // don't close and forward event if clicked inside photo frame window
+        if event.type == .leftMouseDown && event.window != photoFrame.window {
             togglePopover()
             blockEvent = true       // don't propagate this any further
         }
@@ -55,7 +56,7 @@ class StatusMenuController: NSObject {
     }
     
     func togglePopover() {
-        if popover.isShown {
+        if photoFrame.window?.isVisible == true {
             closePopover()
         } else {
             showPopover()
@@ -64,13 +65,13 @@ class StatusMenuController: NSObject {
     
     func showPopover() {
         if let button = statusItem.button {
-            popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+            photoFrame.window?.makeKeyAndOrderFront(nil)
             globalEventMonitor = NSEvent.addGlobalMonitorForEvents(matching: mouseEventMask, handler: globalEventHandler)
         }
     }
     
     func closePopover() {
-        popover.close()
+        photoFrame.close()
         if let globalEventMonitor = globalEventMonitor {
             NSEvent.removeMonitor(globalEventMonitor)
         }
