@@ -9,11 +9,25 @@
 import Cocoa
 
 class PhotoFrameWindowController: NSWindowController {
+    let provider = LocalFolderPhotoProvider()
+    
+    var isVisible: Bool {
+        return window?.isVisible ?? false
+    }
 
     override func windowDidLoad() {
         super.windowDidLoad()
         
-       window?.isMovableByWindowBackground = true
+        window?.isMovableByWindowBackground = true
     }
     
 }
+
+class PhotoWindow: NSWindow {
+    override var canBecomeKey: Bool { return true }
+}
+
+class PhotoView: NSImageView {
+    override var mouseDownCanMoveWindow: Bool { return true }
+}
+

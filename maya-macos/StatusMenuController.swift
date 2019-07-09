@@ -31,28 +31,34 @@ class StatusMenuController: NSObject {
     }
     
     func globalEventHandler(event: NSEvent) {
-        print("Global \(event.debugDescription)")
         closePopover()
     }
     
     func localEventHandler(event: NSEvent) -> NSEvent? {
-        print("Event \(event) \(event.locationInWindow)")
-        guard let button = statusItem.button else { return event }
+        // if we get a local left click in the status item button, toggle the popover
+        // and block left click from being propagated
+        // if the click is out the photo frame, close the popover and propagate the event
+        // otherwise, do nothing and simply propagate the event
         
-        var blockEvent = false      // indicates if intercepted event should be propagaged
+        /// indicates if intercepted event should be propagaged
+        var blockEvent = false
         
         // close popover if clicked on status item or outside the photo frame
         // don't close and forward event if clicked inside photo frame window
-        if event.type == .leftMouseDown && event.window != photoFrame.window {
-            togglePopover()
-            blockEvent = true       // don't propagate this any further
+        if event.type == .leftMouseDown {
+            if event.window == statusItem.button?.window {
+                togglePopover()
+                blockEvent = true    // don't propagate this event any further
+            } else if event.window != photoFrame.window && photoFrame.isVisible {
+                closePopover()
+            }
         }
         
         return blockEvent ? nil : event
     }
     
     func togglePopover() {
-        if photoFrame.window?.isVisible == true {
+        if photoFrame.isVisible == true {
             closePopover()
         } else {
             showPopover()

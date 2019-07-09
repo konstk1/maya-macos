@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */; };
 		FF14AD8D22BDB8B800C7518C /* PhotoFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */; };
-		FF14AD8F22BE591200C7518C /* PhotoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF14AD8E22BE591200C7518C /* PhotoWindow.swift */; };
 		FF9072D222BB04CD0052428E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9072D122BB04CD0052428E /* AppDelegate.swift */; };
 		FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */; };
 		FF9072D722BB04CE0052428E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF9072D622BB04CE0052428E /* Assets.xcassets */; };
@@ -35,7 +34,6 @@
 /* Begin PBXFileReference section */
 		FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameController.swift; sourceTree = "<group>"; };
 		FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoFrameController.xib; sourceTree = "<group>"; };
-		FF14AD8E22BE591200C7518C /* PhotoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoWindow.swift; sourceTree = "<group>"; };
 		FF9072CE22BB04CD0052428E /* maya-macos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "maya-macos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF9072D122BB04CD0052428E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF9072D422BB04CD0052428E /* maya_macos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = maya_macos.xcdatamodel; sourceTree = "<group>"; };
@@ -95,7 +93,6 @@
 				FF9072D122BB04CD0052428E /* AppDelegate.swift */,
 				FF90731D22BBFF4D0052428E /* StatusMenuController.swift */,
 				FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */,
-				FF14AD8E22BE591200C7518C /* PhotoWindow.swift */,
 				FF90731F22BC12670052428E /* PhotoProvider.swift */,
 				FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */,
 				FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */,
@@ -227,7 +224,6 @@
 				FF9072D222BB04CD0052428E /* AppDelegate.swift in Sources */,
 				FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */,
 				FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */,
-				FF14AD8F22BE591200C7518C /* PhotoWindow.swift in Sources */,
 				FF90732022BC12670052428E /* PhotoProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
