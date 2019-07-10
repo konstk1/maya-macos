@@ -66,8 +66,7 @@ class StatusMenuController: NSObject {
     }
     
     func showPopover() {
-        photoFrame.window?.makeKeyAndOrderFront(nil)
-        photoFrame.window?.orderFrontRegardless()
+        photoFrame.show()
         statusItem.button?.isHighlighted = true
         globalEventMonitor = NSEvent.addGlobalMonitorForEvents(matching: mouseEventMask, handler: globalEventHandler)
     }
