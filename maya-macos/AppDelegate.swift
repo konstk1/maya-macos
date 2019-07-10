@@ -7,12 +7,28 @@
 //
 
 import Cocoa
+import SwiftyBeaver
+
+let log: SwiftyBeaver.Type = {
+    let log = SwiftyBeaver.self
+    let console = ConsoleDestination()
+    console.levelColor.verbose = "◻️ "
+    console.levelColor.debug   = "◼️ "
+    console.levelColor.info    = "🔷 "
+    console.levelColor.warning = "🔶 "
+    console.levelColor.error   = "🛑 "
+    
+    log.addDestination(console)
+    log.verbose("SwiftyBeaver ready")
+    return log
+}()
+
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-    
+        
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

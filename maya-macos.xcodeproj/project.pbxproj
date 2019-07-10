@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */; };
 		FF14AD8D22BDB8B800C7518C /* PhotoFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */; };
+		FF34717F22D63A780009CB40 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = FF34717E22D63A780009CB40 /* SwiftyBeaver */; };
 		FF9072D222BB04CD0052428E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9072D122BB04CD0052428E /* AppDelegate.swift */; };
 		FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */; };
 		FF9072D722BB04CE0052428E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF9072D622BB04CE0052428E /* Assets.xcassets */; };
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF34717F22D63A780009CB40 /* SwiftyBeaver in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +134,9 @@
 			dependencies = (
 			);
 			name = "maya-macos";
+			packageProductDependencies = (
+				FF34717E22D63A780009CB40 /* SwiftyBeaver */,
+			);
 			productName = "maya-macos";
 			productReference = FF9072CE22BB04CD0052428E /* maya-macos.app */;
 			productType = "com.apple.product-type.application";
@@ -182,6 +187,9 @@
 				Base,
 			);
 			mainGroup = FF9072C522BB04CD0052428E;
+			packageReferences = (
+				FF34717D22D63A780009CB40 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
+			);
 			productRefGroup = FF9072CF22BB04CD0052428E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -478,6 +486,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FF34717D22D63A780009CB40 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyBeaver/SwiftyBeaver";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FF34717E22D63A780009CB40 /* SwiftyBeaver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF34717D22D63A780009CB40 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */;
+			productName = SwiftyBeaver;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */ = {
