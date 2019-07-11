@@ -8,8 +8,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PhotoFrameController">
             <connections>
-                <outlet property="imageView" destination="lpa-iY-LbK" id="PdU-LU-uqG"/>
-                <outlet property="photoImage" destination="9gu-YY-Dnq" id="R5w-fq-6ka"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -18,24 +16,12 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="F0z-JX-Cv5" customClass="PhotoWindow" customModule="maya_macos" customModuleProvider="target">
             <windowStyleMask key="styleMask" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="831" y="607" width="480" height="270"/>
+            <rect key="contentRect" x="831" y="607" width="400" height="300"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <value key="minSize" type="size" width="200" height="200"/>
-            <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+            <view key="contentView" autoresizesSubviews="NO" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <imageView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="lpa-iY-LbK" customClass="PhotoView" customModule="maya_macos" customModuleProvider="target">
-                        <rect key="frame" x="5" y="5" width="470" height="260"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSEveryone" id="9gu-YY-Dnq"/>
-                    </imageView>
-                </subviews>
-                <constraints>
-                    <constraint firstItem="lpa-iY-LbK" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="5" id="3or-v3-GZ3"/>
-                    <constraint firstAttribute="trailing" secondItem="lpa-iY-LbK" secondAttribute="trailing" constant="5" id="HeR-ie-vhg"/>
-                    <constraint firstItem="lpa-iY-LbK" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="5" id="iIG-nx-Gux"/>
-                    <constraint firstAttribute="bottom" secondItem="lpa-iY-LbK" secondAttribute="bottom" constant="5" id="xMZ-ua-nxN"/>
-                </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
@@ -43,7 +29,4 @@
             <point key="canvasLocation" x="127" y="147"/>
         </window>
     </objects>
-    <resources>
-        <image name="NSEveryone" width="32" height="32"/>
-    </resources>
 </document>

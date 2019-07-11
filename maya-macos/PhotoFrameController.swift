@@ -11,10 +11,14 @@ import Cocoa
 class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
     let provider = LocalFolderPhotoProvider()
     
-    @IBOutlet weak var photoImage: NSImageCell!
-    @IBOutlet weak var imageView: PhotoView!
+    private var photoView: PhotoView!
     
-    let minWindowSize = NSSize(width: 200, height: 200)
+    private let photoHorizontalPadding: CGFloat = 5.0
+    private let photoVerticalPadding: CGFloat = 5.0
+    
+    lazy var windowSize: NSSize = {
+        return window?.frame.size ?? NSMakeSize(200, 200)
+    }()
     
     var isVisible: Bool {
         return window?.isVisible ?? false
@@ -31,11 +35,15 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
     
     override func windowDidLoad() {
         super.windowDidLoad()
-        photoImage =
-        window?.contentView =
-//        window?.setContentSize(window!.frame.size)
-        window?.isMovableByWindowBackground = true
-        window?.delegate = self
+        
+        guard let window = window else { return }
+        
+        photoView = PhotoView()
+        photoView.imageScaling = .scaleProportionallyUpOrDown
+
+        window.contentView?.addSubview(photoView)
+        window.isMovableByWindowBackground = true
+        window.delegate = self
     }
     
     func show() {
@@ -45,15 +53,27 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
         }
         
         let image = provider.nextImage()
-        imageView.image = image
+        photoView.image = image
         
         window.aspectRatio = image.size
-        imageView.setFrameSize(imageView.contentImageSize)
-//        window.setFrame(NSRect(origin: window.frame.origin, size: imageView.contentImageSize), display: true)
+        
+        var frameSize = windowSize
+        
+        // determine photo view size based on max window dimmension
+        if image.size.width > image.size.height  {
+            // landscape (clamp width, calculate height)
+            frameSize.height = image.size.height / image.size.width * windowSize.width
+        } else {
+            // portrait (clamp height, calculate width)
+            frameSize.width = image.size.width / image.size.height * windowSize.height
+        }
+        
+        photoView.setFrameSize(NSMakeSize(frameSize.width - 2.0 * photoHorizontalPadding, frameSize.height - 2.0 * photoVerticalPadding))
+        window.setFrame(NSRect(origin: window.frame.origin, size: frameSize), display: true)
         
         print("Image: \(image.size)")
-        print("View: \(imageView.contentImageSize)")
-        print("View: \(imageView.frame.size)")
+        print("View: \(photoView.contentImageSize)")
+        print("View: \(photoView.frame.size)")
         print("Window: \(window.frame.size)")
         
         window.makeKeyAndOrderFront(nil)
@@ -68,6 +88,9 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
     
     func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
         print("Resizing \(frameSize)")
+        let photoVerticalPadding = 5.0 as CGFloat
+        let photoHorizontalPadding = 5.0 as CGFloat
+        photoView.setFrameSize(NSMakeSize(frameSize.width - 2.0 * photoHorizontalPadding, frameSize.height - 2.0 * photoVerticalPadding))
         return frameSize
     }
 }
