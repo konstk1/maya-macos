@@ -22,8 +22,11 @@ class StatusMenuController: NSObject {
     @IBOutlet weak var statusMenu: NSMenu!
     
     override func awakeFromNib() {
-        if let button = statusItem.button {
-            button.title = "Maya"
+        if let icon = NSImage(named: "StatusIcon") {
+            icon.isTemplate = true
+            statusItem.button?.image = icon
+        } else {
+            statusItem.button?.title = "Maya"
         }
         statusItem.menu = statusMenu
 
