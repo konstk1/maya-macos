@@ -99,7 +99,9 @@ final class LocalFolderPhotoProvider {
 
 extension LocalFolderPhotoProvider: PhotoProvider {
     func nextImage() -> NSImage {
-        let image = NSImage(contentsOf: photoUrls[currentPhotoIndex])
+        guard photoUrls.count > 0, let image = NSImage(contentsOf: photoUrls[currentPhotoIndex]) else {
+            return NSImage(named: NSImage.everyoneName)!
+        }
         
         currentPhotoIndex += 1
         // if at the end of the list, reshuffle the list (this will also reset the current index)
@@ -107,6 +109,6 @@ extension LocalFolderPhotoProvider: PhotoProvider {
             photoUrls = photoUrls.shuffled()
         }
         
-        return image ?? NSImage()
+        return image
     }
 }

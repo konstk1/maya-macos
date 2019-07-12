@@ -24,15 +24,6 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
         return window?.isVisible ?? false
     }
     
-//    init() {
-//        print("Init")
-//        window = PhotoWindow(contentRect: <#T##NSRect#>, styleMask: <#T##NSWindow.StyleMask#>, backing: <#T##NSWindow.BackingStoreType#>, defer: <#T##Bool#>, screen: <#T##NSScreen?#>)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//    }
-    
     override func windowDidLoad() {
         super.windowDidLoad()
         
@@ -68,7 +59,9 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
             frameSize.width = image.size.width / image.size.height * windowSize.height
         }
         
-        photoView.setFrameSize(NSMakeSize(frameSize.width - 2.0 * photoHorizontalPadding, frameSize.height - 2.0 * photoVerticalPadding))
+        photoView.frame = NSRect(x: photoHorizontalPadding, y: photoVerticalPadding, width: frameSize.width - 2 * photoHorizontalPadding, height: frameSize.height - 2 * photoVerticalPadding)
+//        photoView.setFrameSize(NSMakeSize(frameSize.width - 2.0 * photoHorizontalPadding, frameSize.height - 2.0 * photoVerticalPadding))
+
         window.setFrame(NSRect(origin: window.frame.origin, size: frameSize), display: true)
         
         print("Image: \(image.size)")
@@ -87,11 +80,19 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
     }
     
     func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
-        print("Resizing \(frameSize)")
+//        print("Resizing \(frameSize)")
         let photoVerticalPadding = 5.0 as CGFloat
         let photoHorizontalPadding = 5.0 as CGFloat
         photoView.setFrameSize(NSMakeSize(frameSize.width - 2.0 * photoHorizontalPadding, frameSize.height - 2.0 * photoVerticalPadding))
         return frameSize
+    }
+    
+    func windowDidEndLiveResize(_ notification: Notification) {
+        guard let window = window else { return }
+        print("Resized \(window.frame)")
+        windowSize = window.frame.size
+    }
+    func windowDidResize(_ notification: Notification) {
     }
 }
 
