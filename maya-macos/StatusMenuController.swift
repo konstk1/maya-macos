@@ -23,7 +23,7 @@ class StatusMenuController: NSObject {
     
     override func awakeFromNib() {
         if let icon = NSImage(named: "StatusIcon") {
-            icon.isTemplate = true
+//            icon.isTemplate = true
             statusItem.button?.image = icon
         } else {
             statusItem.button?.title = "Maya"
