@@ -17,8 +17,13 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
     private let photoVerticalPadding: CGFloat = 5.0
     
     lazy var windowSize: NSSize = {
-        return window?.frame.size ?? NSMakeSize(200, 200)
+        return window?.frame.size ?? NSSize(width: 200, height: 200)
     }()
+    
+    weak var referenceWindow: NSWindow?
+    
+    /// Offset of the top left corner from the reference window specified in show(relativeTo:)
+    private var windowOffset: NSPoint =  NSPoint(x: 0, y: -1)    // TODO: persist windowOffset
     
     var isVisible: Bool {
         return window?.isVisible ?? false
@@ -37,11 +42,13 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
         window.delegate = self
     }
     
-    func show() {
+    func show(relativeTo referenceWindow: NSWindow?) {
         guard let window = window else {
             log.error("Window is nil")
             return
         }
+        
+        self.referenceWindow = referenceWindow
         
         let image = provider.nextImage()
         photoView.image = image
@@ -62,13 +69,17 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
         photoView.frame = NSRect(x: photoHorizontalPadding, y: photoVerticalPadding, width: frameSize.width - 2 * photoHorizontalPadding, height: frameSize.height - 2 * photoVerticalPadding)
 //        photoView.setFrameSize(NSMakeSize(frameSize.width - 2.0 * photoHorizontalPadding, frameSize.height - 2.0 * photoVerticalPadding))
 
-        window.setFrame(NSRect(origin: window.frame.origin, size: frameSize), display: true)
+        var windowOrigin = window.frame.origin
+        if let referenceWindow = referenceWindow {
+            windowOrigin = referenceWindow.frame.origin + windowOffset
+            windowOrigin.y -= frameSize.height
+        }
+        window.setFrame(NSRect(origin: windowOrigin, size: frameSize), display: true)
         
-        print("Image: \(image.size)")
-        print("View: \(photoView.contentImageSize)")
-        print("View: \(photoView.frame.size)")
-        print("Window: \(window.frame.size)")
-        
+        print("Offset \(windowOffset)")
+        print("Window: \(window.frame)")
+        print("Ref Window: \(referenceWindow?.frame)")
+
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
         
@@ -92,7 +103,19 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
         print("Resized \(window.frame)")
         windowSize = window.frame.size
     }
-    func windowDidResize(_ notification: Notification) {
+    
+    func windowWillMove(_ notification: Notification) {
+        guard let window = notification.object as? NSWindow else { return }
+//        print("Will move \(window.frame)")
+//        previousWindowOrigin = window.frame.origin
+    }
+
+    func windowDidMove(_ notification: Notification) {
+        guard let window = window, let referenceWindow = referenceWindow else { return }
+        windowOffset = window.frame.origin - referenceWindow.frame.origin
+        windowOffset.y += window.frame.height
+        print("Moved \(window.frame.origin), new offset \(windowOffset)")
+        
     }
 }
 

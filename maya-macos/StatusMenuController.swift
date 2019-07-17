@@ -49,6 +49,8 @@ class StatusMenuController: NSObject {
         // close popover if clicked on status item or outside the photo frame
         // don't close and forward event if clicked inside photo frame window
         if event.type == .leftMouseDown {
+            print("Event screen \(event.window?.screen?.frame)")
+            print("Button screen \(statusItem.button?.window?.frame)")
             if event.window == statusItem.button?.window {
                 togglePopover()
                 blockEvent = true    // don't propagate this event any further
@@ -69,7 +71,7 @@ class StatusMenuController: NSObject {
     }
     
     func showPopover() {
-        photoFrame.show()
+        photoFrame.show(relativeTo: statusItem.button?.window)
         statusItem.button?.isHighlighted = true
         globalEventMonitor = NSEvent.addGlobalMonitorForEvents(matching: mouseEventMask, handler: globalEventHandler)
     }
