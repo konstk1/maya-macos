@@ -21,6 +21,8 @@
 		FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */; };
 		FF90732422BC13840052428E /* PhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732322BC13840052428E /* PhotoProviderTests.swift */; };
 		FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */; };
+		FFE9162322E0F5C400687322 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9162122E0F5C400687322 /* SettingsController.swift */; };
+		FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE9162222E0F5C400687322 /* SettingsController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 		FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudPhotoProvider.swift; sourceTree = "<group>"; };
 		FF90732322BC13840052428E /* PhotoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProviderTests.swift; sourceTree = "<group>"; };
 		FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderPhotoProvider.swift; sourceTree = "<group>"; };
+		FFE9162122E0F5C400687322 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		FFE9162222E0F5C400687322 /* SettingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,10 +104,12 @@
 				FF90731F22BC12670052428E /* PhotoProvider.swift */,
 				FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */,
 				FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */,
+				FFE9162122E0F5C400687322 /* SettingsController.swift */,
 				FF34718322DF82F70009CB40 /* Utilities.swift */,
 				FF9072D622BB04CE0052428E /* Assets.xcassets */,
 				FF9072D822BB04CE0052428E /* MainMenu.xib */,
 				FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */,
+				FFE9162222E0F5C400687322 /* SettingsController.xib */,
 				FF9072DB22BB04CE0052428E /* Info.plist */,
 				FF9072DC22BB04CE0052428E /* maya_macos.entitlements */,
 				FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */,
@@ -211,6 +217,7 @@
 				FF9072D722BB04CE0052428E /* Assets.xcassets in Resources */,
 				FF14AD8D22BDB8B800C7518C /* PhotoFrameController.xib in Resources */,
 				FF9072DA22BB04CE0052428E /* MainMenu.xib in Resources */,
+				FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */,
 				FF9072F122BBD9230052428E /* Todo.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,6 +236,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFE9162322E0F5C400687322 /* SettingsController.swift in Sources */,
 				FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */,
 				FF90731E22BBFF4D0052428E /* StatusMenuController.swift in Sources */,
 				FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */,

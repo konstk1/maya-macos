@@ -12,7 +12,8 @@ class StatusMenuController: NSObject {
     
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     
-    let photoFrame = PhotoFrameWindowController(windowNibName: "PhotoFrameController")
+    lazy var photoFrame = { PhotoFrameWindowController(windowNibName: "PhotoFrameController") }()
+    lazy var prefController = { SettingsController(windowNibName: "SettingsController") }()
     
     let mouseEventMask: NSEvent.EventTypeMask = [.leftMouseDown, .rightMouseDown]
     
@@ -49,8 +50,8 @@ class StatusMenuController: NSObject {
         // close popover if clicked on status item or outside the photo frame
         // don't close and forward event if clicked inside photo frame window
         if event.type == .leftMouseDown {
-            print("Event screen \(event.window?.screen?.frame)")
-            print("Button screen \(statusItem.button?.window?.frame)")
+//            print("Event screen \(event.window?.screen?.frame)")
+//            print("Button screen \(statusItem.button?.window?.frame)")
             if event.window == statusItem.button?.window {
                 togglePopover()
                 blockEvent = true    // don't propagate this event any further
@@ -82,6 +83,10 @@ class StatusMenuController: NSObject {
         if let globalEventMonitor = globalEventMonitor {
             NSEvent.removeMonitor(globalEventMonitor)
         }
+    }
+    
+    @IBAction func preferencesClicked(_ sender: NSMenuItem) {
+        prefController.showWindow(sender)
     }
     
     @IBAction func quitClicked(_ sender: NSMenuItem) {

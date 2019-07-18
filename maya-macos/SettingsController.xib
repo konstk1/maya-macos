@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14845" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14845"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SettingsController" customModule="maya_macos" customModuleProvider="target">
+            <connections>
+                <outlet property="generalView" destination="QTc-xx-c67" id="Tar-pJ-3wl"/>
+                <outlet property="sourcesView" destination="f9i-Wq-wNa" id="i7S-XQ-rrJ"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Maya - Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="579" y="754" width="500" height="40"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <view key="contentView" autoresizesSubviews="NO" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="500" height="40"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            </view>
+            <toolbar key="toolbar" implicitIdentifier="85BE4C0C-72F3-48A3-8918-50860F2A9A0A" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="uow-00-MKn">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="96D348F5-DA74-4F3B-A1D0-822FB674ED20" explicitItemIdentifier="ToolbarGeneralItem" label="General" paletteLabel="General" tag="1" image="NSPreferencesGeneral" selectable="YES" id="BYy-j3-Lcw">
+                        <size key="minSize" width="32" height="32"/>
+                        <size key="maxSize" width="32" height="32"/>
+                        <connections>
+                            <action selector="generalPressed:" target="-2" id="W6A-z8-pZ2"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="2D210DB5-EBAF-4BFF-BAE8-830F7CA3978C" explicitItemIdentifier="ToolbarSourcesItem" label="Sources" paletteLabel="Sources" tag="2" image="NSEveryone" selectable="YES" id="MUa-8n-knt">
+                        <size key="minSize" width="32" height="32"/>
+                        <size key="maxSize" width="32" height="32"/>
+                        <connections>
+                            <action selector="sourcesPressed:" target="-2" id="KJv-Qd-VUT"/>
+                        </connections>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="BYy-j3-Lcw"/>
+                    <toolbarItem reference="MUa-8n-knt"/>
+                </defaultToolbarItems>
+            </toolbar>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="149" y="32"/>
+        </window>
+        <customView identifier="GeneralView" id="QTc-xx-c67" userLabel="GeneralView">
+            <rect key="frame" x="0.0" y="0.0" width="391" height="56"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6SV-hF-7R5">
+                    <rect key="frame" x="18" y="20" width="52" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="General" id="s8x-fp-Nnq">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="6SV-hF-7R5" firstAttribute="leading" secondItem="QTc-xx-c67" secondAttribute="leading" constant="20" id="5Cs-S6-ird"/>
+                <constraint firstAttribute="bottom" secondItem="6SV-hF-7R5" secondAttribute="bottom" constant="20" id="SQP-QK-Qds"/>
+                <constraint firstItem="6SV-hF-7R5" firstAttribute="top" secondItem="QTc-xx-c67" secondAttribute="top" constant="20" id="dig-sN-K1s"/>
+                <constraint firstAttribute="trailing" secondItem="6SV-hF-7R5" secondAttribute="trailing" constant="323" id="uzf-9d-4fg"/>
+            </constraints>
+            <point key="canvasLocation" x="-166.5" y="261"/>
+        </customView>
+        <customView identifier="SourcesView" id="f9i-Wq-wNa" userLabel="SourcesView">
+            <rect key="frame" x="0.0" y="0.0" width="231" height="197"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TDo-cd-q0F">
+                    <rect key="frame" x="20" y="14" width="191" height="169"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="169" id="2o1-9p-00H"/>
+                        <constraint firstAttribute="width" constant="191" id="adz-ce-nGE"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSEveryone" id="1Uu-Pi-m6I"/>
+                </imageView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="TDo-cd-q0F" firstAttribute="centerY" secondItem="f9i-Wq-wNa" secondAttribute="centerY" id="SOb-1e-xDA"/>
+                <constraint firstItem="TDo-cd-q0F" firstAttribute="centerX" secondItem="f9i-Wq-wNa" secondAttribute="centerX" id="dER-bO-rFC"/>
+            </constraints>
+            <point key="canvasLocation" x="300.5" y="269.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="NSEveryone" width="32" height="32"/>
+        <image name="NSPreferencesGeneral" width="32" height="32"/>
+    </resources>
+</document>
