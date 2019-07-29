@@ -15,3 +15,4 @@ func +(lhs: NSPoint, rhs: NSPoint) -> NSPoint {
 func -(lhs: NSPoint, rhs: NSPoint) -> NSPoint {
     return NSPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
 }
+

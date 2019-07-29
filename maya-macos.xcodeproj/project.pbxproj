@@ -23,6 +23,8 @@
 		FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */; };
 		FFE9162322E0F5C400687322 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9162122E0F5C400687322 /* SettingsController.swift */; };
 		FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE9162222E0F5C400687322 /* SettingsController.xib */; };
+		FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE7F22EF5CC7009411B8 /* Settings.swift */; };
+		FFEBBE8422EF834F009411B8 /* TimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE8322EF834F009411B8 /* TimePeriod.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderPhotoProvider.swift; sourceTree = "<group>"; };
 		FFE9162122E0F5C400687322 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		FFE9162222E0F5C400687322 /* SettingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsController.xib; sourceTree = "<group>"; };
+		FFEBBE7F22EF5CC7009411B8 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		FFEBBE8322EF834F009411B8 /* TimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePeriod.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +109,8 @@
 				FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */,
 				FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */,
 				FFE9162122E0F5C400687322 /* SettingsController.swift */,
+				FFEBBE7F22EF5CC7009411B8 /* Settings.swift */,
+				FFEBBE8322EF834F009411B8 /* TimePeriod.swift */,
 				FF34718322DF82F70009CB40 /* Utilities.swift */,
 				FF9072D622BB04CE0052428E /* Assets.xcassets */,
 				FF9072D822BB04CE0052428E /* MainMenu.xib */,
@@ -237,9 +243,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFE9162322E0F5C400687322 /* SettingsController.swift in Sources */,
+				FFEBBE8422EF834F009411B8 /* TimePeriod.swift in Sources */,
 				FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */,
 				FF90731E22BBFF4D0052428E /* StatusMenuController.swift in Sources */,
 				FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */,
+				FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */,
 				FF9072D222BB04CD0052428E /* AppDelegate.swift in Sources */,
 				FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */,
 				FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */,
