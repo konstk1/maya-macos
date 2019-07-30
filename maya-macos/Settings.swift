@@ -20,17 +20,17 @@ enum Settings {
     enum Frame {
         @UserDefault("\(Self.self).popupFrame", defaultValue: false) static var popupFrame: Bool
         @UserDefault("\(Self.self).autoCloseFrame", defaultValue: false) static var autoCloseFrame: Bool
-        @UserDefaultCodable("\(Self.self).autoCloseFrameAfter", defaultValue: .seconds(10)) static var autoCloseFrameAfter: TimePeriod
+        @UserDefault("\(Self.self).autoCloseFrameAfter", defaultValue: .seconds(10)) static var autoCloseFrameAfter: TimePeriod
     }
     
     enum Photos {
         @UserDefault("\(Self.self).autoSwitchPhoto", defaultValue: true) static var autoSwitchPhoto: Bool
-        @UserDefaultCodable("\(Self.self).autoSwitchPhotoPeriod", defaultValue: .minutes(10)) static var autoSwitchPhotoAfter: TimePeriod
+        @UserDefault("\(Self.self).autoSwitchPhotoPeriod", defaultValue: .minutes(10)) static var autoSwitchPhotoAfter: TimePeriod
         
     }
 }
 
-@propertyWrapper struct UserDefault<T> {
+@propertyWrapper struct UserDefault<T: Codable> {
     let key: String
     let defaultValue: T
     
@@ -41,33 +41,20 @@ enum Settings {
     
     var wrappedValue: T {
         get {
-            return UserDefaults.standard.object(forKey: key) as? T ?? defaultValue
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: key)
-        }
-    }
-}
-
-@propertyWrapper struct UserDefaultCodable<T: Codable> {
-    let key: String
-    let defaultValue: T
-    
-    init(_ key: String, defaultValue: T) {
-        self.key = key
-        self.defaultValue = defaultValue
-    }
-    
-    var wrappedValue: T {
-        get {
-            if let data = UserDefaults.standard.value(forKey: key) as? Data,
-               let value = try? PropertyListDecoder().decode(T.self, from: data) {
+            let object = UserDefaults.standard.object(forKey: key)
+            
+            // first try to decode object as property list
+            // if that fails, value is most likely a basic type that can be cast directly to object
+            if let data = object as? Data, let value = try? PropertyListDecoder().decode(T.self, from: data) {
                 return value
             }
-            return defaultValue
+            return object as? T ?? defaultValue
         }
         set {
-            UserDefaults.standard.set(try? PropertyListEncoder().encode(newValue), forKey: key)
+            // first see if value is a property list convertible struct
+            // if that fails, value is most likely a basic type that can be stored directly into user defaults
+            let propList = try? PropertyListEncoder().encode(newValue)
+            UserDefaults.standard.set(propList ?? newValue, forKey: key)
         }
     }
 }
