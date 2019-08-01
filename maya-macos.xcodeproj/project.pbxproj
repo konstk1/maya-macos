@@ -17,7 +17,7 @@
 		FF9072DA22BB04CE0052428E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF9072D822BB04CE0052428E /* MainMenu.xib */; };
 		FF9072F122BBD9230052428E /* Todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = FF9072F022BBD9230052428E /* Todo.txt */; };
 		FF90731E22BBFF4D0052428E /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90731D22BBFF4D0052428E /* StatusMenuController.swift */; };
-		FF90732022BC12670052428E /* PhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90731F22BC12670052428E /* PhotoProvider.swift */; };
+		FF90732022BC12670052428E /* PhotoVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90731F22BC12670052428E /* PhotoVendor.swift */; };
 		FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */; };
 		FF90732422BC13840052428E /* PhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732322BC13840052428E /* PhotoProviderTests.swift */; };
 		FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */; };
@@ -26,6 +26,7 @@
 		FFC22B6522F2387600121828 /* Maya Launcher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = FFC22B5622F2378300121828 /* Maya Launcher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FFC22B6822F2389200121828 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFC22B6722F2389200121828 /* ServiceManagement.framework */; };
 		FFC22B6B22F2427A00121828 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFC22B6922F2427A00121828 /* MainMenu.xib */; };
+		FFD3698322F385AA00EC7A85 /* PhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */; };
 		FFE9162322E0F5C400687322 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9162122E0F5C400687322 /* SettingsController.swift */; };
 		FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE9162222E0F5C400687322 /* SettingsController.xib */; };
 		FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE7F22EF5CC7009411B8 /* Settings.swift */; };
@@ -70,7 +71,7 @@
 		FF9072E722BB04CE0052428E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF9072F022BBD9230052428E /* Todo.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Todo.txt; sourceTree = "<group>"; };
 		FF90731D22BBFF4D0052428E /* StatusMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuController.swift; sourceTree = "<group>"; };
-		FF90731F22BC12670052428E /* PhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProvider.swift; sourceTree = "<group>"; };
+		FF90731F22BC12670052428E /* PhotoVendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoVendor.swift; sourceTree = "<group>"; };
 		FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudPhotoProvider.swift; sourceTree = "<group>"; };
 		FF90732322BC13840052428E /* PhotoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProviderTests.swift; sourceTree = "<group>"; };
 		FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderPhotoProvider.swift; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 		FFC22B6022F2378400121828 /* maya_macos_launcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = maya_macos_launcher.entitlements; sourceTree = "<group>"; };
 		FFC22B6722F2389200121828 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		FFC22B6A22F2427A00121828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProvider.swift; sourceTree = "<group>"; };
 		FFE9162122E0F5C400687322 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		FFE9162222E0F5C400687322 /* SettingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsController.xib; sourceTree = "<group>"; };
 		FFEBBE7F22EF5CC7009411B8 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -139,9 +141,30 @@
 			children = (
 				FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */,
 				FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */,
-				FF90731F22BC12670052428E /* PhotoProvider.swift */,
+				FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */,
+				FF90731F22BC12670052428E /* PhotoVendor.swift */,
 			);
 			path = "Photo Providers";
+			sourceTree = "<group>";
+		};
+		FF206B0422F35CEE000C0FB3 /* XIB */ = {
+			isa = PBXGroup;
+			children = (
+				FF9072D822BB04CE0052428E /* MainMenu.xib */,
+				FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */,
+				FFE9162222E0F5C400687322 /* SettingsController.xib */,
+			);
+			path = XIB;
+			sourceTree = "<group>";
+		};
+		FF206B0522F35D05000C0FB3 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				FF9072DB22BB04CE0052428E /* Info.plist */,
+				FF9072DC22BB04CE0052428E /* maya_macos.entitlements */,
+				FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 		FF9072C522BB04CD0052428E = {
@@ -173,12 +196,8 @@
 				FF206B0322F35C64000C0FB3 /* Photo Providers */,
 				FF206B0222F35C5A000C0FB3 /* Utilities */,
 				FF9072D622BB04CE0052428E /* Assets.xcassets */,
-				FF9072D822BB04CE0052428E /* MainMenu.xib */,
-				FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */,
-				FFE9162222E0F5C400687322 /* SettingsController.xib */,
-				FF9072DB22BB04CE0052428E /* Info.plist */,
-				FF9072DC22BB04CE0052428E /* maya_macos.entitlements */,
-				FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */,
+				FF206B0422F35CEE000C0FB3 /* XIB */,
+				FF206B0522F35D05000C0FB3 /* Other */,
 				FF9072F022BBD9230052428E /* Todo.txt */,
 			);
 			path = "maya-macos";
@@ -356,6 +375,7 @@
 				FFE9162322E0F5C400687322 /* SettingsController.swift in Sources */,
 				FFEBBE8422EF834F009411B8 /* TimePeriod.swift in Sources */,
 				FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */,
+				FFD3698322F385AA00EC7A85 /* PhotoProvider.swift in Sources */,
 				FF90731E22BBFF4D0052428E /* StatusMenuController.swift in Sources */,
 				FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */,
 				FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */,
@@ -363,7 +383,7 @@
 				FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */,
 				FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */,
 				FF34718422DF82F70009CB40 /* Utilities.swift in Sources */,
-				FF90732022BC12670052428E /* PhotoProvider.swift in Sources */,
+				FF90732022BC12670052428E /* PhotoVendor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,10 +552,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "maya-macos/maya_macos.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "maya-macos/Other/maya_macos.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "maya-macos/Info.plist";
+				INFOPLIST_FILE = "maya-macos/Other/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -550,10 +570,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "maya-macos/maya_macos.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "maya-macos/Other/maya_macos.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "maya-macos/Info.plist";
+				INFOPLIST_FILE = "maya-macos/Other/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

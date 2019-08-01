@@ -97,18 +97,23 @@ final class LocalFolderPhotoProvider {
     }
 }
 
+struct LocalPhotoAsset: PhotoAssetDescriptor {
+    var photoURL: URL
+    var description: String { photoURL.path }
+    
+    func fetchImage(completion: (Result<NSImage, Error>) -> Void) {
+        guard let image = NSImage(contentsOf: photoURL) else {
+            log.error("Failed to read file \(photoURL.path)")
+            completion(.failure(PhotoProviderError.failedReadLocalFile))
+            return
+        }
+        
+        completion(.success(image))
+    }
+}
+
 extension LocalFolderPhotoProvider: PhotoProvider {
-    func nextImage() -> NSImage {
-        guard photoUrls.count > 0, let image = NSImage(contentsOf: photoUrls[currentPhotoIndex]) else {
-            return NSImage(named: NSImage.everyoneName)!
-        }
-        
-        currentPhotoIndex += 1
-        // if at the end of the list, reshuffle the list (this will also reset the current index)
-        if currentPhotoIndex >= photoUrls.count {
-            photoUrls = photoUrls.shuffled()
-        }
-        
-        return image
+    var photoDescriptors: [PhotoAssetDescriptor] {
+        return photoUrls.map { LocalPhotoAsset(photoURL: $0) }
     }
 }

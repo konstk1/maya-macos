@@ -9,7 +9,7 @@
 import Cocoa
 
 class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
-    let provider = LocalFolderPhotoProvider()
+    let photoVendor = PhotoVendor()
     
     private var photoView: PhotoView!
     
@@ -40,50 +40,17 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
         window.contentView?.addSubview(photoView)
         window.isMovableByWindowBackground = true
         window.delegate = self
+        
+        photoVendor.setProvider(LocalFolderPhotoProvider())
+        photoVendor.delegate = self
     }
     
     func show(relativeTo referenceWindow: NSWindow?) {
-        guard let window = window else {
-            log.error("Window is nil")
-            return
-        }
-        
         self.referenceWindow = referenceWindow
         
-        let image = provider.nextImage()
-        photoView.image = image
-        
-        window.aspectRatio = image.size
-        
-        var frameSize = windowSize
-        
-        // determine photo view size based on max window dimmension
-        if image.size.width > image.size.height  {
-            // landscape (clamp width, calculate height)
-            frameSize.height = image.size.height / image.size.width * windowSize.width
-        } else {
-            // portrait (clamp height, calculate width)
-            frameSize.width = image.size.width / image.size.height * windowSize.height
-        }
-        
-        photoView.frame = NSRect(x: photoHorizontalPadding, y: photoVerticalPadding, width: frameSize.width - 2 * photoHorizontalPadding, height: frameSize.height - 2 * photoVerticalPadding)
-//        photoView.setFrameSize(NSMakeSize(frameSize.width - 2.0 * photoHorizontalPadding, frameSize.height - 2.0 * photoVerticalPadding))
-
-        var windowOrigin = window.frame.origin
-        if let referenceWindow = referenceWindow {
-            windowOrigin = referenceWindow.frame.origin + windowOffset
-            windowOrigin.y -= frameSize.height
-        }
-        window.setFrame(NSRect(origin: windowOrigin, size: frameSize), display: true)
-        
-        print("Offset \(windowOffset)")
-        print("Window: \(window.frame)")
-        print("Ref Window: \(referenceWindow?.frame)")
-
-        window.makeKeyAndOrderFront(nil)
-        window.orderFrontRegardless()
-        
-        print("Showing window")
+        // this will trigger popup when next image is fetched
+        // TODO: can this be less cludgy?
+        photoVendor.nextImage()
     }
     
     override func close() {
@@ -116,6 +83,52 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
         windowOffset.y += window.frame.height
         print("Moved \(window.frame.origin), new offset \(windowOffset)")
         
+    }
+}
+
+extension PhotoFrameWindowController: PhotoVendorDelegate {
+    func didVendNewImage(image: NSImage) {
+        guard let window = window else {
+            log.error("Window is nil")
+            return
+        }
+        
+        photoView.image = image
+        
+        window.aspectRatio = image.size
+        
+        var frameSize = windowSize
+        
+        // determine photo view size based on max window dimmension
+        if image.size.width > image.size.height  {
+            // landscape (clamp width, calculate height)
+            frameSize.height = image.size.height / image.size.width * windowSize.width
+        } else {
+            // portrait (clamp height, calculate width)
+            frameSize.width = image.size.width / image.size.height * windowSize.height
+        }
+        
+        photoView.frame = NSRect(x: photoHorizontalPadding, y: photoVerticalPadding, width: frameSize.width - 2 * photoHorizontalPadding, height: frameSize.height - 2 * photoVerticalPadding)
+        
+        var windowOrigin = window.frame.origin
+        if let referenceWindow = referenceWindow {
+            windowOrigin = referenceWindow.frame.origin + windowOffset
+            windowOrigin.y -= frameSize.height
+        }
+        window.setFrame(NSRect(origin: windowOrigin, size: frameSize), display: true)
+        
+//        print("Offset \(windowOffset)")
+//        print("Window: \(window.frame)")
+//        print("Ref Window: \(referenceWindow?.frame)")
+        
+        window.makeKeyAndOrderFront(nil)
+        window.orderFrontRegardless()
+        
+//        print("Showing window")
+    }
+    
+    func didFailToVend(error: Error?) {
+        // TODO: implement this
     }
 }
 

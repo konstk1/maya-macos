@@ -17,8 +17,7 @@ final class iCloudPhotoProvider {
 }
 
 extension iCloudPhotoProvider: PhotoProvider {
-    func nextImage() -> NSImage {
-        // TODO: implement this
-        return NSImage()
+    var photoDescriptors: [PhotoAssetDescriptor] {
+        return []
     }
 }
