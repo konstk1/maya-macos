@@ -114,6 +114,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FF206B0122F35C4A000C0FB3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */,
+				FFE9162122E0F5C400687322 /* SettingsController.swift */,
+				FF90731D22BBFF4D0052428E /* StatusMenuController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		FF206B0222F35C5A000C0FB3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				FFEBBE7F22EF5CC7009411B8 /* Settings.swift */,
+				FFEBBE8322EF834F009411B8 /* TimePeriod.swift */,
+				FF34718322DF82F70009CB40 /* Utilities.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		FF206B0322F35C64000C0FB3 /* Photo Providers */ = {
+			isa = PBXGroup;
+			children = (
+				FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */,
+				FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */,
+				FF90731F22BC12670052428E /* PhotoProvider.swift */,
+			);
+			path = "Photo Providers";
+			sourceTree = "<group>";
+		};
 		FF9072C522BB04CD0052428E = {
 			isa = PBXGroup;
 			children = (
@@ -139,15 +169,9 @@
 			isa = PBXGroup;
 			children = (
 				FF9072D122BB04CD0052428E /* AppDelegate.swift */,
-				FF90731D22BBFF4D0052428E /* StatusMenuController.swift */,
-				FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */,
-				FF90731F22BC12670052428E /* PhotoProvider.swift */,
-				FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */,
-				FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */,
-				FFE9162122E0F5C400687322 /* SettingsController.swift */,
-				FFEBBE7F22EF5CC7009411B8 /* Settings.swift */,
-				FFEBBE8322EF834F009411B8 /* TimePeriod.swift */,
-				FF34718322DF82F70009CB40 /* Utilities.swift */,
+				FF206B0122F35C4A000C0FB3 /* Controllers */,
+				FF206B0322F35C64000C0FB3 /* Photo Providers */,
+				FF206B0222F35C5A000C0FB3 /* Utilities */,
 				FF9072D622BB04CE0052428E /* Assets.xcassets */,
 				FF9072D822BB04CE0052428E /* MainMenu.xib */,
 				FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */,

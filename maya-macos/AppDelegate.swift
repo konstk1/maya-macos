@@ -24,6 +24,8 @@ let log: SwiftyBeaver.Type = {
     return log
 }()
 
+let launcherAppId = "com.kk.maya-macos-launcher"
+
 extension Notification.Name {
     static let killLauncher = Notification.Name("killLauncher")
 }
@@ -32,11 +34,10 @@ extension Notification.Name {
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        let launcherAppId = "com.kk.maya-macos-launcher"
         let runningApps = NSWorkspace.shared.runningApplications
         let isRunning = runningApps.contains { $0.bundleIdentifier == launcherAppId }
         
-        SMLoginItemSetEnabled(launcherAppId as CFString, true)
+        SMLoginItemSetEnabled(launcherAppId as CFString, Settings.App.openAtLogin)
         
         // if launcher is running, send notification to terminate it
         if isRunning {

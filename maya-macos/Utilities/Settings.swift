@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import ServiceManagement
 
 enum Settings {
     enum App {
         @UserDefault("\(Self.self).openAtLogin", defaultValue: false) static var openAtLogin: Bool {
             didSet {
-                print("New val \(openAtLogin)")
+                SMLoginItemSetEnabled(launcherAppId as CFString, Settings.App.openAtLogin)
             }
         }
     }

@@ -1,11 +1,17 @@
 Bugs:
 
-
 Next:
-- menu bar icon
-- design icon
-- popup/frame view
-- icloud photos (photokit)
-- OAuth2 (https://github.com/OAuthSwift/OAuthSwift -> update for Swift 5.1)
+- Implement auto switch photos
+- Implement popup window
+- Implement auto close
+- Implement 1 source (Local folder) in settings
 
 Features:
+- OAuth2 (https://github.com/OAuthSwift/OAuthSwift -> update for Swift 5.1)
+- menu bar icon (more colors to indicate status)
+
+Photo Providers:
+- Google Photos
+- Flickr
+- iCloud photos (PhotoKit)
+- Local folder
