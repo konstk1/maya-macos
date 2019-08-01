@@ -21,6 +21,11 @@
 		FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */; };
 		FF90732422BC13840052428E /* PhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732322BC13840052428E /* PhotoProviderTests.swift */; };
 		FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */; };
+		FFC22B5922F2378300121828 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC22B5822F2378300121828 /* AppDelegate.swift */; };
+		FFC22B5B22F2378400121828 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFC22B5A22F2378400121828 /* Assets.xcassets */; };
+		FFC22B6522F2387600121828 /* Maya Launcher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = FFC22B5622F2378300121828 /* Maya Launcher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FFC22B6822F2389200121828 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFC22B6722F2389200121828 /* ServiceManagement.framework */; };
+		FFC22B6B22F2427A00121828 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFC22B6922F2427A00121828 /* MainMenu.xib */; };
 		FFE9162322E0F5C400687322 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9162122E0F5C400687322 /* SettingsController.swift */; };
 		FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE9162222E0F5C400687322 /* SettingsController.xib */; };
 		FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE7F22EF5CC7009411B8 /* Settings.swift */; };
@@ -37,11 +42,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		FFC22B6422F2382100121828 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				FFC22B6522F2387600121828 /* Maya Launcher.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameController.swift; sourceTree = "<group>"; };
 		FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoFrameController.xib; sourceTree = "<group>"; };
 		FF34718322DF82F70009CB40 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		FF9072CE22BB04CD0052428E /* maya-macos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "maya-macos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF9072CE22BB04CD0052428E /* Maya.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maya.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF9072D122BB04CD0052428E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF9072D422BB04CD0052428E /* maya_macos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = maya_macos.xcdatamodel; sourceTree = "<group>"; };
 		FF9072D622BB04CE0052428E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,6 +74,13 @@
 		FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudPhotoProvider.swift; sourceTree = "<group>"; };
 		FF90732322BC13840052428E /* PhotoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProviderTests.swift; sourceTree = "<group>"; };
 		FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderPhotoProvider.swift; sourceTree = "<group>"; };
+		FFC22B5622F2378300121828 /* Maya Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Maya Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFC22B5822F2378300121828 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FFC22B5A22F2378400121828 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FFC22B5F22F2378400121828 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FFC22B6022F2378400121828 /* maya_macos_launcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = maya_macos_launcher.entitlements; sourceTree = "<group>"; };
+		FFC22B6722F2389200121828 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		FFC22B6A22F2427A00121828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		FFE9162122E0F5C400687322 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		FFE9162222E0F5C400687322 /* SettingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsController.xib; sourceTree = "<group>"; };
 		FFEBBE7F22EF5CC7009411B8 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -68,10 +93,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF34717F22D63A780009CB40 /* SwiftyBeaver in Frameworks */,
+				FFC22B6822F2389200121828 /* ServiceManagement.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FF9072DE22BB04CE0052428E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFC22B5322F2378300121828 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -86,15 +119,18 @@
 			children = (
 				FF9072D022BB04CD0052428E /* maya-macos */,
 				FF9072E422BB04CE0052428E /* maya-macosTests */,
+				FFC22B5722F2378300121828 /* maya-macos-launcher */,
 				FF9072CF22BB04CD0052428E /* Products */,
+				FFC22B6622F2389200121828 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		FF9072CF22BB04CD0052428E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FF9072CE22BB04CD0052428E /* maya-macos.app */,
+				FF9072CE22BB04CD0052428E /* Maya.app */,
 				FF9072E122BB04CE0052428E /* maya-macosTests.xctest */,
+				FFC22B5622F2378300121828 /* Maya Launcher.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -133,6 +169,26 @@
 			path = "maya-macosTests";
 			sourceTree = "<group>";
 		};
+		FFC22B5722F2378300121828 /* maya-macos-launcher */ = {
+			isa = PBXGroup;
+			children = (
+				FFC22B5822F2378300121828 /* AppDelegate.swift */,
+				FFC22B5A22F2378400121828 /* Assets.xcassets */,
+				FFC22B6922F2427A00121828 /* MainMenu.xib */,
+				FFC22B5F22F2378400121828 /* Info.plist */,
+				FFC22B6022F2378400121828 /* maya_macos_launcher.entitlements */,
+			);
+			path = "maya-macos-launcher";
+			sourceTree = "<group>";
+		};
+		FFC22B6622F2389200121828 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FFC22B6722F2389200121828 /* ServiceManagement.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +199,7 @@
 				FF9072CA22BB04CD0052428E /* Sources */,
 				FF9072CB22BB04CD0052428E /* Frameworks */,
 				FF9072CC22BB04CD0052428E /* Resources */,
+				FFC22B6422F2382100121828 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -153,7 +210,7 @@
 				FF34717E22D63A780009CB40 /* SwiftyBeaver */,
 			);
 			productName = "maya-macos";
-			productReference = FF9072CE22BB04CD0052428E /* maya-macos.app */;
+			productReference = FF9072CE22BB04CD0052428E /* Maya.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FF9072E022BB04CE0052428E /* maya-macosTests */ = {
@@ -174,6 +231,23 @@
 			productReference = FF9072E122BB04CE0052428E /* maya-macosTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		FFC22B5522F2378300121828 /* maya-macos-launcher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FFC22B6322F2378400121828 /* Build configuration list for PBXNativeTarget "maya-macos-launcher" */;
+			buildPhases = (
+				FFC22B5222F2378300121828 /* Sources */,
+				FFC22B5322F2378300121828 /* Frameworks */,
+				FFC22B5422F2378300121828 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "maya-macos-launcher";
+			productName = "maya-macos-launcher";
+			productReference = FFC22B5622F2378300121828 /* Maya Launcher.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -190,6 +264,9 @@
 					FF9072E022BB04CE0052428E = {
 						CreatedOnToolsVersion = 11.0;
 						TestTargetID = FF9072CD22BB04CD0052428E;
+					};
+					FFC22B5522F2378300121828 = {
+						CreatedOnToolsVersion = 11.0;
 					};
 				};
 			};
@@ -211,6 +288,7 @@
 			targets = (
 				FF9072CD22BB04CD0052428E /* maya-macos */,
 				FF9072E022BB04CE0052428E /* maya-macosTests */,
+				FFC22B5522F2378300121828 /* maya-macos-launcher */,
 			);
 		};
 /* End PBXProject section */
@@ -232,6 +310,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFC22B5422F2378300121828 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFC22B5B22F2378400121828 /* Assets.xcassets in Resources */,
+				FFC22B6B22F2427A00121828 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +351,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FFC22B5222F2378300121828 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFC22B5922F2378300121828 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -279,6 +374,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				FF9072D922BB04CE0052428E /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		FFC22B6922F2427A00121828 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FFC22B6A22F2427A00121828 /* Base */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -340,6 +443,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -393,6 +497,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "";
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -412,7 +517,7 @@
 					"@executable_path/../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Maya;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -430,7 +535,7 @@
 					"@executable_path/../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Maya;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -475,6 +580,46 @@
 			};
 			name = Release;
 		};
+		FFC22B6122F2378400121828 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "maya-macos-launcher/maya_macos_launcher.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "maya-macos-launcher/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos-launcher";
+				PRODUCT_NAME = "Maya Launcher";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		FFC22B6222F2378400121828 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "maya-macos-launcher/maya_macos_launcher.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "maya-macos-launcher/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos-launcher";
+				PRODUCT_NAME = "Maya Launcher";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -501,6 +646,15 @@
 			buildConfigurations = (
 				FF9072EE22BB04CF0052428E /* Debug */,
 				FF9072EF22BB04CF0052428E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FFC22B6322F2378400121828 /* Build configuration list for PBXNativeTarget "maya-macos-launcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FFC22B6122F2378400121828 /* Debug */,
+				FFC22B6222F2378400121828 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -83,6 +83,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "maya-macos"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
