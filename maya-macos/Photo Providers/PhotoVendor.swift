@@ -50,7 +50,8 @@ final class PhotoVendor {
         }
     }
     
-    func nextImage() {
+    /// Fetches next image and calls the delegate to notify when next image is ready
+    func vendImage() {
         // if reached end of photos, reset the vending state (reload the list)
         if photos.isEmpty {
             resetVendingState()

@@ -26,7 +26,6 @@ class SettingsController: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var autoSwitchPhotosTimeStepper: NSStepper!
     @IBOutlet weak var autoSwitchPhotosTimeUnitsDropdown: NSPopUpButton!
     
-    
     override func windowDidLoad() {
         super.windowDidLoad()
         guard let toolbar = window?.toolbar else { return }

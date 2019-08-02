@@ -9,11 +9,16 @@
 import Foundation
 import ServiceManagement
 
+extension Notification.Name {
+    static let settingsNotification = Notification.Name("\(Bundle.main.bundleIdentifier!).Settings")
+}
+
 enum Settings {
     enum App {
         @UserDefault("\(Self.self).openAtLogin", defaultValue: false) static var openAtLogin: Bool {
             didSet {
-                SMLoginItemSetEnabled(launcherAppId as CFString, Settings.App.openAtLogin)
+                SMLoginItemSetEnabled(launcherAppId as CFString, openAtLogin)
+                print("Key \(self.openAtLogin)")
             }
         }
     }
@@ -25,7 +30,12 @@ enum Settings {
     }
     
     enum Photos {
-        @UserDefault("\(Self.self).autoSwitchPhoto", defaultValue: true) static var autoSwitchPhoto: Bool
+        @UserDefault("\(Self.self).autoSwitchPhoto", defaultValue: true) static var autoSwitchPhoto: Bool {
+            didSet {
+                print("Sending notification: \(autoSwitchPhoto)")
+                NotificationCenter.default.post(name: .settingsNotification, object: autoSwitchPhoto)
+            }
+        }
         @UserDefault("\(Self.self).autoSwitchPhotoPeriod", defaultValue: .minutes(10)) static var autoSwitchPhotoAfter: TimePeriod
         
     }
@@ -43,7 +53,6 @@ enum Settings {
     var wrappedValue: T {
         get {
             let object = UserDefaults.standard.object(forKey: key)
-            
             // first try to decode object as property list
             // if that fails, value is most likely a basic type that can be cast directly to object
             if let data = object as? Data, let value = try? PropertyListDecoder().decode(T.self, from: data) {
@@ -56,6 +65,19 @@ enum Settings {
             // if that fails, value is most likely a basic type that can be stored directly into user defaults
             let propList = try? PropertyListEncoder().encode(newValue)
             UserDefaults.standard.set(propList ?? newValue, forKey: key)
+        }
+    }
+}
+
+@propertyWrapper struct Notifying<T> {
+    private var value: T
+    
+    var wrappedValue: T {
+        get {
+            return value
+        }
+        set {
+//            NotificationCenter.default.post(name: <#T##NSNotification.Name#>, object: <#T##Any?#>)
         }
     }
 }

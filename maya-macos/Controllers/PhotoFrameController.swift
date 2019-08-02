@@ -16,14 +16,19 @@ class PhotoView: NSImageView {
     override var mouseDownCanMoveWindow: Bool { return true }
 }
 
-class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
-    let photoVendor = PhotoVendor()
+class PhotoFrameWindowController: NSWindowController {
+    // Photo vendor properties
+    private let photoVendor = PhotoVendor()
+    private var currentPhoto: NSImage = NSImage(named: NSImage.everyoneName)!
+    private var vendTimer: Timer?
     
+    // Photo frame properties
     private var photoView: PhotoView!
     
     private let photoHorizontalPadding: CGFloat = 5.0
     private let photoVerticalPadding: CGFloat = 5.0
     
+    // Window properties
     lazy var windowSize: NSSize = {
         return window?.frame.size ?? NSSize(width: 200, height: 200)  // TODO: persist this
     }()
@@ -51,14 +56,71 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
         
         photoVendor.setProvider(LocalFolderPhotoProvider())
         photoVendor.delegate = self
+        photoVendor.vendImage()
+        
+        NotificationCenter.default.addObserver(forName: .settingsNotification, object: Settings.Photos.autoSwitchPhoto, queue: nil) { (notification) in
+            print("New auto switch")
+        }
+        NotificationCenter.default.addObserver(forName: .settingsNotification, object: Settings.Photos.autoSwitchPhotoAfter, queue: nil) { (notification) in
+            print("New period \(Settings.Photos.autoSwitchPhotoAfter)")
+        }
+        
+    }
+}
+
+extension PhotoFrameWindowController: PhotoVendorDelegate {
+    func didVendNewImage(image: NSImage) {
+        currentPhoto = image
     }
     
+    func didFailToVend(error: Error?) {
+        // TODO: implement this
+        currentPhoto = NSImage(named: NSImage.everyoneName)!
+    }
+}
+
+// MARK: Window related methods
+extension PhotoFrameWindowController: NSWindowDelegate {
     func show(relativeTo referenceWindow: NSWindow?) {
+        guard let window = window else {
+            log.error("Window is nil")
+            return
+        }
+        
         self.referenceWindow = referenceWindow
+        
+        photoView.image = currentPhoto
+        
+        window.aspectRatio = currentPhoto.size
+        
+        var frameSize = windowSize
+        
+        // determine photo view size based on max window dimmension
+        if currentPhoto.size.width > currentPhoto.size.height  {
+            // landscape (clamp width, calculate height)
+            frameSize.height = currentPhoto.size.height / currentPhoto.size.width * windowSize.width
+        } else {
+            // portrait (clamp height, calculate width)
+            frameSize.width = currentPhoto.size.width / currentPhoto.size.height * windowSize.height
+        }
+        
+        photoView.frame = NSRect(x: photoHorizontalPadding, y: photoVerticalPadding, width: frameSize.width - 2 * photoHorizontalPadding, height: frameSize.height - 2 * photoVerticalPadding)
+        
+        // set window position based on offset from reference window (which is usually status menu item)
+        var windowOrigin = window.frame.origin
+        if let referenceWindow = referenceWindow {
+            windowOrigin = referenceWindow.frame.origin + windowOffset
+            windowOrigin.y -= frameSize.height
+        }
+        window.setFrame(NSRect(origin: windowOrigin, size: frameSize), display: true)
+        
+        // show window on top of everything
+        window.makeKeyAndOrderFront(nil)
+        window.orderFrontRegardless()
         
         // this will trigger popup when next image is fetched
         // TODO: can this be less cludgy?
-        photoVendor.nextImage()
+        photoVendor.vendImage()
     }
     
     override func close() {
@@ -84,48 +146,6 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
         windowOffset.y += window.frame.height
         print("Moved \(window.frame.origin), new offset \(windowOffset)")
         
-    }
-}
-
-extension PhotoFrameWindowController: PhotoVendorDelegate {
-    func didVendNewImage(image: NSImage) {
-        guard let window = window else {
-            log.error("Window is nil")
-            return
-        }
-        
-        photoView.image = image
-        
-        window.aspectRatio = image.size
-        
-        var frameSize = windowSize
-        
-        // determine photo view size based on max window dimmension
-        if image.size.width > image.size.height  {
-            // landscape (clamp width, calculate height)
-            frameSize.height = image.size.height / image.size.width * windowSize.width
-        } else {
-            // portrait (clamp height, calculate width)
-            frameSize.width = image.size.width / image.size.height * windowSize.height
-        }
-        
-        photoView.frame = NSRect(x: photoHorizontalPadding, y: photoVerticalPadding, width: frameSize.width - 2 * photoHorizontalPadding, height: frameSize.height - 2 * photoVerticalPadding)
-        
-        // set window position based on offset from reference window (which is usually status menu item)
-        var windowOrigin = window.frame.origin
-        if let referenceWindow = referenceWindow {
-            windowOrigin = referenceWindow.frame.origin + windowOffset
-            windowOrigin.y -= frameSize.height
-        }
-        window.setFrame(NSRect(origin: windowOrigin, size: frameSize), display: true)
-        
-        // show window on top of everything
-        window.makeKeyAndOrderFront(nil)
-        window.orderFrontRegardless()
-    }
-    
-    func didFailToVend(error: Error?) {
-        // TODO: implement this
     }
 }
 
