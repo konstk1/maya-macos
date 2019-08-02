@@ -25,13 +25,13 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
     private let photoVerticalPadding: CGFloat = 5.0
     
     lazy var windowSize: NSSize = {
-        return window?.frame.size ?? NSSize(width: 200, height: 200)
+        return window?.frame.size ?? NSSize(width: 200, height: 200)  // TODO: persist this
     }()
-    
-    weak var referenceWindow: NSWindow?
     
     /// Offset of the top left corner from the reference window specified in show(relativeTo:)
     private var windowOffset: NSPoint =  NSPoint(x: 0, y: -1)    // TODO: persist windowOffset
+    
+    weak var referenceWindow: NSWindow?
     
     var isVisible: Bool {
         return window?.isVisible ?? false
@@ -66,26 +66,19 @@ class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
     }
     
     func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
-//        print("Resizing \(frameSize)")
-        let photoVerticalPadding = 5.0 as CGFloat
-        let photoHorizontalPadding = 5.0 as CGFloat
+        // resize photoView to track window size with specified padding
         photoView.setFrameSize(NSMakeSize(frameSize.width - 2.0 * photoHorizontalPadding, frameSize.height - 2.0 * photoVerticalPadding))
         return frameSize
     }
     
     func windowDidEndLiveResize(_ notification: Notification) {
         guard let window = window else { return }
-        print("Resized \(window.frame)")
+        // save window size so the frame always opens with same size
         windowSize = window.frame.size
-    }
-    
-    func windowWillMove(_ notification: Notification) {
-        guard let window = notification.object as? NSWindow else { return }
-//        print("Will move \(window.frame)")
-//        previousWindowOrigin = window.frame.origin
     }
 
     func windowDidMove(_ notification: Notification) {
+        // track offset of top left corner from origin so the frame always opens in the same location
         guard let window = window, let referenceWindow = referenceWindow else { return }
         windowOffset = window.frame.origin - referenceWindow.frame.origin
         windowOffset.y += window.frame.height
@@ -118,6 +111,7 @@ extension PhotoFrameWindowController: PhotoVendorDelegate {
         
         photoView.frame = NSRect(x: photoHorizontalPadding, y: photoVerticalPadding, width: frameSize.width - 2 * photoHorizontalPadding, height: frameSize.height - 2 * photoVerticalPadding)
         
+        // set window position based on offset from reference window (which is usually status menu item)
         var windowOrigin = window.frame.origin
         if let referenceWindow = referenceWindow {
             windowOrigin = referenceWindow.frame.origin + windowOffset
@@ -125,14 +119,9 @@ extension PhotoFrameWindowController: PhotoVendorDelegate {
         }
         window.setFrame(NSRect(origin: windowOrigin, size: frameSize), display: true)
         
-//        print("Offset \(windowOffset)")
-//        print("Window: \(window.frame)")
-//        print("Ref Window: \(referenceWindow?.frame)")
-        
+        // show window on top of everything
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
-        
-//        print("Showing window")
     }
     
     func didFailToVend(error: Error?) {

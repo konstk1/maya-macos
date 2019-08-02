@@ -54,7 +54,7 @@ class SettingsController: NSWindowController, NSWindowDelegate {
     }
     
     func setWindowContent(to view: NSView) {
-        print("Sources size \(sourcesView.frame.size)")
+        print("View size \(view.frame.size)")
         guard let window = window else { return }
         
         // save these before setting content view because setting content view changes these
@@ -65,9 +65,16 @@ class SettingsController: NSWindowController, NSWindowDelegate {
         // the delta is the different between current content height and new content height
         let deltaY = (window.contentView?.frame.height ?? 0) - contentSize.height
         
+        // calculate new frame origin and frame based on new content size
+        let origin = NSPoint(x: windowOrigin.x, y: windowOrigin.y + deltaY)
+        let windowSize = window.frameRect(forContentRect: NSRect(origin: origin, size: contentSize)).size
+        let frame = NSRect(origin: origin, size: windowSize)
+        
+        // clear out the content before switching,
+        // then change window frame and set new content
+        window.contentView = nil
+        window.setFrame(frame, display: false, animate: true)
         window.contentView = view
-        window.setContentSize(contentSize)
-        window.setFrameOrigin(NSPoint(x: windowOrigin.x, y: windowOrigin.y + deltaY))
     }
     
     @IBAction func openAtLoginToggled(_ sender: NSButton) {
