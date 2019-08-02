@@ -8,6 +8,14 @@
 
 import Cocoa
 
+class PhotoWindow: NSWindow {
+    override var canBecomeKey: Bool { return true }
+}
+
+class PhotoView: NSImageView {
+    override var mouseDownCanMoveWindow: Bool { return true }
+}
+
 class PhotoFrameWindowController: NSWindowController, NSWindowDelegate {
     let photoVendor = PhotoVendor()
     
@@ -132,27 +140,4 @@ extension PhotoFrameWindowController: PhotoVendorDelegate {
     }
 }
 
-class PhotoWindow: NSWindow {
-    override var canBecomeKey: Bool { return true }
-}
 
-class PhotoView: NSImageView {
-    override var mouseDownCanMoveWindow: Bool { return true }
-}
-
-extension NSImageView {
-    var contentImageSize: NSSize {
-        guard let image = image else { return bounds.size }
-        guard imageScaling == .scaleProportionallyUpOrDown || imageScaling == .scaleProportionallyDown else { return bounds.size }
-        guard image.size.width > 0 && image.size.height > 0 else { return bounds.size }
-        
-        let scale: CGFloat
-        if image.size.width > image.size.height {
-            scale = bounds.width / image.size.width
-        } else {
-            scale = bounds.height / image.size.height
-        }
-        
-        return NSSize(width: image.size.width * scale, height: image.size.height * scale)
-    }
-}
