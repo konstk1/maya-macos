@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let runningApps = NSWorkspace.shared.runningApplications
         let isRunning = runningApps.contains { $0.bundleIdentifier == launcherAppId }
         
-        SMLoginItemSetEnabled(launcherAppId as CFString, Settings.App.openAtLogin)
+        SMLoginItemSetEnabled(launcherAppId as CFString, Settings.app.openAtLogin)
         
         // if launcher is running, send notification to terminate it
         if isRunning {

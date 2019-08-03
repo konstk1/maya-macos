@@ -21,9 +21,26 @@ enum TimeUnit: String, CaseIterable, Codable {
 //    }
 }
 
-struct TimePeriod: Codable {
+class TimePeriod: NSObject, Codable {
     let value: Int
     let unit: TimeUnit
+    
+    var timeInterval: TimeInterval {
+        switch unit {
+        case .seconds: return TimeInterval(value)
+        case .minutes: return TimeInterval(value * 60)
+        case .hours: return TimeInterval(value * 60 * 60)
+        case .days: return TimeInterval(value * 60 * 60 * 24)
+        }
+    }
+    
+    override var description: String { "\(value) \(unit)" }
+    
+    init(value: Int, unit: TimeUnit) {
+        self.value = value
+        self.unit = unit
+        super.init()
+    }
     
     static func seconds(_ val: Int) -> TimePeriod {
         return TimePeriod(value: val, unit: .seconds)

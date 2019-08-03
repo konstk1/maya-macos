@@ -39,7 +39,7 @@ class SettingsController: NSWindowController, NSWindowDelegate {
     }
     
     func loadAppSettings() {
-        openAtLoginCheckbox.state = Settings.App.openAtLogin ? .on : .off
+        openAtLoginCheckbox.state = Settings.app.openAtLogin ? .on : .off
     }
     
     @IBAction func generalPressed(_ sender: NSToolbarItem) {
@@ -78,26 +78,26 @@ class SettingsController: NSWindowController, NSWindowDelegate {
     
     @IBAction func openAtLoginToggled(_ sender: NSButton) {
         print("Open at login \(sender.state == .on)")
-        Settings.App.openAtLogin = (sender.state == .on)
+        Settings.app.openAtLogin = (sender.state == .on)
     }
 }
 
 // MARK: - Frame Settings Actions
 extension SettingsController {
     func loadFrameSettings() {
-        popupWindowCheckbox.state = Settings.Frame.popupFrame ? .on : .off
-        autoCloseCheckbox.state = Settings.Frame.autoCloseFrame ? .on : .off
+        popupWindowCheckbox.state = Settings.frame.popupFrame ? .on : .off
+        autoCloseCheckbox.state = Settings.frame.autoCloseFrame ? .on : .off
         
         // TODO: implement dropdown settings
     }
     
     @IBAction func popupWindowToggled(_ sender: NSButton) {
-        Settings.Frame.popupFrame = (sender.state == .on)
+        Settings.frame.popupFrame = (sender.state == .on)
         // TODO: implement this
     }
     
     @IBAction func autoCloseToggled(_ sender: NSButton) {
-        Settings.Frame.autoCloseFrame = (sender.state == .on)
+        Settings.frame.autoCloseFrame = (sender.state == .on)
         // TODO: implement this
     }
     
@@ -109,10 +109,10 @@ extension SettingsController {
 // MARK: - Photo Settings Actions
 extension SettingsController {
     func loadPhotoSettings() {
-        autoSwitchPhotosCheckbox.state = Settings.Photos.autoSwitchPhoto ? .on : .off
-        autoSwitchPhotosTimeField.integerValue = Settings.Photos.autoSwitchPhotoAfter.value
-        autoSwitchPhotosTimeStepper.integerValue = Settings.Photos.autoSwitchPhotoAfter.value
-        autoSwitchPhotosTimeUnitsDropdown.selectItem(withTitle: Settings.Photos.autoSwitchPhotoAfter.unit.rawValue)
+        autoSwitchPhotosCheckbox.state = Settings.photos.autoSwitchPhoto ? .on : .off
+        autoSwitchPhotosTimeField.integerValue = Settings.photos.autoSwitchPhotoPeriod.value
+        autoSwitchPhotosTimeStepper.integerValue = Settings.photos.autoSwitchPhotoPeriod.value
+        autoSwitchPhotosTimeUnitsDropdown.selectItem(withTitle: Settings.photos.autoSwitchPhotoPeriod.unit.rawValue)
     }
     
     func updateAutoSwitchPhotoTime() {
@@ -137,11 +137,11 @@ extension SettingsController {
             return
         }
         
-        Settings.Photos.autoSwitchPhotoAfter = autoSwitchTime
+        Settings.photos.autoSwitchPhotoPeriod = autoSwitchTime
     }
     
     @IBAction func switchPhotosToggled(_ sender: NSButton) {
-        Settings.Photos.autoSwitchPhoto = (sender.state == .on)
+        Settings.photos.autoSwitchPhoto = (sender.state == .on)
         // TODO: implement this
     }
     

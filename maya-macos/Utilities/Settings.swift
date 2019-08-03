@@ -9,35 +9,59 @@
 import Foundation
 import ServiceManagement
 
-extension Notification.Name {
-    static let settingsNotification = Notification.Name("\(Bundle.main.bundleIdentifier!).Settings")
-}
-
 enum Settings {
-    enum App {
-        @UserDefault("\(Self.self).openAtLogin", defaultValue: false) static var openAtLogin: Bool {
-            didSet {
-                SMLoginItemSetEnabled(launcherAppId as CFString, openAtLogin)
-                print("Key \(self.openAtLogin)")
-            }
-        }
-    }
+
+    static let app = AppSettings.shared
+    static let frame = FrameSettings.shared
+    static let photos = PhotosSettings.shared
     
-    enum Frame {
-        @UserDefault("\(Self.self).popupFrame", defaultValue: false) static var popupFrame: Bool
-        @UserDefault("\(Self.self).autoCloseFrame", defaultValue: false) static var autoCloseFrame: Bool
-        @UserDefault("\(Self.self).autoCloseFrameAfter", defaultValue: .seconds(10)) static var autoCloseFrameAfter: TimePeriod
-    }
-    
-    enum Photos {
-        @UserDefault("\(Self.self).autoSwitchPhoto", defaultValue: true) static var autoSwitchPhoto: Bool {
-            didSet {
-                print("Sending notification: \(autoSwitchPhoto)")
-                NotificationCenter.default.post(name: .settingsNotification, object: autoSwitchPhoto)
-            }
-        }
-        @UserDefault("\(Self.self).autoSwitchPhotoPeriod", defaultValue: .minutes(10)) static var autoSwitchPhotoAfter: TimePeriod
+    class AppSettings: NSObject {
+        fileprivate static let shared = AppSettings()
+        private override init() {}
         
+        @UserDefault(makeKey(type: AppSettings.self, keypath: \.openAtLogin), defaultValue: false) @objc dynamic var openAtLogin: Bool {
+            didSet {
+                // TODO: move this to app delegate
+                SMLoginItemSetEnabled(launcherAppId as CFString, openAtLogin)
+            }
+        }
+    }
+    
+    class FrameSettings: NSObject {
+        fileprivate static let shared = FrameSettings()
+        private override init() {}
+        
+        @UserDefault(makeKey(type: FrameSettings.self, keypath: \.popupFrame), defaultValue: false)
+        @objc dynamic var popupFrame: Bool
+        
+        @UserDefault(makeKey(type: FrameSettings.self, keypath: \.autoCloseFrame), defaultValue: false)
+        @objc dynamic var autoCloseFrame: Bool
+        
+        @UserDefault(makeKey(type: FrameSettings.self, keypath: \.autoCloseFrameAfter), defaultValue: .seconds(10))
+        @objc dynamic var autoCloseFrameAfter: TimePeriod
+    }
+    
+    class PhotosSettings: NSObject {
+        fileprivate static let shared = PhotosSettings()
+        private override init() {}
+        
+        @UserDefault(makeKey(type: PhotosSettings.self, keypath: \.autoSwitchPhoto), defaultValue: true)
+        @objc dynamic var autoSwitchPhoto: Bool
+        
+        @UserDefault(makeKey(type: PhotosSettings.self, keypath: \.autoSwitchPhotoPeriod), defaultValue: .minutes(10))
+        @objc dynamic var autoSwitchPhotoPeriod: TimePeriod
+        
+    }
+    
+    /// Makes UserDefaults key from type and keypath.
+    /// - Warning: `keypath` must reference an `@objc` property,
+    /// otherwise `_kvcKeyPathString` is nil and app abort.
+    /// This is intentional because there is no default behavior to save such a value.
+    private static func makeKey<T,U>(type: T.Type, keypath: KeyPath<T,U>) -> String {
+        guard let keyPathString = keypath._kvcKeyPathString else {
+            fatalError("Attempt to make key from non-@objc property!")
+        }
+        return "\(type).\(keyPathString)"
     }
 }
 
@@ -69,15 +93,3 @@ enum Settings {
     }
 }
 
-@propertyWrapper struct Notifying<T> {
-    private var value: T
-    
-    var wrappedValue: T {
-        get {
-            return value
-        }
-        set {
-//            NotificationCenter.default.post(name: <#T##NSNotification.Name#>, object: <#T##Any?#>)
-        }
-    }
-}

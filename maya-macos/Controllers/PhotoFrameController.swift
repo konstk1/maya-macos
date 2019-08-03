@@ -42,6 +42,8 @@ class PhotoFrameWindowController: NSWindowController {
         return window?.isVisible ?? false
     }
     
+    private var observers: [NSKeyValueObservation] = []
+    
     override func windowDidLoad() {
         super.windowDidLoad()
         
@@ -58,13 +60,24 @@ class PhotoFrameWindowController: NSWindowController {
         photoVendor.delegate = self
         photoVendor.vendImage()
         
-        NotificationCenter.default.addObserver(forName: .settingsNotification, object: Settings.Photos.autoSwitchPhoto, queue: nil) { (notification) in
-            print("New auto switch")
-        }
-        NotificationCenter.default.addObserver(forName: .settingsNotification, object: Settings.Photos.autoSwitchPhotoAfter, queue: nil) { (notification) in
-            print("New period \(Settings.Photos.autoSwitchPhotoAfter)")
-        }
+        observers = [
+            Settings.photos.observe(\.autoSwitchPhoto, options: [.initial, .new], changeHandler: { [weak self] (_, _) in
+                self?.updatePhotoTiming()
+            }),
+            Settings.photos.observe(\.autoSwitchPhotoPeriod, options: [.initial, .new], changeHandler: { [weak self] (_, _) in
+                self?.updatePhotoTiming()
+            })
+        ]
+    }
+    
+    func updatePhotoTiming() {
+        print("New photo switch settings")
         
+        if Settings.photos.autoSwitchPhoto {
+            vendTimer = Timer.scheduledTimer(withTimeInterval: Settings.photos.autoSwitchPhotoPeriod.timeInterval, repeats: true, block: { [weak self] (_) in
+                self?.photoVendor.vendImage()
+            })
+        }
     }
 }
 
