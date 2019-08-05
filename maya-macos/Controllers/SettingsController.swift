@@ -109,6 +109,11 @@ extension SettingsController {
 // MARK: - Photo Settings Actions
 extension SettingsController {
     func loadPhotoSettings() {
+        // populate units dropdown
+        let unitsItems: [TimeUnit] = [.seconds, .minutes, .hours, .days]
+        autoSwitchPhotosTimeUnitsDropdown.removeAllItems()  // remove any items populated from XIB
+        autoSwitchPhotosTimeUnitsDropdown.addItems(withTitles: unitsItems.map { $0.rawValue })
+        
         autoSwitchPhotosCheckbox.state = Settings.photos.autoSwitchPhoto ? .on : .off
         autoSwitchPhotosTimeField.integerValue = Settings.photos.autoSwitchPhotoPeriod.value
         autoSwitchPhotosTimeStepper.integerValue = Settings.photos.autoSwitchPhotoPeriod.value
@@ -116,8 +121,9 @@ extension SettingsController {
     }
     
     func updateAutoSwitchPhotoTime() {
-        guard let units = autoSwitchPhotosTimeUnitsDropdown.titleOfSelectedItem else {
-            log.error("autoSwitchPhotosTimeUnitsDropdown selected item is nil")
+        guard let titleOfSelectedItem = autoSwitchPhotosTimeUnitsDropdown.titleOfSelectedItem,
+              let unit = TimeUnit(rawValue: titleOfSelectedItem) else {
+            log.error("autoSwitchPhotosTimeUnitsDropdown selected item is nil or invalid")
             return
         }
         
@@ -125,16 +131,15 @@ extension SettingsController {
         
         var autoSwitchTime: TimePeriod
         
-        switch units {
-        case "minutes":
+        switch unit {
+        case .seconds:
+            autoSwitchTime = .seconds(value)
+        case .minutes:
             autoSwitchTime = .minutes(value)
-        case "hours":
+        case .hours:
             autoSwitchTime = .hours(value)
-        case "days":
+        case .days:
             autoSwitchTime = .days(value)
-        default:
-            log.warning("Unexpected value for autoSwitchPhotosTimeUnitsDropdown")
-            return
         }
         
         Settings.photos.autoSwitchPhotoPeriod = autoSwitchTime

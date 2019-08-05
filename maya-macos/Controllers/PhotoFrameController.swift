@@ -71,19 +71,28 @@ class PhotoFrameWindowController: NSWindowController {
     }
     
     func updatePhotoTiming() {
-        print("New photo switch settings")
+        // invalidate current timer and update as necessary
+        vendTimer?.invalidate()
         
         if Settings.photos.autoSwitchPhoto {
+            log.info("Auto next photo in \(Settings.photos.autoSwitchPhotoPeriod)")
             vendTimer = Timer.scheduledTimer(withTimeInterval: Settings.photos.autoSwitchPhotoPeriod.timeInterval, repeats: true, block: { [weak self] (_) in
                 self?.photoVendor.vendImage()
             })
+        } else {
+            log.info("Auto photo switch off")
         }
     }
 }
 
 extension PhotoFrameWindowController: PhotoVendorDelegate {
     func didVendNewImage(image: NSImage) {
+        log.verbose("Vending new image")
         currentPhoto = image
+        if Settings.frame.popupFrame {
+            log.verbose("Poping up frame")
+            show(relativeTo: referenceWindow)
+        }
     }
     
     func didFailToVend(error: Error?) {
@@ -133,7 +142,7 @@ extension PhotoFrameWindowController: NSWindowDelegate {
         
         // this will trigger popup when next image is fetched
         // TODO: can this be less cludgy?
-        photoVendor.vendImage()
+//        photoVendor.vendImage()
     }
     
     override func close() {
