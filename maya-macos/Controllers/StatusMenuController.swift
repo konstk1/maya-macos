@@ -12,12 +12,11 @@ class StatusMenuController: NSObject {
     
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     
-    lazy var photoFrame = { PhotoFrameWindowController(windowNibName: "PhotoFrameController") }()
+    var photoFrame = PhotoFrameWindowController()
     lazy var prefController = { SettingsController(windowNibName: "SettingsController") }()
     
     let mouseEventMask: NSEvent.EventTypeMask = [.leftMouseDown, .rightMouseDown]
     
-    var globalEventMonitor: Any?
     var localEventMonitor: Any?
     
     @IBOutlet weak var statusMenu: NSMenu!
@@ -32,10 +31,6 @@ class StatusMenuController: NSObject {
         statusItem.menu = statusMenu
 
         NSEvent.addLocalMonitorForEvents(matching: mouseEventMask, handler: localEventHandler)
-    }
-    
-    func globalEventHandler(event: NSEvent) {
-        closePopover()
     }
     
     func localEventHandler(event: NSEvent) -> NSEvent? {
@@ -73,22 +68,12 @@ class StatusMenuController: NSObject {
     
     func showPopover() {
         photoFrame.show(relativeTo: statusItem.button?.window)
-        statusItem.button?.isHighlighted = true
-
-        // only install global event monitor if not already installed
-        if globalEventMonitor == nil {
-            globalEventMonitor = NSEvent.addGlobalMonitorForEvents(matching: mouseEventMask, handler: globalEventHandler)
-        }
+//        statusItem.button?.isHighlighted = true
     }
     
     func closePopover() {
         photoFrame.close()
-        statusItem.button?.isHighlighted = false
-        if let globalEventMonitor = globalEventMonitor {
-            NSEvent.removeMonitor(globalEventMonitor)
-            // clear out event monitor to indicate it's no longer installed
-            self.globalEventMonitor = nil
-        }
+//        statusItem.button?.isHighlighted = false
     }
     
     @IBAction func preferencesClicked(_ sender: NSMenuItem) {

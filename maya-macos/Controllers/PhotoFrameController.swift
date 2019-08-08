@@ -17,6 +17,7 @@ class PhotoView: NSImageView {
 }
 
 class PhotoFrameWindowController: NSWindowController {
+    // MARK: - Properties
     // Photo vendor properties
     private let photoVendor = PhotoVendor()
     private var currentPhoto: NSImage = NSImage(named: NSImage.everyoneName)!
@@ -24,10 +25,11 @@ class PhotoFrameWindowController: NSWindowController {
     
     // Photo frame properties
     private var photoView: PhotoView!
+    private var shouldPopupOnVend = false
     
     private let photoHorizontalPadding: CGFloat = 5.0
     private let photoVerticalPadding: CGFloat = 5.0
-    
+
     // Window properties
     lazy var windowSize: NSSize = {
         return window?.frame.size ?? NSSize(width: 200, height: 200)  // TODO: persist this
@@ -37,6 +39,8 @@ class PhotoFrameWindowController: NSWindowController {
     private var windowOffset: NSPoint =  NSPoint(x: 0, y: -1)    // TODO: persist windowOffset
     
     weak var referenceWindow: NSWindow?
+    private var globalEventMonitor: Any?
+
     
     var isVisible: Bool {
         return window?.isVisible ?? false
@@ -44,17 +48,16 @@ class PhotoFrameWindowController: NSWindowController {
     
     private var observers: [NSKeyValueObservation] = []
     
-    override func windowDidLoad() {
-        super.windowDidLoad()
-        
-        guard let window = window else { return }
-        
-        photoView = PhotoView()
-        photoView.imageScaling = .scaleProportionallyUpOrDown
+    override var windowNibName: NSNib.Name? { NSNib.Name("PhotoFrameController") }
 
-        window.contentView?.addSubview(photoView)
-        window.isMovableByWindowBackground = true
-        window.delegate = self
+    // MARK: Functions
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented. Use init()")
+    }
+    
+    init() {
+        super.init(window: nil)
         
         photoVendor.setProvider(LocalFolderPhotoProvider())
         photoVendor.delegate = self
@@ -68,29 +71,54 @@ class PhotoFrameWindowController: NSWindowController {
                 self?.updatePhotoTiming()
             })
         ]
+        
+        updatePhotoTiming()
     }
     
+    override func windowDidLoad() {
+        super.windowDidLoad()
+        
+        guard let window = window else { return }
+        
+        photoView = PhotoView()
+        photoView.imageScaling = .scaleProportionallyUpOrDown
+
+        window.contentView?.addSubview(photoView)
+        window.isMovableByWindowBackground = true
+        window.delegate = self
+    }
+    
+    /// Determines next photo timing.  If auto-switch enabled, [re]sets the timer to vend new image.
     func updatePhotoTiming() {
-        // invalidate current timer and update as necessary
+        // invalidate current timer, if running
         vendTimer?.invalidate()
         
+        // set new timer based on settings
         if Settings.photos.autoSwitchPhoto {
             log.info("Auto next photo in \(Settings.photos.autoSwitchPhotoPeriod)")
-            vendTimer = Timer.scheduledTimer(withTimeInterval: Settings.photos.autoSwitchPhotoPeriod.timeInterval, repeats: true, block: { [weak self] (_) in
+            vendTimer = Timer.scheduledTimer(withTimeInterval: Settings.photos.autoSwitchPhotoPeriod.timeInterval, repeats: false, block: { [weak self] (_) in
+                self?.shouldPopupOnVend = Settings.frame.popupFrame
                 self?.photoVendor.vendImage()
             })
         } else {
             log.info("Auto photo switch off")
         }
     }
+    
+    func globalEventHandler(event: NSEvent) {
+        close()
+    }
 }
 
+// MARK: - PhotoVendorDelegate
 extension PhotoFrameWindowController: PhotoVendorDelegate {
     func didVendNewImage(image: NSImage) {
         log.verbose("Vending new image")
         currentPhoto = image
-        if Settings.frame.popupFrame {
+        if shouldPopupOnVend {
             log.verbose("Poping up frame")
+            // reset popup flag, this will be set to true by the auto switch timer
+            shouldPopupOnVend = false
             show(relativeTo: referenceWindow)
         }
     }
@@ -101,7 +129,7 @@ extension PhotoFrameWindowController: PhotoVendorDelegate {
     }
 }
 
-// MARK: Window related methods
+// MARK: - Window related methods
 extension PhotoFrameWindowController: NSWindowDelegate {
     func show(relativeTo referenceWindow: NSWindow?) {
         guard let window = window else {
@@ -140,13 +168,27 @@ extension PhotoFrameWindowController: NSWindowDelegate {
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
         
-        // this will trigger popup when next image is fetched
-        // TODO: can this be less cludgy?
-//        photoVendor.vendImage()
+        // only install global event monitor if not already installed
+        // any clicks outside the window will trigger frame to close
+        if globalEventMonitor == nil {
+            globalEventMonitor = NSEvent.addGlobalMonitorForEvents(matching: .leftMouseDown, handler: globalEventHandler)
+        }
     }
     
     override func close() {
         super.close()
+        print("Closing frame")
+        
+        // remove the global event monitor when frame is closed
+        if let globalEventMonitor = globalEventMonitor {
+            NSEvent.removeMonitor(globalEventMonitor)
+            // clear out event monitor to indicate it's no longer installed
+            print("Remove global")
+            self.globalEventMonitor = nil
+        }
+        
+        // restart photo timers when frame is closed
+        updatePhotoTiming()
     }
     
     func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
@@ -166,8 +208,7 @@ extension PhotoFrameWindowController: NSWindowDelegate {
         guard let window = window, let referenceWindow = referenceWindow else { return }
         windowOffset = window.frame.origin - referenceWindow.frame.origin
         windowOffset.y += window.frame.height
-        print("Moved \(window.frame.origin), new offset \(windowOffset)")
-        
+//        print("Moved \(window.frame.origin), new offset \(windowOffset)")
     }
 }
 
