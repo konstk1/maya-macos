@@ -31,13 +31,13 @@ class PhotoFrameWindowController: NSWindowController {
     private let photoVerticalPadding: CGFloat = 5.0
 
     // Window properties
-    lazy var windowSize: NSSize = {
-        return window?.frame.size ?? NSSize(width: 200, height: 200)  // TODO: persist this
-    }()
+    @UserDefault("PhotoFrame.windowSize", defaultValue: NSSize(width: 400, height: 400))
+    private var windowSize
     
     /// Offset of the top left corner from the reference window specified in show(relativeTo:)
-    private var windowOffset: NSPoint =  NSPoint(x: 0, y: -1)    // TODO: persist windowOffset
-    
+    @UserDefault("PhotoFrame.windowOffset", defaultValue: NSPoint(x: 0, y: -1))
+    private var windowOffset;
+        
     weak var referenceWindow: NSWindow?
     private var globalEventMonitor: Any?
 
