@@ -43,17 +43,15 @@ class SettingsController: NSWindowController, NSWindowDelegate {
     }
     
     @IBAction func generalPressed(_ sender: NSToolbarItem) {
-        print("General")
         setWindowContent(to: generalView)
     }
     
     @IBAction func sourcesPressed(_ sender: NSToolbarItem) {
-        print("Sources")
         setWindowContent(to: sourcesView)
     }
     
     func setWindowContent(to view: NSView) {
-        print("View size \(view.frame.size)")
+//        print("View size \(view.frame.size)")
         guard let window = window else { return }
         
         // save these before setting content view because setting content view changes these

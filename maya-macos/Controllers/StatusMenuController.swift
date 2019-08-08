@@ -74,7 +74,11 @@ class StatusMenuController: NSObject {
     func showPopover() {
         photoFrame.show(relativeTo: statusItem.button?.window)
         statusItem.button?.isHighlighted = true
-        globalEventMonitor = NSEvent.addGlobalMonitorForEvents(matching: mouseEventMask, handler: globalEventHandler)
+
+        // only install global event monitor if not already installed
+        if globalEventMonitor == nil {
+            globalEventMonitor = NSEvent.addGlobalMonitorForEvents(matching: mouseEventMask, handler: globalEventHandler)
+        }
     }
     
     func closePopover() {
@@ -82,10 +86,15 @@ class StatusMenuController: NSObject {
         statusItem.button?.isHighlighted = false
         if let globalEventMonitor = globalEventMonitor {
             NSEvent.removeMonitor(globalEventMonitor)
+            // clear out event monitor to indicate it's no longer installed
+            self.globalEventMonitor = nil
         }
     }
     
     @IBAction func preferencesClicked(_ sender: NSMenuItem) {
+        // by default, status menu apps are in background (inactive)
+        // activate the app so that pref window appears on top
+        NSApp.activate(ignoringOtherApps: true)
         prefController.showWindow(sender)
     }
     
