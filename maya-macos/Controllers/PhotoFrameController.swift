@@ -115,11 +115,24 @@ extension PhotoFrameWindowController: PhotoVendorDelegate {
     func didVendNewImage(image: NSImage) {
         log.verbose("Vending new image")
         currentPhoto = image
+        
         if shouldPopupOnVend {
-            log.verbose("Poping up frame")
+            log.verbose("Auto poping up frame")
             // reset popup flag, this will be set to true by the auto switch timer
             shouldPopupOnVend = false
             show(relativeTo: referenceWindow)
+            
+            // if auto-close is enabled, set timer to trigger frame close
+            if Settings.frame.autoCloseFrame {
+                // TODO: can this be improved? buggy if close period is greater than vend period
+                DispatchQueue.main.asyncAfter(deadline: .now() + Settings.frame.autoCloseFrameAfter.timeInterval) { [weak self] in
+                    log.verbose("Auto-closing")
+                    self?.close()
+                }
+            }
+            
+            // restart photo timers
+            updatePhotoTiming()
         }
     }
     
@@ -177,18 +190,13 @@ extension PhotoFrameWindowController: NSWindowDelegate {
     
     override func close() {
         super.close()
-        print("Closing frame")
         
         // remove the global event monitor when frame is closed
         if let globalEventMonitor = globalEventMonitor {
             NSEvent.removeMonitor(globalEventMonitor)
             // clear out event monitor to indicate it's no longer installed
-            print("Remove global")
             self.globalEventMonitor = nil
         }
-        
-        // restart photo timers when frame is closed
-        updatePhotoTiming()
     }
     
     func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
@@ -211,5 +219,4 @@ extension PhotoFrameWindowController: NSWindowDelegate {
 //        print("Moved \(window.frame.origin), new offset \(windowOffset)")
     }
 }
-
 

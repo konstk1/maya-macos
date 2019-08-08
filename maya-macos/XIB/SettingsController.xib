@@ -120,14 +120,14 @@
                                         </button>
                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="p7B-UZ-Fzl">
                                             <rect key="frame" x="173" y="-1" width="95" height="23"/>
-                                            <popUpButtonCell key="cell" type="roundTextured" title="15 seconds" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" selectedItem="eCv-NN-O7Z" id="g9Q-66-IPy">
+                                            <popUpButtonCell key="cell" type="roundTextured" title="10 seconds" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" selectedItem="mq1-fN-kIT" id="g9Q-66-IPy">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="31m-02-ADU">
                                                     <items>
                                                         <menuItem title="5 seconds" id="EOD-Nt-uwg"/>
-                                                        <menuItem title="10 seconds" id="mq1-fN-kIT"/>
-                                                        <menuItem title="15 seconds" state="on" id="eCv-NN-O7Z"/>
+                                                        <menuItem title="10 seconds" state="on" id="mq1-fN-kIT"/>
+                                                        <menuItem title="15 seconds" id="eCv-NN-O7Z"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>

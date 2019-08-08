@@ -68,12 +68,10 @@ class StatusMenuController: NSObject {
     
     func showPopover() {
         photoFrame.show(relativeTo: statusItem.button?.window)
-//        statusItem.button?.isHighlighted = true
     }
     
     func closePopover() {
         photoFrame.close()
-//        statusItem.button?.isHighlighted = false
     }
     
     @IBAction func preferencesClicked(_ sender: NSMenuItem) {

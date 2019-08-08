@@ -82,25 +82,39 @@ class SettingsController: NSWindowController, NSWindowDelegate {
 
 // MARK: - Frame Settings Actions
 extension SettingsController {
+    private var autoCloseTimeOptions: [TimePeriod] {
+        [.seconds(5), .seconds(10), .seconds(15), .seconds(30), .seconds(60)]
+    }
+    
     func loadFrameSettings() {
         popupWindowCheckbox.state = Settings.frame.popupFrame ? .on : .off
         autoCloseCheckbox.state = Settings.frame.autoCloseFrame ? .on : .off
+                
+        // remove any items popuplated in XIB
+        autoCloseAfterDropdown.removeAllItems()
         
-        // TODO: implement dropdown settings
+        autoCloseAfterDropdown.addItems(withTitles: autoCloseTimeOptions.map { $0.description })
+        
+        autoCloseAfterDropdown.selectItem(withTitle: Settings.frame.autoCloseFrameAfter.description)
+        
     }
     
     @IBAction func popupWindowToggled(_ sender: NSButton) {
         Settings.frame.popupFrame = (sender.state == .on)
-        // TODO: implement this
     }
     
     @IBAction func autoCloseToggled(_ sender: NSButton) {
         Settings.frame.autoCloseFrame = (sender.state == .on)
-        // TODO: implement this
     }
     
     @IBAction func autoCloseTimeSelected(_ sender: NSPopUpButton) {
-        print("Close after \(sender.titleOfSelectedItem)")
+        guard sender.indexOfSelectedItem >= 0 else {
+            log.warning("Nothing selected in autoCloseAfterDropdown")
+            return
+        }
+        
+        Settings.frame.autoCloseFrameAfter = autoCloseTimeOptions[sender.indexOfSelectedItem]
+        log.info("New settings: auto-close frame after \(Settings.frame.autoCloseFrameAfter)")
     }
 }
 
