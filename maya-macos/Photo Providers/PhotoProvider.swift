@@ -10,11 +10,12 @@ import Cocoa
 
 protocol PhotoProvider {
     var photoDescriptors: [PhotoAssetDescriptor] { get }
+    func refreshAssets(completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void)
 }
 
 protocol PhotoAssetDescriptor: CustomStringConvertible {
     // fetches an image for underlying photo asset
-    func fetchImage(completion: (Result<NSImage, Error>) -> Void)
+    func fetchImage(completion: @escaping (Result<NSImage, Error>) -> Void)
 }
 
 enum PhotoProviderError: Error {

@@ -18,6 +18,12 @@ final class iCloudPhotoProvider {
 
 extension iCloudPhotoProvider: PhotoProvider {
     var photoDescriptors: [PhotoAssetDescriptor] {
+        log.warning("iCloud not implemented")
         return []
+    }
+    
+    func refreshAssets(completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void) {
+        log.warning("iCloud not implemented")
+        completion(.success([]))
     }
 }

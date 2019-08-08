@@ -8,7 +8,7 @@
 
 import Cocoa
 
-final class LocalFolderPhotoProvider {
+final class LocalFolderPhotoProvider: NSObject {    
     /// supported photo file extensions
     private let supportedExtension = ["png", "jpg", "jpeg"]
     
@@ -18,17 +18,17 @@ final class LocalFolderPhotoProvider {
         didSet {
             do {
                 log.info("Setting folder URL: \(folder?.path ?? "nil")")
-                updatePhotoList()
+                photoURLs = try updatePhotoList()
                 // save folder bookmark to user defaults
                 let bookmark = try folder?.bookmarkData(options: [.withSecurityScope, .securityScopeAllowOnlyReadAccess])
                 UserDefaults.standard.set(bookmark, forKey: "bookmark")
             } catch {
-                log.error("Failed to save bookmark: \(error)")
+                log.error("Failed to read folder/save bookmark: \(error)")
             }
         }
     }
     
-    private var photoUrls: [URL] = [] {
+    private var photoURLs: [URL] = [] {
         didSet {
             // reset current photo index if new list assigned
             currentPhotoIndex = 0
@@ -36,7 +36,8 @@ final class LocalFolderPhotoProvider {
     }
     private var currentPhotoIndex = 0
     
-    init() {
+    override init() {
+        super.init()
 //        UserDefaults.standard.removeObject(forKey: "bookmark")
         if let bookmarkData = UserDefaults.standard.object(forKey: "bookmark") as? Data {
             do {
@@ -59,11 +60,13 @@ final class LocalFolderPhotoProvider {
         } else {
             chooseFolder()
         }
+        NSFileCoordinator.addFilePresenter(self)
         log.info("Init done")
     }
     
     deinit {
         folder?.stopAccessingSecurityScopedResource()
+        NSFileCoordinator.removeFilePresenter(self)
     }
     
     func chooseFolder() {
@@ -86,14 +89,11 @@ final class LocalFolderPhotoProvider {
         }
     }
     
-    func updatePhotoList() {
-        guard let folder = folder else { return }
-        do {
-            let urls = try fileManager.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants])
-            photoUrls = urls.filter { supportedExtension.contains($0.pathExtension) }.shuffled()
-        } catch {
-            print("Failed to get contents of \(folder.absoluteString): \(error)")
-        }
+    func updatePhotoList() throws -> [URL] {
+        guard let folder = folder else { return [] }
+            
+        let urls = try fileManager.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants])
+        return urls.filter { supportedExtension.contains($0.pathExtension) }
     }
 }
 
@@ -114,6 +114,20 @@ struct LocalPhotoAsset: PhotoAssetDescriptor {
 
 extension LocalFolderPhotoProvider: PhotoProvider {
     var photoDescriptors: [PhotoAssetDescriptor] {
-        return photoUrls.map { LocalPhotoAsset(photoURL: $0) }
+        return photoURLs.map { LocalPhotoAsset(photoURL: $0) }
+    }
+    
+    func refreshAssets(completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void) {
+        let result = Result { try updatePhotoList() }.map { $0.map { LocalPhotoAsset(photoURL: $0) as PhotoAssetDescriptor } }
+        completion(result)
+    }
+}
+
+extension LocalFolderPhotoProvider: NSFilePresenter {
+    var presentedItemURL: URL? { folder }
+    var presentedItemOperationQueue: OperationQueue { OperationQueue.main }
+    
+    func presentedSubitemDidChange(at url: URL) {
+        print("Did change: \(url)")
     }
 }

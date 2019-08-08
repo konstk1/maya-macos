@@ -65,13 +65,29 @@ final class PhotoVendor {
         
         let nextPhoto = photos.removeFirst()
         
-        nextPhoto.fetchImage { (result) in
+        nextPhoto.fetchImage { [weak self] (result) in
             switch result {
             case .success(let image):
-                delegate?.didVendNewImage(image: image)
+                self?.delegate?.didVendNewImage(image: image)
             case .failure(let error):
                 log.error("Error converting descriptor to image (error: \(error.localizedDescription))")
-                delegate?.didFailToVend(error: error)
+                self?.delegate?.didFailToVend(error: error)
+            }
+        }
+        
+        refreshAssets()
+    }
+    
+    func refreshAssets() {
+        guard let photoProvider = photoProvider else { return }
+        
+        photoProvider.refreshAssets { (result) in
+            switch result {
+            case .success(let assets):
+                // TODO: implement this
+                fatalError("Not implemented")
+            case .failure(let error):
+                log.error("Error refreshing assets \(error.localizedDescription)")
             }
         }
     }
