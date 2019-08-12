@@ -24,7 +24,8 @@ final class PhotoVendor {
     weak var delegate: PhotoVendorDelegate?
     
     private var photoProvider: PhotoProvider?
-    private var photos: [PhotoAssetDescriptor] = []
+    private var unshownPhotos: [PhotoAssetDescriptor] = []
+    private var shownPhotos: [PhotoAssetDescriptor] = []
     
     init() {
         
@@ -39,31 +40,34 @@ final class PhotoVendor {
     /// Clear all vending state, including shown photos, etc.
     func resetVendingState() {
         guard let photoProvider = photoProvider else {
-            photos.removeAll()
+            unshownPhotos.removeAll()
+            shownPhotos.removeAll()
             return
         }
         
-        photos = photoProvider.photoDescriptors
+        unshownPhotos = photoProvider.photoDescriptors
         
         if shufflePhotos {
-            photos.shuffle()
+            unshownPhotos.shuffle()
         }
     }
     
     /// Fetches next image and calls the delegate to notify when next image is ready
     func vendImage() {
         // if reached end of photos, reset the vending state (reload the list)
-        if photos.isEmpty {
+        if unshownPhotos.isEmpty {
             resetVendingState()
         }
         
         // at this point, list shouldn't be empty, if it is, just return
-        guard !photos.isEmpty else {
+        guard !unshownPhotos.isEmpty else {
             log.warning("Photo vendor doesn't have any photos")
             return
         }
         
-        let nextPhoto = photos.removeFirst()
+        // pop from unshown and add to shown
+        let nextPhoto = unshownPhotos.removeFirst()
+        shownPhotos.append(nextPhoto)
         
         nextPhoto.fetchImage { [weak self] (result) in
             switch result {
@@ -81,14 +85,29 @@ final class PhotoVendor {
     func refreshAssets() {
         guard let photoProvider = photoProvider else { return }
         
-        photoProvider.refreshAssets { (result) in
+        photoProvider.refreshAssets { [weak self] (result) in
             switch result {
             case .success(let assets):
                 // TODO: implement this
-                fatalError("Not implemented")
+                self?.processNewAssetList(assets)
             case .failure(let error):
                 log.error("Error refreshing assets \(error.localizedDescription)")
             }
+        }
+    }
+    
+    /// Merge new asset list with current assets.  Preserve shown assets and re-shuffle old un-shown and new assets.
+    func processNewAssetList(_ assets: [PhotoAssetDescriptor]) {
+        // just need to filter OUT any assets that have been shown
+        // everything else is going to become unshown
+        unshownPhotos = assets.filter { asset in
+            !shownPhotos.contains { photo in
+                photo.description == asset.description
+            }
+        }
+        
+        if shufflePhotos {
+            unshownPhotos.shuffle()
         }
     }
 }

@@ -13,7 +13,7 @@ class StatusMenuController: NSObject {
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     
     var photoFrame = PhotoFrameWindowController()
-    lazy var prefController = { SettingsController(windowNibName: "SettingsController") }()
+    lazy var prefController = { PreferencesWindowController(windowNibName: "SettingsController") }()
     
     let mouseEventMask: NSEvent.EventTypeMask = [.leftMouseDown, .rightMouseDown]
     

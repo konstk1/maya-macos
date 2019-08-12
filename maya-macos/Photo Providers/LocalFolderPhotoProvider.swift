@@ -8,8 +8,11 @@
 
 import Cocoa
 
-final class LocalFolderPhotoProvider: NSObject {    
-    /// supported photo file extensions
+final class LocalFolderPhotoProvider {
+    /// Whether or not to look into sub-folders while looking for photos
+    var descendIntoSubfolders = false   // TODO: implement this
+    
+    /// Supported photo file extensions
     private let supportedExtension = ["png", "jpg", "jpeg"]
     
     private let fileManager = FileManager.default
@@ -36,8 +39,7 @@ final class LocalFolderPhotoProvider: NSObject {
     }
     private var currentPhotoIndex = 0
     
-    override init() {
-        super.init()
+    init() {
 //        UserDefaults.standard.removeObject(forKey: "bookmark")
         if let bookmarkData = UserDefaults.standard.object(forKey: "bookmark") as? Data {
             do {
@@ -60,13 +62,11 @@ final class LocalFolderPhotoProvider: NSObject {
         } else {
             chooseFolder()
         }
-        NSFileCoordinator.addFilePresenter(self)
         log.info("Init done")
     }
     
     deinit {
         folder?.stopAccessingSecurityScopedResource()
-        NSFileCoordinator.removeFilePresenter(self)
     }
     
     func chooseFolder() {
@@ -118,16 +118,11 @@ extension LocalFolderPhotoProvider: PhotoProvider {
     }
     
     func refreshAssets(completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void) {
-        let result = Result { try updatePhotoList() }.map { $0.map { LocalPhotoAsset(photoURL: $0) as PhotoAssetDescriptor } }
+        let result = Result { try updatePhotoList() }.map {
+            // convert LocalPhotoAsset to PhotoAssetDescriptor
+            $0.map { LocalPhotoAsset(photoURL: $0) as PhotoAssetDescriptor }
+        }
         completion(result)
     }
 }
 
-extension LocalFolderPhotoProvider: NSFilePresenter {
-    var presentedItemURL: URL? { folder }
-    var presentedItemOperationQueue: OperationQueue { OperationQueue.main }
-    
-    func presentedSubitemDidChange(at url: URL) {
-        print("Did change: \(url)")
-    }
-}

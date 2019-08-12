@@ -27,10 +27,12 @@
 		FFC22B6822F2389200121828 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFC22B6722F2389200121828 /* ServiceManagement.framework */; };
 		FFC22B6B22F2427A00121828 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFC22B6922F2427A00121828 /* MainMenu.xib */; };
 		FFD3698322F385AA00EC7A85 /* PhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */; };
-		FFE9162322E0F5C400687322 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9162122E0F5C400687322 /* SettingsController.swift */; };
+		FFE9162322E0F5C400687322 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */; };
 		FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE9162222E0F5C400687322 /* SettingsController.xib */; };
 		FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE7F22EF5CC7009411B8 /* Settings.swift */; };
 		FFEBBE8422EF834F009411B8 /* TimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE8322EF834F009411B8 /* TimePeriod.swift */; };
+		FFEEFCB72300F0750023F581 /* SourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEEFCB52300F0750023F581 /* SourcesViewController.swift */; };
+		FFEEFCB82300F0750023F581 /* SourcesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFEEFCB62300F0750023F581 /* SourcesViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,10 +85,12 @@
 		FFC22B6722F2389200121828 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		FFC22B6A22F2427A00121828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProvider.swift; sourceTree = "<group>"; };
-		FFE9162122E0F5C400687322 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		FFE9162222E0F5C400687322 /* SettingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsController.xib; sourceTree = "<group>"; };
 		FFEBBE7F22EF5CC7009411B8 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		FFEBBE8322EF834F009411B8 /* TimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePeriod.swift; sourceTree = "<group>"; };
+		FFEEFCB52300F0750023F581 /* SourcesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesViewController.swift; sourceTree = "<group>"; };
+		FFEEFCB62300F0750023F581 /* SourcesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SourcesViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */,
-				FFE9162122E0F5C400687322 /* SettingsController.swift */,
+				FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */,
+				FFEEFCB52300F0750023F581 /* SourcesViewController.swift */,
 				FF90731D22BBFF4D0052428E /* StatusMenuController.swift */,
 			);
 			path = Controllers;
@@ -153,6 +158,7 @@
 				FF9072D822BB04CE0052428E /* MainMenu.xib */,
 				FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */,
 				FFE9162222E0F5C400687322 /* SettingsController.xib */,
+				FFEEFCB62300F0750023F581 /* SourcesViewController.xib */,
 			);
 			path = XIB;
 			sourceTree = "<group>";
@@ -342,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF9072D722BB04CE0052428E /* Assets.xcassets in Resources */,
+				FFEEFCB82300F0750023F581 /* SourcesViewController.xib in Resources */,
 				FF14AD8D22BDB8B800C7518C /* PhotoFrameController.xib in Resources */,
 				FF9072DA22BB04CE0052428E /* MainMenu.xib in Resources */,
 				FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */,
@@ -372,7 +379,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFE9162322E0F5C400687322 /* SettingsController.swift in Sources */,
+				FFE9162322E0F5C400687322 /* PreferencesWindowController.swift in Sources */,
 				FFEBBE8422EF834F009411B8 /* TimePeriod.swift in Sources */,
 				FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */,
 				FFD3698322F385AA00EC7A85 /* PhotoProvider.swift in Sources */,
@@ -384,6 +391,7 @@
 				FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */,
 				FF34718422DF82F70009CB40 /* Utilities.swift in Sources */,
 				FF90732022BC12670052428E /* PhotoVendor.swift in Sources */,
+				FFEEFCB72300F0750023F581 /* SourcesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

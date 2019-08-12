@@ -1,11 +1,7 @@
 Bugs:
 
 Next:
-- Implement auto switch photos
-- Implement popup window
-- Implement auto close
 - Implement 1 source (Local folder) in settings
-- Persist photo frame offset
 
 Features:
 - OAuth2 (https://github.com/OAuthSwift/OAuthSwift -> update for Swift 5.1)

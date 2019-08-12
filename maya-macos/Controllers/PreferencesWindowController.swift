@@ -8,9 +8,8 @@
 
 import Cocoa
 
-class SettingsController: NSWindowController, NSWindowDelegate {
+class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     @IBOutlet var generalView: NSView!
-    @IBOutlet var sourcesView: NSView!
     
     // App
     @IBOutlet weak var openAtLoginCheckbox: NSButton!
@@ -47,7 +46,8 @@ class SettingsController: NSWindowController, NSWindowDelegate {
     }
     
     @IBAction func sourcesPressed(_ sender: NSToolbarItem) {
-        setWindowContent(to: sourcesView)
+        let viewController = SourcesViewController(nibName: NSNib.Name("SourcesViewController"), bundle: nil)
+        setWindowContent(to: viewController.view)
     }
     
     func setWindowContent(to view: NSView) {
@@ -81,7 +81,7 @@ class SettingsController: NSWindowController, NSWindowDelegate {
 }
 
 // MARK: - Frame Settings Actions
-extension SettingsController {
+extension PreferencesWindowController {
     private var autoCloseTimeOptions: [TimePeriod] {
         [.seconds(5), .seconds(10), .seconds(15), .seconds(30), .seconds(60)]
     }
@@ -119,7 +119,7 @@ extension SettingsController {
 }
 
 // MARK: - Photo Settings Actions
-extension SettingsController {
+extension PreferencesWindowController {
     func loadPhotoSettings() {
         // populate units dropdown
         let unitsItems: [TimeUnit] = [.seconds, .minutes, .hours, .days]
