@@ -20,6 +20,15 @@ let log: SwiftyBeaver.Type = {
     console.levelColor.error   = "🛑 "
     
     log.addDestination(console)
+    
+    let logDirectoryURL = try? FileManager.default.url(for: .applicationSupportDirectory,
+                                    in: .userDomainMask, appropriateFor: nil, create: true)
+    
+    let file = FileDestination()
+    file.logFileURL = logDirectoryURL?.appendingPathComponent("maya.log")
+    log.addDestination(file)
+    
+    log.verbose("Log file \(file.logFileURL)")
     log.verbose("SwiftyBeaver ready")
     return log
 }()
