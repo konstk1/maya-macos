@@ -14,6 +14,7 @@ class StatusMenuController: NSObject {
     
     var photoFrame = PhotoFrameWindowController()
     lazy var prefController = { PreferencesWindowController(windowNibName: "SettingsController") }()
+    lazy var aboutController = { AboutWindowController(windowNibName: "AboutWindowController") } ()
     
     let mouseEventMask: NSEvent.EventTypeMask = [.leftMouseDown, .rightMouseDown]
     
@@ -74,6 +75,11 @@ class StatusMenuController: NSObject {
         photoFrame.close()
     }
     
+    @IBAction func aboutClicked(_ sender: NSMenuItem) {
+        NSApp.activate(ignoringOtherApps: true)
+        aboutController.showWindow(sender)
+    }
+    
     @IBAction func preferencesClicked(_ sender: NSMenuItem) {
         // by default, status menu apps are in background (inactive)
         // activate the app so that pref window appears on top
@@ -85,4 +91,3 @@ class StatusMenuController: NSObject {
         NSApplication.shared.terminate(self)
     }
 }
-
