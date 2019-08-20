@@ -28,7 +28,7 @@ let log: SwiftyBeaver.Type = {
     file.logFileURL = logDirectoryURL?.appendingPathComponent("maya.log")
     log.addDestination(file)
     
-    log.verbose("Log file \(file.logFileURL)")
+    log.verbose("Log file: \(file.logFileURL?.path ?? "none")")
     log.verbose("SwiftyBeaver ready")
     return log
 }()

@@ -9,6 +9,8 @@
 import Cocoa
 
 class PreferencesWindowController: NSWindowController, NSWindowDelegate {
+    lazy var sourcesViewController = SourcesViewController(nibName: NSNib.Name("SourcesViewController"), bundle: nil)
+    
     @IBOutlet var generalView: NSView!
     
     // App
@@ -46,8 +48,7 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     }
     
     @IBAction func sourcesPressed(_ sender: NSToolbarItem) {
-        let viewController = SourcesViewController(nibName: NSNib.Name("SourcesViewController"), bundle: nil)
-        setWindowContent(to: viewController.view)
+        setWindowContent(to: sourcesViewController.view)
     }
     
     func setWindowContent(to view: NSView) {

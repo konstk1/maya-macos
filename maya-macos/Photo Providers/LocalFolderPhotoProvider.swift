@@ -9,90 +9,120 @@
 import Cocoa
 
 final class LocalFolderPhotoProvider {
+    static let shared = LocalFolderPhotoProvider()
+    
+    weak var delegate: PhotoProviderDelegate?
+    
+    /// List of recently used folders
+    var recentFolders: [URL] {
+        Settings.localFolderProvider.recentFolders
+    }
+    
     /// Whether or not to look into sub-folders while looking for photos
     var descendIntoSubfolders = false   // TODO: implement this
+    
+    /// List of photos in active folder
+    private var photoURLs: [URL] = []
     
     /// Supported photo file extensions
     private let supportedExtension = ["png", "jpg", "jpeg"]
     
     private let fileManager = FileManager.default
     
-    private var folder: URL? {
+    private var activeFolder: URL? {
         didSet {
-            do {
-                log.info("Setting folder URL: \(folder?.path ?? "nil")")
-                photoURLs = try updatePhotoList()
-                // save folder bookmark to user defaults
-                let bookmark = try folder?.bookmarkData(options: [.withSecurityScope, .securityScopeAllowOnlyReadAccess])
-                UserDefaults.standard.set(bookmark, forKey: "bookmark")
-            } catch {
-                log.error("Failed to read folder/save bookmark: \(error)")
-            }
+           
         }
     }
     
-    private var photoURLs: [URL] = [] {
-        didSet {
-            // reset current photo index if new list assigned
-            currentPhotoIndex = 0
+    private init() {
+        guard let lastActiveFolder = Settings.localFolderProvider.recentFolders.first else { return }
+        
+        do {
+            activeFolder = try loadBookmark(for: lastActiveFolder)
+            photoURLs = try updatePhotoList()
+        } catch {
+            print("Failed initialize Local Folder provider: \(error)")
         }
-    }
-    private var currentPhotoIndex = 0
-    
-    init() {
-//        UserDefaults.standard.removeObject(forKey: "bookmark")
-        if let bookmarkData = UserDefaults.standard.object(forKey: "bookmark") as? Data {
-            do {
-                var isStale: Bool = false
-                var selectedFolder: URL? = try URL(resolvingBookmarkData: bookmarkData, options: [.withoutUI, .withSecurityScope], relativeTo: nil, bookmarkDataIsStale: &isStale)
-                
-                // use defer here to trigger didSet on folder property
-                defer {
-                    folder = selectedFolder
-                }
-                
-                if selectedFolder?.startAccessingSecurityScopedResource() != true {
-                    print("Failed to access security resource")
-                    selectedFolder = nil // reset folder to nil to indicate it's not accessible
-                }
-                
-            } catch {
-                print("Failed to resolve bookmark: \(error)")
-            }
-        } else {
-            chooseFolder()
-        }
-        log.info("Init done")
     }
     
     deinit {
-        folder?.stopAccessingSecurityScopedResource()
+        activeFolder?.stopAccessingSecurityScopedResource()
     }
     
-    func chooseFolder() {
-        let panel = NSOpenPanel()
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-        panel.allowsMultipleSelection = false
+    func setActiveFolder(url: URL) throws {
+        //  previous folder
+        let previousFolder = activeFolder
+
+        log.info("Setting folder URL: \(url.path)")
         
-        panel.begin { [weak self] (response) in
-            guard let strongSelf = self else { print("Warning: self doesn't exist anymore"); return }
+        // check if url has bookmark data
+        if let bookmarkData = try? url.bookmarkData(options: [.withSecurityScope, .securityScopeAllowOnlyReadAccess]) {
+            Settings.localFolderProvider.bookmarks[url] = bookmarkData
+            activeFolder = url
+        } else {
+            // load bookmark from settings
+            activeFolder = try loadBookmark(for: url)
+        }
+        
+        // if everything was successful, stop access to previous folder, unless previous and active folder are the same
+        if previousFolder != activeFolder {
+            previousFolder?.stopAccessingSecurityScopedResource()
+        }
+        
+        photoURLs = (try? updatePhotoList()) ?? []
             
-            if response == .OK {
-                if let selectedUrl = panel.url {
-                    print("Selected \(selectedUrl)")
-                    strongSelf.folder = selectedUrl
-                }
-            } else {
-                print("Panel \(response.rawValue)")
-            }
+        // save most recent folders
+        updateRecents(with: url)
+        
+        // notify delegate that assets were updated
+        delegate?.didUpdateAssets()
+    }
+    
+    private func loadBookmark(for url: URL) throws -> URL {
+        guard let bookmarkData = Settings.localFolderProvider.bookmarks[url] else {
+            log.error("No bookmark found for \(url.path)")
+            throw LocalFolderProviderError.bookmarkFailure
+        }
+        
+        var isStale: Bool = false
+        let secScopedUrl = try URL(resolvingBookmarkData: bookmarkData, options: [.withoutUI, .withSecurityScope], relativeTo: nil, bookmarkDataIsStale: &isStale)
+        
+        guard secScopedUrl.startAccessingSecurityScopedResource() else {
+            log.error("Failed to access security resource of \(url.path)")
+            throw LocalFolderProviderError.bookmarkFailure
+        }
+        
+        return secScopedUrl
+    }
+    
+    private func saveBookmark(for url: URL) {
+        do {
+            Settings.localFolderProvider.bookmarks[url] = try url.bookmarkData(options: [.withSecurityScope, .securityScopeAllowOnlyReadAccess])
+        } catch {
+            log.error("Failed to save bookmark for \(url.path)")
         }
     }
     
+    private func updateRecents(with url: URL) {
+        let maxRecentFolders = 3
+        var recents = Settings.localFolderProvider.recentFolders
+        
+        // if url exists in recent list, remove it to avoid duplicates
+        // then add url to the front of the list and clip the list to max items
+        recents.removeAll{ $0 == url}
+        recents.insert(url, at: 0)
+        if recents.count > maxRecentFolders {
+            recents.removeSubrange(maxRecentFolders...)
+        }
+        
+        Settings.localFolderProvider.recentFolders = recents
+    }
+    
     func updatePhotoList() throws -> [URL] {
-        guard let folder = folder else { return [] }
+        guard let activeFolder = activeFolder else { return [] }
             
-        let urls = try fileManager.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants])
+        let urls = try fileManager.contentsOfDirectory(at: activeFolder, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants])
         return urls.filter { supportedExtension.contains($0.pathExtension) }
     }
 }
@@ -126,3 +156,6 @@ extension LocalFolderPhotoProvider: PhotoProvider {
     }
 }
 
+enum LocalFolderProviderError: Error {
+    case bookmarkFailure
+}

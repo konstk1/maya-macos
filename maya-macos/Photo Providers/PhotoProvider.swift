@@ -9,8 +9,13 @@
 import Cocoa
 
 protocol PhotoProvider {
+    var delegate: PhotoProviderDelegate? { get set }
     var photoDescriptors: [PhotoAssetDescriptor] { get }
     func refreshAssets(completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void)
+}
+
+protocol PhotoProviderDelegate: class {
+    func didUpdateAssets()
 }
 
 protocol PhotoAssetDescriptor: CustomStringConvertible {

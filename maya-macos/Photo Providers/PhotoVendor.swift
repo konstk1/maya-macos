@@ -13,7 +13,7 @@ protocol PhotoVendorDelegate: class {
     func didFailToVend(error: Error?)
 }
 
-final class PhotoVendor {
+final class PhotoVendor: PhotoProviderDelegate {
     /// Whether to show photos in random order. Defaults to `true`.
     var shufflePhotos: Bool = true {
         didSet {
@@ -34,7 +34,14 @@ final class PhotoVendor {
     /// Set new provider of photos.
     func setProvider(_ provider: PhotoProvider) {
         photoProvider = provider
+        photoProvider?.delegate = self
         resetVendingState()
+    }
+    
+    /// PhotoProviderDelegate method
+    func didUpdateAssets() {
+        refreshAssets()
+        vendImage()
     }
     
     /// Clear all vending state, including shown photos, etc.
@@ -62,6 +69,7 @@ final class PhotoVendor {
         // at this point, list shouldn't be empty, if it is, just return
         guard !unshownPhotos.isEmpty else {
             log.warning("Photo vendor doesn't have any photos")
+            delegate?.didFailToVend(error: nil)
             return
         }
         
@@ -88,7 +96,6 @@ final class PhotoVendor {
         photoProvider.refreshAssets { [weak self] (result) in
             switch result {
             case .success(let assets):
-                // TODO: implement this
                 self?.processNewAssetList(assets)
             case .failure(let error):
                 log.error("Error refreshing assets \(error.localizedDescription)")

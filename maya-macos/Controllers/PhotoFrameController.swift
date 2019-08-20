@@ -59,7 +59,7 @@ class PhotoFrameWindowController: NSWindowController {
     init() {
         super.init(window: nil)
         
-        photoVendor.setProvider(LocalFolderPhotoProvider())
+        photoVendor.setProvider(LocalFolderPhotoProvider.shared)
         photoVendor.delegate = self
         photoVendor.vendImage()
         

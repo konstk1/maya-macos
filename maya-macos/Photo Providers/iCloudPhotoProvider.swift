@@ -10,6 +10,7 @@ import Cocoa
 import Photos
 
 final class iCloudPhotoProvider {
+    weak var delegate: PhotoProviderDelegate?
     
     init() {
         
