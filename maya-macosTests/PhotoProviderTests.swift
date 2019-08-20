@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import maya_macos
+@testable import Maya
 
 class PhotoProviderTests: XCTestCase {
 
@@ -17,6 +17,12 @@ class PhotoProviderTests: XCTestCase {
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+    }
+    
+    func testBookmark() {
+        let url = URL(fileURLWithPath: "/home/kon/")
+        let data = try? url.bookmarkData(options: [.withSecurityScope, .securityScopeAllowOnlyReadAccess])
+        print("Bookmark data: ", data)
     }
 
     func testICloud() {

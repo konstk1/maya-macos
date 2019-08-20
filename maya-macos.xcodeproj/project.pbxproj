@@ -26,6 +26,8 @@
 		FFC22B6522F2387600121828 /* Maya Launcher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = FFC22B5622F2378300121828 /* Maya Launcher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FFC22B6822F2389200121828 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFC22B6722F2389200121828 /* ServiceManagement.framework */; };
 		FFC22B6B22F2427A00121828 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFC22B6922F2427A00121828 /* MainMenu.xib */; };
+		FFD1D566230C840000D8F503 /* LocalFolderProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1D565230C840000D8F503 /* LocalFolderProviderViewController.swift */; };
+		FFD1D568230C905500D8F503 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFD1D567230C905500D8F503 /* Storyboard.storyboard */; };
 		FFD3698322F385AA00EC7A85 /* PhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */; };
 		FFDD944B23057E2300891545 /* AboutWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDD944923057E2300891545 /* AboutWindowController.swift */; };
 		FFDD944C23057E2300891545 /* AboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFDD944A23057E2300891545 /* AboutWindowController.xib */; };
@@ -86,6 +88,8 @@
 		FFC22B6022F2378400121828 /* maya_macos_launcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = maya_macos_launcher.entitlements; sourceTree = "<group>"; };
 		FFC22B6722F2389200121828 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		FFC22B6A22F2427A00121828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		FFD1D565230C840000D8F503 /* LocalFolderProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocalFolderProviderViewController.swift; path = "maya-macos/Controllers/LocalFolderProviderViewController.swift"; sourceTree = SOURCE_ROOT; };
+		FFD1D567230C905500D8F503 /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProvider.swift; sourceTree = "<group>"; };
 		FFDD944923057E2300891545 /* AboutWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutWindowController.swift; sourceTree = "<group>"; };
 		FFDD944A23057E2300891545 /* AboutWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutWindowController.xib; sourceTree = "<group>"; };
@@ -128,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				FFDD944923057E2300891545 /* AboutWindowController.swift */,
+				FFD1D565230C840000D8F503 /* LocalFolderProviderViewController.swift */,
 				FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */,
 				FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */,
 				FFEEFCB52300F0750023F581 /* SourcesViewController.swift */,
@@ -165,6 +170,7 @@
 				FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */,
 				FFE9162222E0F5C400687322 /* SettingsController.xib */,
 				FFEEFCB62300F0750023F581 /* SourcesViewController.xib */,
+				FFD1D567230C905500D8F503 /* Storyboard.storyboard */,
 			);
 			path = XIB;
 			sourceTree = "<group>";
@@ -358,6 +364,7 @@
 				FFDD944C23057E2300891545 /* AboutWindowController.xib in Resources */,
 				FF14AD8D22BDB8B800C7518C /* PhotoFrameController.xib in Resources */,
 				FF9072DA22BB04CE0052428E /* MainMenu.xib in Resources */,
+				FFD1D568230C905500D8F503 /* Storyboard.storyboard in Resources */,
 				FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */,
 				FF9072F122BBD9230052428E /* Todo.txt in Resources */,
 			);
@@ -386,6 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFD1D566230C840000D8F503 /* LocalFolderProviderViewController.swift in Sources */,
 				FFE9162322E0F5C400687322 /* PreferencesWindowController.swift in Sources */,
 				FFEBBE8422EF834F009411B8 /* TimePeriod.swift in Sources */,
 				FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */,
@@ -618,7 +626,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya.maya-macosTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/maya-macos.app/Contents/MacOS/maya-macos";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Maya.app/Contents/MacOS/Maya";
 			};
 			name = Debug;
 		};
@@ -638,7 +646,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya.maya-macosTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/maya-macos.app/Contents/MacOS/maya-macos";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Maya.app/Contents/MacOS/Maya";
 			};
 			name = Release;
 		};

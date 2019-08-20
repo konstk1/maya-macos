@@ -14,10 +14,11 @@ enum Settings {
     static let app = AppSettings.shared
     static let frame = FrameSettings.shared
     static let photos = PhotosSettings.shared
+    static let localFolderProvider = LocalFolderProviderSettings.shared
     
     class AppSettings: NSObject {
         fileprivate static let shared = AppSettings()
-        private override init() {}
+        private override init() { super.init() }
         
         @UserDefault(makeKey(type: AppSettings.self, keypath: \.openAtLogin), defaultValue: false) @objc dynamic var openAtLogin: Bool {
             didSet {
@@ -29,7 +30,7 @@ enum Settings {
     
     class FrameSettings: NSObject {
         fileprivate static let shared = FrameSettings()
-        private override init() {}
+        private override init() { super.init() }
         
         @UserDefault(makeKey(type: FrameSettings.self, keypath: \.popupFrame), defaultValue: false)
         @objc dynamic var popupFrame: Bool
@@ -43,19 +44,29 @@ enum Settings {
     
     class PhotosSettings: NSObject {
         fileprivate static let shared = PhotosSettings()
-        private override init() {}
+        private override init() { super.init() }
         
         @UserDefault(makeKey(type: PhotosSettings.self, keypath: \.autoSwitchPhoto), defaultValue: true)
         @objc dynamic var autoSwitchPhoto: Bool
         
         @UserDefault(makeKey(type: PhotosSettings.self, keypath: \.autoSwitchPhotoPeriod), defaultValue: .minutes(10))
         @objc dynamic var autoSwitchPhotoPeriod: TimePeriod
+    }
+    
+    class LocalFolderProviderSettings: NSObject {
+        fileprivate static let shared = LocalFolderProviderSettings()
+        private override init() { super.init() }
         
+        @UserDefault(makeKey(type: LocalFolderProviderSettings.self, keypath: \.recentFolders), defaultValue: [])
+        @objc dynamic var recentFolders: [URL]
+        
+        @UserDefault(makeKey(type: LocalFolderProviderSettings.self, keypath: \.bookmarks), defaultValue: [:])
+        @objc dynamic var bookmarks: [URL: Data]
     }
     
     /// Makes UserDefaults key from type and keypath.
     /// - Warning: `keypath` must reference an `@objc` property,
-    /// otherwise `_kvcKeyPathString` is nil and app abort.
+    /// otherwise `_kvcKeyPathString` is nil and app will abort.
     /// This is intentional because there is no default behavior to save such a value.
     private static func makeKey<T,U>(type: T.Type, keypath: KeyPath<T,U>) -> String {
         guard let keyPathString = keypath._kvcKeyPathString else {
