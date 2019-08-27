@@ -39,6 +39,11 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         setWindowContent(to: generalView)
     }
     
+    func windowWillClose(_ notification: Notification) {
+        // save settings
+        updateAutoSwitchPhotoTime()
+    }
+    
     func loadAppSettings() {
         openAtLoginCheckbox.state = Settings.app.openAtLogin ? .on : .off
     }
@@ -120,7 +125,7 @@ extension PreferencesWindowController {
 }
 
 // MARK: - Photo Settings Actions
-extension PreferencesWindowController {
+extension PreferencesWindowController: NSTextFieldDelegate {
     func loadPhotoSettings() {
         // populate units dropdown
         let unitsItems: [TimeUnit] = [.seconds, .minutes, .hours, .days]
@@ -164,14 +169,21 @@ extension PreferencesWindowController {
     }
     
     @IBAction func switchPhotosTimeEntered(_ sender: NSTextField) {
-        print("Time entered \(sender.stringValue)")
-        guard let value = Int(autoSwitchPhotosTimeField.stringValue) else {
-            log.warning("Non integer value for photo time \(autoSwitchPhotosTimeField.stringValue)")
-            return
-        }
-        
-        autoSwitchPhotosTimeStepper.integerValue = value  // sync stepper with text
         updateAutoSwitchPhotoTime()
+    }
+    
+    func controlTextDidChange(_ obj: Notification) {
+        guard let sender = obj.object as? NSTextField else { return }
+        switch sender.tag {
+        case 0:
+            guard let value = Int(sender.stringValue) else {
+                log.warning("Non integer value for photo time \(sender.stringValue)")
+                return
+            }
+            autoSwitchPhotosTimeStepper.integerValue = value  // sync stepper with text
+        default:
+            log.warning("Invalid tag")
+        }
     }
     
     @IBAction func switchPhotosTimeStepped(_ sender: NSStepper) {

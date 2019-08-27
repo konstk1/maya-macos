@@ -57,7 +57,6 @@ extension SourcesViewController: NSTableViewDataSource, NSTableViewDelegate {
     }
     
     func tableViewSelectionDidChange(_ notification: Notification) {
-        print("Table selection notification")
         guard let tableView = notification.object as? NSTableView, tableView.selectedRow >= 0 else {
                 return
         }
