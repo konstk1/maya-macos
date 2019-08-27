@@ -75,6 +75,10 @@ class StatusMenuController: NSObject {
         photoFrame.close()
     }
     
+    @IBAction func cantWaitClicked(_ sender: Any) {
+        photoFrame.forceNext()
+    }
+    
     @IBAction func aboutClicked(_ sender: NSMenuItem) {
         NSApp.activate(ignoringOtherApps: true)
         aboutController.showWindow(sender)

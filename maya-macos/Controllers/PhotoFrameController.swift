@@ -105,6 +105,11 @@ class PhotoFrameWindowController: NSWindowController {
         }
     }
     
+    func forceNext() {
+        shouldPopupOnVend = true
+        photoVendor.vendImage()
+    }
+    
     func globalEventHandler(event: NSEvent) {
         close()
     }
