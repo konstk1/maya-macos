@@ -49,10 +49,16 @@ extension SourcesViewController: NSTableViewDataSource, NSTableViewDelegate {
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("SourceCell"), owner: nil) as? NSTableCellView else { return nil }
+        guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("SourceCell"), owner: nil) as? SourceCell else { return nil }
         
-        cell.textField?.stringValue = sources[row].name
-        cell.imageView?.image = sources[row].image
+        cell.titleLabel?.stringValue = sources[row].name
+        cell.iconView?.image = sources[row].image
+        
+        var photoCount = 0
+        if row == 0 {
+            photoCount = LocalFolderPhotoProvider.shared.photoDescriptors.count
+        }
+        cell.photoCountLabel.title = String(photoCount)
         return cell
     }
     
