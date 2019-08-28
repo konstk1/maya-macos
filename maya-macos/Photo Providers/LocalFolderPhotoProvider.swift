@@ -68,7 +68,7 @@ final class LocalFolderPhotoProvider {
         updateRecents(with: url)
         
         // notify delegate that assets were updated
-        delegate?.didUpdateAssets()
+        delegate?.didUpdateAssets(assets: photoDescriptors)
     }
     
     private func loadBookmark(for url: URL) throws -> URL {
@@ -121,7 +121,7 @@ final class LocalFolderPhotoProvider {
         Settings.localFolderProvider.recentFolders = recents
     }
     
-    func updatePhotoList() throws -> [URL] {
+    private func updatePhotoList() throws -> [URL] {
         try startFolderAccess()
         defer {
             stopFolderAccess()
@@ -160,10 +160,11 @@ extension LocalFolderPhotoProvider: PhotoProvider {
         defer {
             stopFolderAccess()
         }
-        let result = Result { try updatePhotoList() }.map {
-            // convert LocalPhotoAsset to PhotoAssetDescriptor
-            $0.map { LocalPhotoAsset(photoURL: $0) as PhotoAssetDescriptor }
+        let result = Result { () -> [PhotoAssetDescriptor] in
+            photoURLs = try updatePhotoList()
+            return photoDescriptors
         }
+
         completion(result)
     }
 }

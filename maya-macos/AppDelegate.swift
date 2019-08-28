@@ -8,6 +8,7 @@
 
 import Cocoa
 import ServiceManagement
+import OAuthSwift
 import SwiftyBeaver
 
 let log: SwiftyBeaver.Type = {
@@ -52,11 +53,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if isRunning {
             DistributedNotificationCenter.default().post(name: .killLauncher, object: Bundle.main.bundleIdentifier!)
         }
+        
+        // register to handle URL scheme
+        NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleGetURL(event:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
+    }
+    
+    /// URL event handler to pass callbacks to OAuth
+    @objc func handleGetURL(event: NSAppleEventDescriptor!, withReplyEvent: NSAppleEventDescriptor!) {
+        if let urlString = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject))?.stringValue, let url = URL(string: urlString) {
+            log.debug("URL: \(urlString)")
+            OAuthSwift.handle(url: url)
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
 
     }
+
     
     // MARK: - Core Data stack
     

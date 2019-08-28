@@ -20,6 +20,7 @@ class SourcesViewController: NSViewController {
     ]
     
     @IBOutlet var localFolderVC: LocalFolderProviderViewController!
+    @IBOutlet var googlePhotosVC: GooglePhotosViewController!
     
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var sourceView: NSView!
@@ -36,15 +37,30 @@ class SourcesViewController: NSViewController {
     }
     
     @objc func updatePhotoCount(_ notification: Notification) {
-        log.debug("Update photo count notification \(String(describing: notification.object))")
-        // reload all cells which will query the new photo counts
-        tableView.reloadData()
+        guard let notifyingProvider = notification.object as? PhotoProvider else { return }
+        
+        log.debug("Update photo count notification \(notifyingProvider)")
+        
+        let row: Int
+        
+        switch notifyingProvider {
+        case is LocalFolderPhotoProvider:
+            row = 0
+        case is GooglePhotoProvider:
+            row = 1
+        default:
+            log.error("Unsupported photo provider \(notifyingProvider.self)")
+            return
+        }
+        
+        tableView.reloadData(forRowIndexes: [row], columnIndexes: [0])
     }
     
     func selectViewControllerAt(index: Int) {
         // remove current view controller, if any
         if let currentSourceController = currentSourceController {
             currentSourceController.removeFromParent()
+            currentSourceController.view.removeFromSuperview()
         }
         
         let source = sources[index].name
@@ -55,8 +71,7 @@ class SourcesViewController: NSViewController {
             // load local folder controller
             currentSourceController = localFolderVC
         case.googlePhotos:
-            // TODO: implement this, for now just return
-            return
+            currentSourceController = googlePhotosVC
         }
         
         self.addChild(currentSourceController!)
@@ -65,14 +80,32 @@ class SourcesViewController: NSViewController {
     }
     
     @IBAction func activateClicked(_ sender: NSButton) {
-        let row = tableView.row(for: sender)
-        print("Active in row \(row)")
+        let previouslyActiveRow = sources.firstIndex { $0.isActive }
+        let newActiveRow = tableView.row(for: sender)
         
+        // update active flags
         for (idx, _) in sources.enumerated() {
-            sources[idx].isActive = (row == idx)
+            sources[idx].isActive = (newActiveRow == idx)
         }
         
-        tableView.reloadData()
+        let provider: PhotoProvider
+        let providerName = sources[newActiveRow].name
+        
+        switch providerName {
+        case ProviderTypes.localFolder:
+            provider = LocalFolderPhotoProvider.shared
+        case ProviderTypes.googlePhotos:
+            provider = GooglePhotoProvider.shared
+        }
+        
+        log.info("Activating \(providerName)")
+        
+        PhotoVendor.shared.setProvider(provider)
+        
+        // reload rows affected by the change (prev.active, active) and select new active row
+        let rowsToReload = [previouslyActiveRow, newActiveRow].compactMap { $0 }
+        tableView.reloadData(forRowIndexes: IndexSet(rowsToReload), columnIndexes: [0])
+        tableView.selectRowIndexes([newActiveRow], byExtendingSelection: false)
     }
 }
 
@@ -90,6 +123,8 @@ extension SourcesViewController: NSTableViewDataSource, NSTableViewDelegate {
         var photoCount = 0
         if row == 0 {
             photoCount = LocalFolderPhotoProvider.shared.photoDescriptors.count
+        } else if row == 1 {
+            photoCount = GooglePhotoProvider.shared.photoDescriptors.count
         }
         cell.photoCountLabel.title = String(photoCount)
         
@@ -109,3 +144,4 @@ extension SourcesViewController: NSTableViewDataSource, NSTableViewDelegate {
         selectViewControllerAt(index: tableView.selectedRow)
     }
 }
+
