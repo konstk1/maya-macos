@@ -27,6 +27,7 @@
                         <action selector="cantWaitClicked:" target="Z2C-Po-7RN" id="Fju-ZM-O7V"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="SeU-xH-tSx"/>
                 <menuItem title="Preferences" id="9YY-4D-Imp">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
