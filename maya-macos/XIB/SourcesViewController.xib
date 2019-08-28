@@ -88,9 +88,9 @@
                                                     <constraint firstItem="el1-p6-N4Z" firstAttribute="centerY" secondItem="coX-t7-thY" secondAttribute="centerY" id="xQT-eL-cbl"/>
                                                 </constraints>
                                                 <connections>
-                                                    <accessibilityConnection property="title" destination="rIO-KT-d40" id="qT0-ig-eYf"/>
                                                     <outlet property="iconView" destination="O9G-eq-wwv" id="PL3-uc-cQF"/>
                                                     <outlet property="photoCountLabel" destination="el1-p6-N4Z" id="JZn-W4-tBW"/>
+                                                    <outlet property="titleLabel" destination="rIO-KT-d40" id="AME-sc-izf"/>
                                                 </connections>
                                             </tableCellView>
                                         </prototypeCellViews>

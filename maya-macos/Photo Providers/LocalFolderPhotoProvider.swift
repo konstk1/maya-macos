@@ -29,11 +29,7 @@ final class LocalFolderPhotoProvider {
     
     private let fileManager = FileManager.default
     
-    private var activeFolder: URL? {
-        didSet {
-           
-        }
-    }
+    private var activeFolder: URL = URL(fileURLWithPath: "")
     
     private init() {
         guard let lastActiveFolder = Settings.localFolderProvider.recentFolders.first else { return }
@@ -47,7 +43,7 @@ final class LocalFolderPhotoProvider {
     }
     
     deinit {
-        activeFolder?.stopAccessingSecurityScopedResource()
+        stopFolderAccess()
     }
     
     func setActiveFolder(url: URL) throws {
@@ -60,15 +56,23 @@ final class LocalFolderPhotoProvider {
         if let bookmarkData = try? url.bookmarkData(options: [.withSecurityScope, .securityScopeAllowOnlyReadAccess]) {
             Settings.localFolderProvider.bookmarks[url] = bookmarkData
             activeFolder = url
+            log.debug("Has bookmark")
         } else {
             // load bookmark from settings
+            log.debug("Load bookmark")
             activeFolder = try loadBookmark(for: url)
         }
         
-        // if everything was successful, stop access to previous folder, unless previous and active folder are the same
-        if previousFolder != activeFolder {
-            previousFolder?.stopAccessingSecurityScopedResource()
-        }
+        log.debug("Active [\(activeFolder.path)]")
+        log.debug("Prev [\(previousFolder.path)]")
+        
+        // if everything was successful and prev and new folders are different,
+        // stop access to previous folder and request access to active folder
+//        if previousFolder != activeFolder {
+//            log.debug("Stopping access for prev")
+//            stopFolderAccess(for: previousFolder)
+//            try startAccess(for: activeFolder)
+//        }
         
         photoURLs = (try? updatePhotoList()) ?? []
             
@@ -86,14 +90,24 @@ final class LocalFolderPhotoProvider {
         }
         
         var isStale: Bool = false
-        let secScopedUrl = try URL(resolvingBookmarkData: bookmarkData, options: [.withoutUI, .withSecurityScope], relativeTo: nil, bookmarkDataIsStale: &isStale)
+        let bookmarkedUrl = try URL(resolvingBookmarkData: bookmarkData, options: [.withoutUI, .withSecurityScope], relativeTo: nil, bookmarkDataIsStale: &isStale)
         
-        guard secScopedUrl.startAccessingSecurityScopedResource() else {
-            log.error("Failed to access security resource of \(url.path)")
-            throw LocalFolderProviderError.bookmarkFailure
+        if isStale {
+            log.warning("Stale bookmark for \(bookmarkedUrl.path)")
         }
         
-        return secScopedUrl
+        return bookmarkedUrl
+    }
+    
+    func startFolderAccess() throws {
+        guard activeFolder.startAccessingSecurityScopedResource() else {
+            log.error("Failed to access security resource of \(activeFolder.path)")
+            throw LocalFolderProviderError.accessFailure
+        }
+    }
+    
+    func stopFolderAccess() {
+        activeFolder.stopAccessingSecurityScopedResource()
     }
     
     private func saveBookmark(for url: URL) {
@@ -105,7 +119,7 @@ final class LocalFolderPhotoProvider {
     }
     
     private func updateRecents(with url: URL) {
-        let maxRecentFolders = 3
+        let maxRecentFolders = 5
         var recents = Settings.localFolderProvider.recentFolders
         
         // if url exists in recent list, remove it to avoid duplicates
@@ -120,8 +134,10 @@ final class LocalFolderPhotoProvider {
     }
     
     func updatePhotoList() throws -> [URL] {
-        guard let activeFolder = activeFolder else { return [] }
-            
+        try startFolderAccess()
+        defer {
+            stopFolderAccess()
+        }
         let urls = try fileManager.contentsOfDirectory(at: activeFolder, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants])
         return urls.filter { supportedExtension.contains($0.pathExtension) }
     }
@@ -132,6 +148,10 @@ struct LocalPhotoAsset: PhotoAssetDescriptor {
     var description: String { photoURL.path }
     
     func fetchImage(completion: (Result<NSImage, Error>) -> Void) {
+        try? LocalFolderPhotoProvider.shared.startFolderAccess()
+        defer {
+            LocalFolderPhotoProvider.shared.stopFolderAccess()
+        }
         guard let image = NSImage(contentsOf: photoURL) else {
             log.error("Failed to read file \(photoURL.path)")
             completion(.failure(PhotoProviderError.failedReadLocalFile))
@@ -148,6 +168,10 @@ extension LocalFolderPhotoProvider: PhotoProvider {
     }
     
     func refreshAssets(completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void) {
+        try? startFolderAccess()
+        defer {
+            stopFolderAccess()
+        }
         let result = Result { try updatePhotoList() }.map {
             // convert LocalPhotoAsset to PhotoAssetDescriptor
             $0.map { LocalPhotoAsset(photoURL: $0) as PhotoAssetDescriptor }
@@ -158,4 +182,6 @@ extension LocalFolderPhotoProvider: PhotoProvider {
 
 enum LocalFolderProviderError: Error {
     case bookmarkFailure
+    case accessFailure
 }
+
