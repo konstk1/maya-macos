@@ -22,7 +22,11 @@ final class LocalFolderPhotoProvider {
     var descendIntoSubfolders = false   // TODO: implement this
     
     /// List of photos in active folder
-    private var photoURLs: [URL] = []
+    private var photoURLs: [URL] = [] {
+        didSet {
+            NotificationCenter.default.post(name: .updatePhotoCount, object: self, userInfo: ["photoCount": photoURLs.count])
+        }
+    }
     
     /// Supported photo file extensions
     private let supportedExtension = ["png", "jpg", "jpeg"]
@@ -47,32 +51,16 @@ final class LocalFolderPhotoProvider {
     }
     
     func setActiveFolder(url: URL) throws {
-        //  previous folder
-        let previousFolder = activeFolder
-
         log.info("Setting folder URL: \(url.path)")
         
         // check if url has bookmark data
         if let bookmarkData = try? url.bookmarkData(options: [.withSecurityScope, .securityScopeAllowOnlyReadAccess]) {
             Settings.localFolderProvider.bookmarks[url] = bookmarkData
             activeFolder = url
-            log.debug("Has bookmark")
         } else {
             // load bookmark from settings
-            log.debug("Load bookmark")
             activeFolder = try loadBookmark(for: url)
         }
-        
-        log.debug("Active [\(activeFolder.path)]")
-        log.debug("Prev [\(previousFolder.path)]")
-        
-        // if everything was successful and prev and new folders are different,
-        // stop access to previous folder and request access to active folder
-//        if previousFolder != activeFolder {
-//            log.debug("Stopping access for prev")
-//            stopFolderAccess(for: previousFolder)
-//            try startAccess(for: activeFolder)
-//        }
         
         photoURLs = (try? updatePhotoList()) ?? []
             

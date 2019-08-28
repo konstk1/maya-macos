@@ -9,6 +9,7 @@
 import Cocoa
 
 class SourceCell: NSTableCellView {
+    @IBOutlet weak var activateButton: NSButton!
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var iconView: NSImageView!
     @IBOutlet weak var photoCountLabel: NSButton!

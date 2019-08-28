@@ -26,3 +26,7 @@ protocol PhotoAssetDescriptor: CustomStringConvertible {
 enum PhotoProviderError: Error {
     case failedReadLocalFile
 }
+
+extension Notification.Name {
+    static let updatePhotoCount = Notification.Name("updatePhotoCount")
+}
