@@ -19,7 +19,7 @@ class PhotoView: NSImageView {
 class PhotoFrameWindowController: NSWindowController {
     // MARK: - Properties
     // Photo vendor properties
-    private let photoVendor = PhotoVendor()
+    private let photoVendor = PhotoVendor.shared
     private var currentPhoto: NSImage = NSImage(named: NSImage.everyoneName)!
     private var vendTimer: Timer?
     

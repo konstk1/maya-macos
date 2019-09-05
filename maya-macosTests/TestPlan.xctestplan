@@ -1,0 +1,36 @@
+{
+  "configurations" : [
+    {
+      "id" : "EDEBC860-B961-4AC0-85FD-7C932CF5CD07",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "environmentVariableEntries" : [
+      {
+        "key" : "OS_ACTIVITY_MODE",
+        "value" : "disable"
+      }
+    ]
+  },
+  "testTargets" : [
+    {
+      "skippedTests" : [
+        "GoogePhotoProviderTests\/testAlbumContents()",
+        "GoogePhotoProviderTests\/testAlbumList()",
+        "GoogePhotoProviderTests\/testAuth()",
+        "GoogePhotoProviderTests\/testPerformanceExample()",
+        "PhotoProviderTests"
+      ],
+      "target" : {
+        "containerPath" : "container:maya-macos.xcodeproj",
+        "identifier" : "FF9072E022BB04CE0052428E",
+        "name" : "maya-macosTests"
+      }
+    }
+  ],
+  "version" : 1
+}

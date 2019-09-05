@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SourcesViewController" customModule="Maya" customModuleProvider="target">
             <connections>
+                <outlet property="googlePhotosVC" destination="vvy-gR-jVy" id="43w-my-x46"/>
                 <outlet property="localFolderVC" destination="LYa-7t-yio" id="eUJ-68-qbZ"/>
                 <outlet property="sourceView" destination="Got-XR-MA8" id="tYD-Qe-baj"/>
                 <outlet property="tableView" destination="fs9-x0-GDe" id="fTn-5U-0Vs"/>
@@ -16,17 +17,17 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView misplaced="YES" id="Hz6-mo-xeY" userLabel="Sources View">
+        <customView id="Hz6-mo-xeY" userLabel="Sources View">
             <rect key="frame" x="0.0" y="0.0" width="570" height="250"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="38" horizontalPageScroll="10" verticalLineScroll="38" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8a-nQ-GnB">
                     <rect key="frame" x="0.0" y="0.0" width="220" height="250"/>
-                    <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="5GQ-mG-SbT">
+                    <clipView key="contentView" drawsBackground="NO" id="5GQ-mG-SbT">
                         <rect key="frame" x="1" y="1" width="218" height="248"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="36" rowSizeStyle="large" viewBased="YES" id="fs9-x0-GDe">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="36" rowSizeStyle="large" viewBased="YES" id="fs9-x0-GDe">
                                 <rect key="frame" x="0.0" y="0.0" width="218" height="248"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -145,7 +146,7 @@
             </constraints>
             <point key="canvasLocation" x="159" y="173"/>
         </customView>
-        <customView id="LQB-nB-8ap" userLabel="Local Provider Settings View">
+        <customView id="LQB-nB-8ap" userLabel="Local Folder View">
             <rect key="frame" x="0.0" y="0.0" width="350" height="250"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -178,10 +179,55 @@
             </subviews>
             <point key="canvasLocation" x="-52" y="467"/>
         </customView>
-        <viewController id="LYa-7t-yio" customClass="LocalFolderProviderViewController" customModule="Maya" customModuleProvider="target">
+        <customView id="uiV-H6-vxG" userLabel="Google Photos View">
+            <rect key="frame" x="0.0" y="0.0" width="350" height="250"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q2B-cs-ffo">
+                    <rect key="frame" x="126" y="13" width="98" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Authorize" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="H69-ME-mS0">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="authorizedClicked:" target="vvy-gR-jVy" id="Vw7-I4-QeD"/>
+                    </connections>
+                </button>
+                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wiJ-Uy-SVc">
+                    <rect key="frame" x="18" y="180" width="315" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="dK1-gO-VD1">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <menu key="menu" id="dqB-ka-9Ur"/>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="albumDropdownChanged:" target="vvy-gR-jVy" id="lvd-pk-bHd"/>
+                    </connections>
+                </popUpButton>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="gYC-Ri-4dg">
+                    <rect key="frame" x="18" y="214" width="192" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Show photos from this album:" id="ckx-CX-qNd">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <point key="canvasLocation" x="384" y="467"/>
+        </customView>
+        <viewController id="LYa-7t-yio" userLabel="Local Folder VC" customClass="LocalFolderProviderViewController" customModule="Maya" customModuleProvider="target">
             <connections>
                 <outlet property="folderSelectionDropdown" destination="YJg-Ji-7xb" id="lDb-Bx-AjY"/>
                 <outlet property="view" destination="LQB-nB-8ap" id="5w6-SH-tS8"/>
+            </connections>
+        </viewController>
+        <viewController id="vvy-gR-jVy" userLabel="Google Photos VC" customClass="GooglePhotosViewController" customModule="Maya" customModuleProvider="target">
+            <connections>
+                <outlet property="albumDropdown" destination="wiJ-Uy-SVc" id="zdQ-f5-K8x"/>
+                <outlet property="view" destination="uiV-H6-vxG" id="XTI-1P-INu"/>
             </connections>
         </viewController>
     </objects>

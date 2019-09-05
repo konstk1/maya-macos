@@ -15,7 +15,7 @@ protocol PhotoProvider {
 }
 
 protocol PhotoProviderDelegate: class {
-    func didUpdateAssets()
+    func didUpdateAssets(assets: [PhotoAssetDescriptor])
 }
 
 protocol PhotoAssetDescriptor: CustomStringConvertible {
@@ -25,6 +25,9 @@ protocol PhotoAssetDescriptor: CustomStringConvertible {
 
 enum PhotoProviderError: Error {
     case failedReadLocalFile
+    case failedFetchURL
+    case failedAuth
+    case noActiveAlbum
 }
 
 extension Notification.Name {

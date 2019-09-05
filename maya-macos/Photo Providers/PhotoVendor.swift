@@ -14,6 +14,8 @@ protocol PhotoVendorDelegate: class {
 }
 
 final class PhotoVendor: PhotoProviderDelegate {
+    static let shared = PhotoVendor()
+    
     /// Whether to show photos in random order. Defaults to `true`.
     var shufflePhotos: Bool = true {
         didSet {
@@ -27,8 +29,7 @@ final class PhotoVendor: PhotoProviderDelegate {
     private var unshownPhotos: [PhotoAssetDescriptor] = []
     private var shownPhotos: [PhotoAssetDescriptor] = []
     
-    init() {
-        
+    private init() {
     }
     
     /// Set new provider of photos.
@@ -39,8 +40,8 @@ final class PhotoVendor: PhotoProviderDelegate {
     }
     
     /// PhotoProviderDelegate method
-    func didUpdateAssets() {
-        refreshAssets()
+    func didUpdateAssets(assets: [PhotoAssetDescriptor] ) {
+        processNewAssetList(assets)
         vendImage()
     }
     
@@ -87,6 +88,7 @@ final class PhotoVendor: PhotoProviderDelegate {
             }
         }
         
+        // TODO: how often to refresh assets? (especially for remote providers)
         refreshAssets()
     }
     

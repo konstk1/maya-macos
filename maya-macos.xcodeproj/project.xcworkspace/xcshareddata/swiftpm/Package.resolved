@@ -2,12 +2,48 @@
   "object": {
     "pins": [
       {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire",
+        "state": {
+          "branch": "5.0.0-rc.1",
+          "revision": "82cc60d703dbced153baa04e26c6296ba9690a2d",
+          "version": null
+        }
+      },
+      {
+        "package": "KeychainAccess",
+        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
+        "state": {
+          "branch": null,
+          "revision": "0046db4ab8fd7be31a59e57912dbb96639ad8ce9",
+          "version": "3.2.0"
+        }
+      },
+      {
+        "package": "OAuthSwift",
+        "repositoryURL": "https://github.com/OAuthSwift/OAuthSwift",
+        "state": {
+          "branch": "2.1.0",
+          "revision": "4aae467bb6aa3c8437b4aba31578a0087bbf6738",
+          "version": null
+        }
+      },
+      {
+        "package": "OAuthSwiftAlamofire",
+        "repositoryURL": "https://github.com/kostyan5/OAuthSwiftAlamofire",
+        "state": {
+          "branch": "master",
+          "revision": "4053686c824d4841be47985843c9021a60901ae1",
+          "version": null
+        }
+      },
+      {
         "package": "SwiftyBeaver",
         "repositoryURL": "https://github.com/SwiftyBeaver/SwiftyBeaver",
         "state": {
           "branch": null,
-          "revision": "ad66cc41c5d8acbd63d9dcdc9d3609f152e08ed1",
-          "version": "1.7.0"
+          "revision": "0660621f44378cd110fcf18525fd042ea11924b4",
+          "version": "1.7.1"
         }
       }
     ]

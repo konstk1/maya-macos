@@ -15,17 +15,22 @@ enum Settings {
     static let frame = FrameSettings.shared
     static let photos = PhotosSettings.shared
     static let localFolderProvider = LocalFolderProviderSettings.shared
+    static let googlePhotos = GooglePhotosProviderSettings.shared
     
     class AppSettings: NSObject {
         fileprivate static let shared = AppSettings()
         private override init() { super.init() }
         
-        @UserDefault(makeKey(type: AppSettings.self, keypath: \.openAtLogin), defaultValue: false) @objc dynamic var openAtLogin: Bool {
+        @UserDefault(makeKey(type: AppSettings.self, keypath: \.openAtLogin), defaultValue: false)
+        @objc dynamic var openAtLogin: Bool {
             didSet {
                 // TODO: move this to app delegate
                 SMLoginItemSetEnabled(launcherAppId as CFString, openAtLogin)
             }
         }
+        
+        @UserDefault(makeKey(type: AppSettings.self, keypath: \.activeProvider), defaultValue: nil)
+        @objc dynamic var activeProvider: String?
     }
     
     class FrameSettings: NSObject {
@@ -62,6 +67,14 @@ enum Settings {
         
         @UserDefault(makeKey(type: LocalFolderProviderSettings.self, keypath: \.bookmarks), defaultValue: [:])
         @objc dynamic var bookmarks: [URL: Data]
+    }
+    
+    class GooglePhotosProviderSettings: NSObject {
+        fileprivate static let shared = GooglePhotosProviderSettings()
+        private override init() { super.init() }
+        
+        @UserDefault(makeKey(type: GooglePhotosProviderSettings.self, keypath: \.activeAlbumId), defaultValue: nil)
+        @objc dynamic var activeAlbumId: String?
     }
     
     /// Makes UserDefaults key from type and keypath.
