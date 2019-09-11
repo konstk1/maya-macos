@@ -8,6 +8,16 @@
 
 import Cocoa
 
+extension NSNotification.Name {
+    static let photoFrameStatus = NSNotification.Name("photoFrameStatus")
+}
+
+enum PhotoFrameStatus {
+    case idle
+    case scheduled
+    case newPhotoReady
+}
+
 class PhotoWindow: NSWindow {
     override var canBecomeKey: Bool { return true }
 }
@@ -18,6 +28,12 @@ class PhotoView: NSImageView {
 
 class PhotoFrameWindowController: NSWindowController {
     // MARK: - Properties
+    private(set) var status: PhotoFrameStatus = .idle {
+        didSet {
+            NotificationCenter.default.post(name: .photoFrameStatus, object: self)
+        }
+    }
+    
     // Photo vendor properties
     private let photoVendor = PhotoVendor.shared
     private var currentPhoto: NSImage = NSImage(named: NSImage.everyoneName)!
@@ -31,6 +47,7 @@ class PhotoFrameWindowController: NSWindowController {
     private let photoVerticalPadding: CGFloat = 5.0
 
     // Window properties
+    // TODO: move this to Settings
     @UserDefault("PhotoFrame.windowSize", defaultValue: NSSize(width: 400, height: 400))
     private var windowSize
     
@@ -41,7 +58,6 @@ class PhotoFrameWindowController: NSWindowController {
     weak var referenceWindow: NSWindow?
     private var globalEventMonitor: Any?
 
-    
     var isVisible: Bool {
         return window?.isVisible ?? false
     }
@@ -71,8 +87,6 @@ class PhotoFrameWindowController: NSWindowController {
                 self?.updatePhotoTiming()
             })
         ]
-        
-        updatePhotoTiming()
     }
     
     override func windowDidLoad() {
@@ -103,6 +117,11 @@ class PhotoFrameWindowController: NSWindowController {
         } else {
             log.info("Auto photo switch off")
         }
+        
+        // update status but don't override .newPhotoReady status, it'll be cleared when frame is closed
+        if status != .newPhotoReady {
+            status = (vendTimer?.isValid == true) ? .scheduled : .idle
+        }
     }
     
     func forceNext() {
@@ -121,6 +140,8 @@ extension PhotoFrameWindowController: PhotoVendorDelegate {
         log.verbose("Vending new image")
         currentPhoto = image
         
+        status = .newPhotoReady
+        
         if shouldPopupOnVend {
             log.verbose("Auto poping up frame")
             // reset popup flag, this will be set to true by the auto switch timer
@@ -135,10 +156,10 @@ extension PhotoFrameWindowController: PhotoVendorDelegate {
                     self?.close()
                 }
             }
-            
-            // restart photo timers
-            updatePhotoTiming()
         }
+        
+        // restart photo timers
+        updatePhotoTiming()
     }
     
     func didFailToVend(error: Error?) {
@@ -195,6 +216,8 @@ extension PhotoFrameWindowController: NSWindowDelegate {
     
     override func close() {
         super.close()
+        
+        status = (vendTimer?.isValid == true) ? .scheduled : .idle
         
         // remove the global event monitor when frame is closed
         if let globalEventMonitor = globalEventMonitor {
