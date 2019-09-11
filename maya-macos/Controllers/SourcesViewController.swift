@@ -16,7 +16,7 @@ enum ProviderTypes: String {
 class SourcesViewController: NSViewController {
     lazy var sources = [
         (name: ProviderTypes.localFolder, image: NSImage(named: NSImage.folderName), isActive: false),
-        (name: ProviderTypes.googlePhotos, image: NSImage(named: NSImage.everyoneName), isActive: false)
+        (name: ProviderTypes.googlePhotos, image: NSImage(named: "GooglePhotos"), isActive: false)
     ]
     
     @IBOutlet var localFolderVC: LocalFolderProviderViewController!

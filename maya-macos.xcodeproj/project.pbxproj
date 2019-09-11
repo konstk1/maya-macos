@@ -646,7 +646,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.3.0;
+				MARKETING_VERSION = 0.3.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos";
 				PRODUCT_NAME = Maya;
 				SWIFT_VERSION = 5.0;
@@ -667,7 +667,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.3.0;
+				MARKETING_VERSION = 0.3.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos";
 				PRODUCT_NAME = Maya;
 				SWIFT_VERSION = 5.0;

@@ -40,7 +40,7 @@
                             <action selector="generalPressed:" target="-2" id="W6A-z8-pZ2"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="2D210DB5-EBAF-4BFF-BAE8-830F7CA3978C" explicitItemIdentifier="ToolbarSourcesItem" label="Sources" paletteLabel="Sources" tag="2" image="NSEveryone" selectable="YES" id="MUa-8n-knt">
+                    <toolbarItem implicitItemIdentifier="2D210DB5-EBAF-4BFF-BAE8-830F7CA3978C" explicitItemIdentifier="ToolbarSourcesItem" label="Sources" paletteLabel="Sources" tag="2" image="SourcesIcon" selectable="YES" id="MUa-8n-knt">
                         <size key="minSize" width="32" height="32"/>
                         <size key="maxSize" width="32" height="32"/>
                         <connections>
@@ -366,7 +366,7 @@
         </customView>
     </objects>
     <resources>
-        <image name="NSEveryone" width="32" height="32"/>
         <image name="NSPreferencesGeneral" width="32" height="32"/>
+        <image name="SourcesIcon" width="55" height="57"/>
     </resources>
 </document>

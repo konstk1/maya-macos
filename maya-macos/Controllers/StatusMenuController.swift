@@ -23,15 +23,35 @@ class StatusMenuController: NSObject {
     @IBOutlet weak var statusMenu: NSMenu!
     
     override func awakeFromNib() {
-        if let icon = NSImage(named: "StatusIcon") {
-//            icon.isTemplate = true
-            statusItem.button?.image = icon
-        } else {
-            statusItem.button?.title = "Maya"
-        }
+        setIcon()
         statusItem.menu = statusMenu
 
         NSEvent.addLocalMonitorForEvents(matching: mouseEventMask, handler: localEventHandler)
+        
+        NotificationCenter.default.addObserver(forName: .photoFrameStatus, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
+            guard let strongSelf = self else { return }
+            print("Status notification \(strongSelf.photoFrame.status)")
+            strongSelf.setIcon()
+        }
+    }
+    
+    func setIcon() {
+        var icon: NSImage?
+        switch photoFrame.status {
+        case .idle:
+            icon = NSImage(named: "StatusIcon-None")
+        case .scheduled:
+            icon = NSImage(named: "StatusIcon-Red")
+        case .newPhotoReady:
+            icon = NSImage(named: "StatusIcon-All")
+        }
+        
+        if let icon = icon {
+            statusItem.button?.image = icon
+        } else {
+            statusItem.button?.image = nil
+            statusItem.button?.title = "Maya"
+        }
     }
     
     func localEventHandler(event: NSEvent) -> NSEvent? {
