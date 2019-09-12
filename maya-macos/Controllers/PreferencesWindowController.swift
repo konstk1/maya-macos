@@ -17,7 +17,7 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var openAtLoginCheckbox: NSButton!
     
     // Frame
-    @IBOutlet weak var popupWindowCheckbox: NSButton!
+    @IBOutlet weak var newPhotoActionDropdown: NSPopUpButton!
     @IBOutlet weak var autoCloseCheckbox: NSButton!
     @IBOutlet weak var autoCloseAfterDropdown: NSPopUpButton!
     
@@ -93,7 +93,20 @@ extension PreferencesWindowController {
     }
     
     func loadFrameSettings() {
-        popupWindowCheckbox.state = Settings.frame.popupFrame ? .on : .off
+        newPhotoActionDropdown.removeAllItems()
+        let newActionTitles = NewPhotoAction.allCases.map { (action) -> String in
+            switch action {
+            case .updateIcon: return "update icon"
+            case .showNotification: return "show notificaiton"
+            case .popupFrame: return "pop it up"
+            }
+        }
+        
+        newPhotoActionDropdown.addItems(withTitles: newActionTitles)
+        if let actionIndex = NewPhotoAction.allCases.firstIndex(of: Settings.frame.newPhotoAction) {
+            newPhotoActionDropdown.selectItem(at: actionIndex)
+        }
+        
         autoCloseCheckbox.state = Settings.frame.autoCloseFrame ? .on : .off
                 
         // remove any items popuplated in XIB
@@ -105,8 +118,14 @@ extension PreferencesWindowController {
         
     }
     
-    @IBAction func popupWindowToggled(_ sender: NSButton) {
-        Settings.frame.popupFrame = (sender.state == .on)
+    @IBAction func newPhotoActionSelected(_ sender: NSPopUpButton) {
+        guard sender.indexOfSelectedItem  >= 0 else {
+            log.warning("Nothing selected in newPhotoActionDropdown")
+            return
+        }
+        
+        Settings.frame.newPhotoAction = NewPhotoAction.allCases[sender.indexOfSelectedItem]
+        log.info("Updated new photo action: \(Settings.frame.newPhotoAction)")
     }
     
     @IBAction func autoCloseToggled(_ sender: NSButton) {

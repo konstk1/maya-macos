@@ -111,7 +111,7 @@ class PhotoFrameWindowController: NSWindowController {
         if Settings.photos.autoSwitchPhoto {
             log.info("Auto next photo in \(Settings.photos.autoSwitchPhotoPeriod)")
             vendTimer = Timer.scheduledTimer(withTimeInterval: Settings.photos.autoSwitchPhotoPeriod.timeInterval, repeats: false, block: { [weak self] (_) in
-                self?.shouldPopupOnVend = Settings.frame.popupFrame
+                self?.shouldPopupOnVend = (Settings.frame.newPhotoAction == .popupFrame)
                 self?.photoVendor.vendImage()
             })
         } else {
@@ -156,6 +156,8 @@ extension PhotoFrameWindowController: PhotoVendorDelegate {
                     self?.close()
                 }
             }
+        } else if Settings.frame.newPhotoAction == .showNotification {
+            showUserNotification(with: image)
         }
         
         // restart photo timers
@@ -165,6 +167,20 @@ extension PhotoFrameWindowController: PhotoVendorDelegate {
     func didFailToVend(error: Error?) {
         // TODO: implement this
         currentPhoto = NSImage(named: NSImage.everyoneName)!
+    }
+    
+    func showUserNotification(with image: NSImage) {
+        // send notification
+        let notification = NSUserNotification()
+        notification.title = "New photo is ready!"
+        notification.informativeText = "Click to see it."
+        notification.soundName = NSUserNotificationDefaultSoundName
+        notification.contentImage = image
+        NSUserNotificationCenter.default.deliver(notification)
+    }
+    
+    func handleNotificationAction() {
+        
     }
 }
 

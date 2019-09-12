@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class StatusMenuController: NSObject {
+class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     
@@ -30,9 +30,10 @@ class StatusMenuController: NSObject {
         
         NotificationCenter.default.addObserver(forName: .photoFrameStatus, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
             guard let strongSelf = self else { return }
-            print("Status notification \(strongSelf.photoFrame.status)")
             strongSelf.setIcon()
         }
+        
+        NSUserNotificationCenter.default.delegate = self
     }
     
     func setIcon() {
@@ -77,6 +78,15 @@ class StatusMenuController: NSObject {
         }
         
         return blockEvent ? nil : event
+    }
+    
+    func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
+        return true
+    }
+    
+    func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification) {
+        photoFrame.show(relativeTo: statusItem.button?.window)
+        center.removeAllDeliveredNotifications()
     }
     
     func togglePopover() {

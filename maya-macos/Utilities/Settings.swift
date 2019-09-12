@@ -37,8 +37,9 @@ enum Settings {
         fileprivate static let shared = FrameSettings()
         private override init() { super.init() }
         
-        @UserDefault(makeKey(type: FrameSettings.self, keypath: \.popupFrame), defaultValue: false)
-        @objc dynamic var popupFrame: Bool
+        // enums can't be @objc so we need to make our own key
+        @UserDefaultEnum("FrameSettings.newPhotoAction", defaultValue: .popupFrame)
+        dynamic var newPhotoAction: NewPhotoAction
         
         @UserDefault(makeKey(type: FrameSettings.self, keypath: \.autoCloseFrame), defaultValue: false)
         @objc dynamic var autoCloseFrame: Bool
@@ -115,5 +116,31 @@ enum Settings {
             UserDefaults.standard.set(propList ?? newValue, forKey: key)
         }
     }
+}
+
+@propertyWrapper struct UserDefaultEnum<T: RawRepresentable> {
+    let key: String
+    let defaultValue: T
+    
+    init(_ key: String, defaultValue: T) {
+        self.key = key
+        self.defaultValue = defaultValue
+    }
+    
+    var wrappedValue: T {
+        get {
+            guard let rawValue = UserDefaults.standard.object(forKey: key) as? T.RawValue else { return defaultValue }
+            return T.init(rawValue: rawValue) ?? defaultValue
+        }
+        set {
+            UserDefaults.standard.set(newValue.rawValue, forKey: key)
+        }
+    }
+}
+
+enum NewPhotoAction: String, Codable, CaseIterable {
+    case updateIcon = "updateIcon"
+    case showNotification = "showNotification"
+    case popupFrame = "popupFrame"
 }
 

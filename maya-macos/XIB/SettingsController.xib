@@ -15,8 +15,8 @@
                 <outlet property="autoSwitchPhotosTimeStepper" destination="VA0-dS-qMC" id="FkT-G7-zkU"/>
                 <outlet property="autoSwitchPhotosTimeUnitsDropdown" destination="i9R-Lj-0mc" id="whq-bM-d2v"/>
                 <outlet property="generalView" destination="QTc-xx-c67" id="Tar-pJ-3wl"/>
+                <outlet property="newPhotoActionDropdown" destination="e3f-k7-4UT" id="PG1-63-7fA"/>
                 <outlet property="openAtLoginCheckbox" destination="FVZ-zt-cs9" id="1fS-jP-61k"/>
-                <outlet property="popupWindowCheckbox" destination="BYj-OD-wqs" id="nZy-ui-PDJ"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -59,16 +59,16 @@
             <point key="canvasLocation" x="149" y="32"/>
         </window>
         <customView identifier="GeneralView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QTc-xx-c67" userLabel="GeneralView">
-            <rect key="frame" x="0.0" y="0.0" width="477" height="281"/>
+            <rect key="frame" x="0.0" y="0.0" width="477" height="333"/>
             <subviews>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="1da-22-MtB">
-                    <rect key="frame" x="15" y="204" width="447" height="5"/>
+                    <rect key="frame" x="15" y="256" width="447" height="5"/>
                 </box>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="u6G-TN-bNf">
-                    <rect key="frame" x="15" y="79" width="447" height="5"/>
+                    <rect key="frame" x="15" y="125" width="447" height="5"/>
                 </box>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7CC-im-73R" userLabel="Startup Stack View">
-                    <rect key="frame" x="119" y="227" width="162" height="32"/>
+                    <rect key="frame" x="119" y="279" width="162" height="32"/>
                     <subviews>
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gCA-mE-KFQ">
                             <rect key="frame" x="0.0" y="0.0" width="162" height="32"/>
@@ -110,24 +110,52 @@
                     </customSpacing>
                 </stackView>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xMX-no-eWb" userLabel="Frame Stack View">
-                    <rect key="frame" x="119" y="102" width="304" height="82"/>
+                    <rect key="frame" x="119" y="148" width="304" height="90"/>
                     <subviews>
-                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YBh-5Y-uei">
-                            <rect key="frame" x="0.0" y="50" width="192" height="32"/>
+                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="82Z-JG-6bN">
+                            <rect key="frame" x="0.0" y="50" width="292" height="40"/>
                             <subviews>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BYj-OD-wqs">
-                                    <rect key="frame" x="-2" y="16" width="111" height="18"/>
-                                    <buttonCell key="cell" type="check" title="Popup window" bezelStyle="regularSquare" imagePosition="left" inset="2" id="8Ba-0G-3kj">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="popupWindowToggled:" target="-2" id="yHr-iR-Z2K"/>
-                                    </connections>
-                                </button>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7OM-2p-wkp">
-                                    <rect key="frame" x="-2" y="0.0" width="196" height="13"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" title="When new photo is ready, it will popup. " id="myN-h8-A7C">
+                                <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="5" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="249.99998474121094" horizontalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bpg-nR-CFu">
+                                    <rect key="frame" x="0.0" y="18" width="292" height="22"/>
+                                    <subviews>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5y5-Nh-NCD">
+                                            <rect key="frame" x="-2" y="3" width="161" height="16"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="When new photo is ready " id="VxM-0A-Lns">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="e3f-k7-4UT">
+                                            <rect key="frame" x="162" y="-1" width="130" height="23"/>
+                                            <popUpButtonCell key="cell" type="roundTextured" title="show notification" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" selectedItem="yug-ao-KYD" id="7UU-QX-PDy">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" id="9bs-YP-czD">
+                                                    <items>
+                                                        <menuItem title="update icon" id="5W1-93-AUZ"/>
+                                                        <menuItem title="show notification" state="on" id="yug-ao-KYD"/>
+                                                        <menuItem title="pop it up" id="TpY-P3-q2m"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="newPhotoActionSelected:" target="-2" id="VtU-Th-2SN"/>
+                                            </connections>
+                                        </popUpButton>
+                                    </subviews>
+                                    <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                    </visibilityPriorities>
+                                    <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                    </customSpacing>
+                                </stackView>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e0Z-pb-pkf">
+                                    <rect key="frame" x="-2" y="0.0" width="205" height="13"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Action to take when a new photo is ready." id="rZ2-d9-qCD">
                                         <font key="font" metaFont="system" size="10"/>
                                         <color key="textColor" red="0.49520188570000001" green="0.49559599160000001" blue="0.49526298050000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -215,7 +243,7 @@
                     </customSpacing>
                 </stackView>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rJv-Na-OyJ" userLabel="Photos Stack View">
-                    <rect key="frame" x="119" y="20" width="275" height="41"/>
+                    <rect key="frame" x="119" y="66" width="275" height="41"/>
                     <subviews>
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4P4-4i-W0y">
                             <rect key="frame" x="0.0" y="0.0" width="275" height="41"/>
@@ -318,7 +346,7 @@
                     </customSpacing>
                 </stackView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zJL-pg-LJp">
-                    <rect key="frame" x="48" y="245" width="53" height="16"/>
+                    <rect key="frame" x="48" y="297" width="53" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Startup:" id="DNR-fu-kUS">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -326,7 +354,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8G2-ht-N52">
-                    <rect key="frame" x="55" y="170" width="46" height="16"/>
+                    <rect key="frame" x="55" y="221" width="46" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Frame:" id="lrE-ma-6Gz">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -334,7 +362,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jRG-nb-Kkr">
-                    <rect key="frame" x="50" y="47" width="51" height="16"/>
+                    <rect key="frame" x="50" y="93" width="51" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Photos:" id="3WU-U7-rhC">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -345,7 +373,7 @@
             <constraints>
                 <constraint firstItem="zJL-pg-LJp" firstAttribute="top" secondItem="7CC-im-73R" secondAttribute="top" constant="-2" id="07q-G0-Qkg"/>
                 <constraint firstAttribute="trailing" secondItem="1da-22-MtB" secondAttribute="trailing" constant="15" id="0a8-xl-EfD"/>
-                <constraint firstItem="xMX-no-eWb" firstAttribute="top" secondItem="1da-22-MtB" secondAttribute="bottom" constant="22" id="4HB-Y4-3kP"/>
+                <constraint firstItem="xMX-no-eWb" firstAttribute="top" secondItem="1da-22-MtB" secondAttribute="bottom" constant="20" id="4HB-Y4-3kP"/>
                 <constraint firstItem="jRG-nb-Kkr" firstAttribute="top" secondItem="rJv-Na-OyJ" secondAttribute="top" constant="-2" id="71d-gj-j2G"/>
                 <constraint firstItem="gCA-mE-KFQ" firstAttribute="top" secondItem="QTc-xx-c67" secondAttribute="top" constant="22" id="ADC-ps-eSY"/>
                 <constraint firstItem="8G2-ht-N52" firstAttribute="trailing" secondItem="zJL-pg-LJp" secondAttribute="trailing" id="JKc-Hr-uOM"/>
@@ -357,12 +385,12 @@
                 <constraint firstItem="xMX-no-eWb" firstAttribute="leading" secondItem="7CC-im-73R" secondAttribute="leading" id="e1t-dC-tTn"/>
                 <constraint firstItem="1da-22-MtB" firstAttribute="top" secondItem="7CC-im-73R" secondAttribute="bottom" constant="20" id="ee7-d0-0ql"/>
                 <constraint firstItem="jRG-nb-Kkr" firstAttribute="trailing" secondItem="zJL-pg-LJp" secondAttribute="trailing" id="gYO-iV-RFA"/>
-                <constraint firstItem="8G2-ht-N52" firstAttribute="top" secondItem="xMX-no-eWb" secondAttribute="top" constant="-2" id="gtR-wA-m5I"/>
+                <constraint firstItem="8G2-ht-N52" firstAttribute="top" secondItem="xMX-no-eWb" secondAttribute="top" constant="1" id="gtR-wA-m5I"/>
                 <constraint firstItem="7CC-im-73R" firstAttribute="leading" secondItem="zJL-pg-LJp" secondAttribute="trailing" constant="20" id="k7P-Nq-KHW"/>
                 <constraint firstAttribute="trailing" secondItem="u6G-TN-bNf" secondAttribute="trailing" constant="15" id="s1B-mV-VD0"/>
                 <constraint firstItem="u6G-TN-bNf" firstAttribute="top" secondItem="xMX-no-eWb" secondAttribute="bottom" constant="20" id="wf0-bd-sm6"/>
             </constraints>
-            <point key="canvasLocation" x="14" y="271"/>
+            <point key="canvasLocation" x="13.5" y="296.5"/>
         </customView>
     </objects>
     <resources>
