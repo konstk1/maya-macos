@@ -13,6 +13,10 @@ protocol PhotoVendorDelegate: class {
     func didFailToVend(error: Error?)
 }
 
+enum PhotoVendorError: Error {
+    case noActiveProvider
+}
+
 final class PhotoVendor: PhotoProviderDelegate {
     static let shared = PhotoVendor()
     
@@ -25,17 +29,25 @@ final class PhotoVendor: PhotoProviderDelegate {
     
     weak var delegate: PhotoVendorDelegate?
     
-    private var photoProvider: PhotoProvider?
+    private(set) var activeProvider: PhotoProvider?
+    var photoProviders: [PhotoProvider] = []
+    
     private var unshownPhotos: [PhotoAssetDescriptor] = []
     private var shownPhotos: [PhotoAssetDescriptor] = []
     
     private init() {
     }
     
+    func add(provider: PhotoProvider) {
+        photoProviders.append(provider)
+    }
+    
     /// Set new provider of photos.
-    func setProvider(_ provider: PhotoProvider) {
-        photoProvider = provider
-        photoProvider?.delegate = self
+    func setActiveProvider(_ provider: PhotoProvider) {
+        activeProvider?.delegate = nil   // disconnect previous active provider
+        activeProvider = provider        // update to new provider
+        activeProvider?.delegate = self  // connect new delegate
+        
         resetVendingState()
     }
     
@@ -47,13 +59,13 @@ final class PhotoVendor: PhotoProviderDelegate {
     
     /// Clear all vending state, including shown photos, etc.
     func resetVendingState() {
-        guard let photoProvider = photoProvider else {
+        guard let activeProvider = activeProvider else {
             unshownPhotos.removeAll()
             shownPhotos.removeAll()
             return
         }
         
-        unshownPhotos = photoProvider.photoDescriptors
+        unshownPhotos = activeProvider.photoDescriptors
         
         if shufflePhotos {
             unshownPhotos.shuffle()
@@ -62,6 +74,12 @@ final class PhotoVendor: PhotoProviderDelegate {
     
     /// Fetches next image and calls the delegate to notify when next image is ready
     func vendImage() {
+        guard activeProvider != nil else {
+            log.warning("No active photo provider")
+            delegate?.didFailToVend(error: PhotoVendorError.noActiveProvider)
+            return
+        }
+        
         // if reached end of photos, reset the vending state (reload the list)
         if unshownPhotos.isEmpty {
             resetVendingState()
@@ -93,9 +111,9 @@ final class PhotoVendor: PhotoProviderDelegate {
     }
     
     func refreshAssets() {
-        guard let photoProvider = photoProvider else { return }
+        guard let activeProvider = activeProvider else { return }
         
-        photoProvider.refreshAssets { [weak self] (result) in
+        activeProvider.refreshAssets { [weak self] (result) in
             switch result {
             case .success(let assets):
                 self?.processNewAssetList(assets)

@@ -29,8 +29,8 @@ enum Settings {
             }
         }
         
-        @UserDefault(makeKey(type: AppSettings.self, keypath: \.activeProvider), defaultValue: nil)
-        @objc dynamic var activeProvider: String?
+        @UserDefaultEnum("AppSettings.activeProvider", defaultValue: .none)
+        var activeProvider: PhotoProviderType
     }
     
     class FrameSettings: NSObject {
@@ -39,7 +39,7 @@ enum Settings {
         
         // enums can't be @objc so we need to make our own key
         @UserDefaultEnum("FrameSettings.newPhotoAction", defaultValue: .popupFrame)
-        dynamic var newPhotoAction: NewPhotoAction
+        var newPhotoAction: NewPhotoAction
         
         @UserDefault(makeKey(type: FrameSettings.self, keypath: \.autoCloseFrame), defaultValue: false)
         @objc dynamic var autoCloseFrame: Bool

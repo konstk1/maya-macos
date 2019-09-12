@@ -75,7 +75,20 @@ class PhotoFrameWindowController: NSWindowController {
     init() {
         super.init(window: nil)
         
-        photoVendor.setProvider(LocalFolderPhotoProvider.shared)
+        photoVendor.add(provider: LocalFolderPhotoProvider.shared)
+        photoVendor.add(provider: GooglePhotoProvider.shared)
+        
+        // load active provider from settings
+        
+        switch Settings.app.activeProvider {
+        case .none:
+            log.info("No active Photo Provider")
+        case .localFolder:
+            photoVendor.setActiveProvider(LocalFolderPhotoProvider.shared)
+        case .googlePhotos:
+            photoVendor.setActiveProvider(GooglePhotoProvider.shared)
+        }
+
         photoVendor.delegate = self
         photoVendor.vendImage()
         

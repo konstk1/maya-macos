@@ -36,6 +36,10 @@ class GooglePhotosViewController: NSViewController {
         }
         
         albumDropdown.menu = menu
+        
+        if let selectedIndex = google.albums.firstIndex(where: { $0.id == Settings.googlePhotos.activeAlbumId }) {
+            albumDropdown.selectItem(at: selectedIndex)
+        }
     }
     
     @IBAction func albumDropdownChanged(_ sender: NSPopUpButton) {
