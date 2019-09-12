@@ -8,7 +8,7 @@
 
 import Cocoa
 
-protocol PhotoProvider {
+protocol PhotoProvider: class {
     var delegate: PhotoProviderDelegate? { get set }
     var photoDescriptors: [PhotoAssetDescriptor] { get }
     func refreshAssets(completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void)
@@ -21,6 +21,12 @@ protocol PhotoProviderDelegate: class {
 protocol PhotoAssetDescriptor: CustomStringConvertible {
     // fetches an image for underlying photo asset
     func fetchImage(completion: @escaping (Result<NSImage, Error>) -> Void)
+}
+
+enum PhotoProviderType: String {
+    case none
+    case localFolder
+    case googlePhotos
 }
 
 enum PhotoProviderError: Error {

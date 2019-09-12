@@ -8,16 +8,12 @@
 
 import Cocoa
 
-enum ProviderTypes: String {
-    case localFolder = "Local Folder"
-    case googlePhotos = "Google Photos"
-}
-
 class SourcesViewController: NSViewController {
-    lazy var sources = [
-        (name: ProviderTypes.localFolder, image: NSImage(named: NSImage.folderName), isActive: false),
-        (name: ProviderTypes.googlePhotos, image: NSImage(named: "GooglePhotos"), isActive: false)
-    ]
+    private let photoVendor = PhotoVendor.shared
+    
+    private var indexOfActiveProvider: Int {
+        photoVendor.photoProviders.firstIndex { $0 === photoVendor.activeProvider } ?? 0
+    }
     
     @IBOutlet var localFolderVC: LocalFolderProviderViewController!
     @IBOutlet var googlePhotosVC: GooglePhotosViewController!
@@ -30,8 +26,7 @@ class SourcesViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let activeIndex = sources.firstIndex { $0.isActive == true } ?? 0
-        selectViewControllerAt(index: activeIndex)
+        selectViewControllerAt(index: indexOfActiveProvider)
         
         NotificationCenter.default.addObserver(self, selector: #selector(updatePhotoCount(_:)), name: .updatePhotoCount, object: nil)
     }
@@ -63,15 +58,16 @@ class SourcesViewController: NSViewController {
             currentSourceController.view.removeFromSuperview()
         }
         
-        let source = sources[index].name
-        
         // add new view controller
-        switch source {
-        case .localFolder:
+        switch photoVendor.photoProviders[index] {
+        case is LocalFolderPhotoProvider:
             // load local folder controller
             currentSourceController = localFolderVC
-        case.googlePhotos:
+        case is GooglePhotoProvider:
             currentSourceController = googlePhotosVC
+        default:
+            log.error("Unimplement view for provider")
+            fatalError("Inimplement provider")
         }
         
         self.addChild(currentSourceController!)
@@ -80,27 +76,29 @@ class SourcesViewController: NSViewController {
     }
     
     @IBAction func activateClicked(_ sender: NSButton) {
-        let previouslyActiveRow = sources.firstIndex { $0.isActive }
+        let previouslyActiveRow = indexOfActiveProvider
         let newActiveRow = tableView.row(for: sender)
         
-        // update active flags
-        for (idx, _) in sources.enumerated() {
-            sources[idx].isActive = (newActiveRow == idx)
+        let provider = PhotoVendor.shared.photoProviders[newActiveRow]
+        
+        log.info("Activating \(provider.self)")
+        
+        PhotoVendor.shared.setActiveProvider(provider)
+        
+        // persist active provider to Settings
+        var providerType: PhotoProviderType
+        
+        switch provider {
+        case is LocalFolderPhotoProvider:
+            providerType = .localFolder
+        case is GooglePhotoProvider:
+            providerType = .googlePhotos
+        default:
+            providerType = .none
+            log.warning("Unimplemented photo provider type")
         }
         
-        let provider: PhotoProvider
-        let providerName = sources[newActiveRow].name
-        
-        switch providerName {
-        case ProviderTypes.localFolder:
-            provider = LocalFolderPhotoProvider.shared
-        case ProviderTypes.googlePhotos:
-            provider = GooglePhotoProvider.shared
-        }
-        
-        log.info("Activating \(providerName)")
-        
-        PhotoVendor.shared.setProvider(provider)
+        Settings.app.activeProvider = providerType
         
         // reload rows affected by the change (prev.active, active) and select new active row
         let rowsToReload = [previouslyActiveRow, newActiveRow].compactMap { $0 }
@@ -111,25 +109,40 @@ class SourcesViewController: NSViewController {
 
 extension SourcesViewController: NSTableViewDataSource, NSTableViewDelegate {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return sources.count
+        return PhotoVendor.shared.photoProviders.count
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("SourceCell"), owner: nil) as? SourceCell else { return nil }
         
-        cell.titleLabel.stringValue = sources[row].name.rawValue
-        cell.iconView.image = sources[row].image
+        let provider = photoVendor.photoProviders[row]
         
-        var photoCount = 0
-        if row == 0 {
-            photoCount = LocalFolderPhotoProvider.shared.photoDescriptors.count
-        } else if row == 1 {
-            photoCount = GooglePhotoProvider.shared.photoDescriptors.count
+        var providerName: String
+        var iconImage: NSImage
+        
+        switch provider {
+        case is LocalFolderPhotoProvider:
+            providerName = "Local Folder"
+            iconImage = NSImage(named: NSImage.folderName)!
+        case is GooglePhotoProvider:
+            providerName = "Google Photos"
+            iconImage = NSImage(named: "GooglePhotos")!
+        default:
+            providerName = "Unknown"
+            iconImage = NSImage(named: NSImage.everyoneName)!
         }
-        cell.photoCountLabel.title = String(photoCount)
+        
+        cell.titleLabel.stringValue = providerName
+        cell.iconView.image = iconImage
+        
+        cell.photoCountLabel.title = String(provider.photoDescriptors.count)
         
         // configure activate radio button
-        cell.activateButton.state = sources[row].isActive ? .on : .off
+        var isActive = false
+        if let activeProvider = PhotoVendor.shared.activeProvider {
+            isActive = (provider === activeProvider)
+        }
+        cell.activateButton.state = isActive ? .on : .off
         cell.activateButton.action = #selector(activateClicked(_:))
         cell.activateButton.target = self
         
