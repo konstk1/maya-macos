@@ -40,6 +40,8 @@ class PhotoFrameWindowController: NSWindowController {
     private var vendTimer: Timer?
     
     // Photo frame properties
+    @IBOutlet weak var scrollView: PhotoScrollView!
+    
     private var photoView: PhotoView!
     private var shouldPopupOnVend = false
     
@@ -63,6 +65,8 @@ class PhotoFrameWindowController: NSWindowController {
     }
     
     private var observers: [NSKeyValueObservation] = []
+    
+    var autoCloseWorkItem: DispatchWorkItem?
     
     override var windowNibName: NSNib.Name? { NSNib.Name("PhotoFrameController") }
 
@@ -98,7 +102,7 @@ class PhotoFrameWindowController: NSWindowController {
             }),
             Settings.photos.observe(\.autoSwitchPhotoPeriod, options: [.initial, .new], changeHandler: { [weak self] (_, _) in
                 self?.updatePhotoTiming()
-            })
+            }),
         ]
     }
     
@@ -106,13 +110,19 @@ class PhotoFrameWindowController: NSWindowController {
         super.windowDidLoad()
         
         guard let window = window else { return }
-        
         photoView = PhotoView()
         photoView.imageScaling = .scaleProportionallyUpOrDown
 
-        window.contentView?.addSubview(photoView)
+        scrollView.documentView = photoView
+        scrollView.postsBoundsChangedNotifications = true
+        
         window.isMovableByWindowBackground = true
         window.delegate = self
+    }
+    
+    override func mouseDown(with event: NSEvent) {
+        print("Frame clicked, cancelling auto close...")
+        autoCloseWorkItem?.cancel()
     }
     
     /// Determines next photo timing.  If auto-switch enabled, [re]sets the timer to vend new image.
@@ -163,11 +173,14 @@ extension PhotoFrameWindowController: PhotoVendorDelegate {
             
             // if auto-close is enabled, set timer to trigger frame close
             if Settings.frame.autoCloseFrame {
-                // TODO: can this be improved? buggy if close period is greater than vend period
-                DispatchQueue.main.asyncAfter(deadline: .now() + Settings.frame.autoCloseFrameAfter.timeInterval) { [weak self] in
+                autoCloseWorkItem?.cancel()  // cancel any pending auto close items
+                // create new auto close work item
+                autoCloseWorkItem = DispatchWorkItem { [weak self] in
                     log.verbose("Auto-closing")
                     self?.close()
                 }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + Settings.frame.autoCloseFrameAfter.timeInterval, execute: autoCloseWorkItem!)
             }
         } else if Settings.frame.newPhotoAction == .showNotification {
             showUserNotification(with: image)
@@ -204,10 +217,15 @@ extension PhotoFrameWindowController: NSWindowDelegate {
             log.error("Window is nil")
             return
         }
+        // reset zoom, if any
+        scrollView.magnification = 1
         
         self.referenceWindow = referenceWindow
         
         photoView.image = currentPhoto
+        
+        // TODO: account for insets for acspect ratio
+        // maybe even refactor this
         
         window.aspectRatio = currentPhoto.size
         
@@ -222,7 +240,7 @@ extension PhotoFrameWindowController: NSWindowDelegate {
             frameSize.width = currentPhoto.size.width / currentPhoto.size.height * windowSize.height
         }
         
-        photoView.frame = NSRect(x: photoHorizontalPadding, y: photoVerticalPadding, width: frameSize.width - 2 * photoHorizontalPadding, height: frameSize.height - 2 * photoVerticalPadding)
+        photoView.frame = NSRect(x: 0, y: 0, width: frameSize.width-12, height: frameSize.height-12)
         
         // set window position based on offset from reference window (which is usually status menu item)
         var windowOrigin = window.frame.origin
@@ -230,6 +248,7 @@ extension PhotoFrameWindowController: NSWindowDelegate {
             windowOrigin = referenceWindow.frame.origin + windowOffset
             windowOrigin.y -= frameSize.height
         }
+
         window.setFrame(NSRect(origin: windowOrigin, size: frameSize), display: true)
         
         // show window on top of everything
@@ -258,7 +277,7 @@ extension PhotoFrameWindowController: NSWindowDelegate {
     
     func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
         // resize photoView to track window size with specified padding
-        photoView.setFrameSize(NSMakeSize(frameSize.width - 2.0 * photoHorizontalPadding, frameSize.height - 2.0 * photoVerticalPadding))
+        photoView.setFrameSize(NSMakeSize(frameSize.width-12, frameSize.height-12))
         return frameSize
     }
     

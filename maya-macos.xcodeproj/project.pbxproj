@@ -40,6 +40,7 @@
 		FFC22B6B22F2427A00121828 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFC22B6922F2427A00121828 /* MainMenu.xib */; };
 		FFD1D566230C840000D8F503 /* LocalFolderProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1D565230C840000D8F503 /* LocalFolderProviderViewController.swift */; };
 		FFD3698322F385AA00EC7A85 /* PhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */; };
+		FFD63774238B0513003A4071 /* PhotoScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD63773238B0513003A4071 /* PhotoScrollView.swift */; };
 		FFDD944B23057E2300891545 /* AboutWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDD944923057E2300891545 /* AboutWindowController.swift */; };
 		FFDD944C23057E2300891545 /* AboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFDD944A23057E2300891545 /* AboutWindowController.xib */; };
 		FFE9162322E0F5C400687322 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */; };
@@ -112,6 +113,7 @@
 		FFC22B6A22F2427A00121828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		FFD1D565230C840000D8F503 /* LocalFolderProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocalFolderProviderViewController.swift; path = "maya-macos/Controllers/LocalFolderProviderViewController.swift"; sourceTree = SOURCE_ROOT; };
 		FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProvider.swift; sourceTree = "<group>"; };
+		FFD63773238B0513003A4071 /* PhotoScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoScrollView.swift; sourceTree = "<group>"; };
 		FFDD944923057E2300891545 /* AboutWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutWindowController.swift; sourceTree = "<group>"; };
 		FFDD944A23057E2300891545 /* AboutWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutWindowController.xib; sourceTree = "<group>"; };
 		FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				FF39C02E2316F74900203D7F /* GooglePhotosViewController.swift */,
 				FFD1D565230C840000D8F503 /* LocalFolderProviderViewController.swift */,
 				FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */,
+				FFD63773238B0513003A4071 /* PhotoScrollView.swift */,
 				FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */,
 				FF53981D2315C6DC0067F3E9 /* SourceCell.swift */,
 				FFEEFCB52300F0750023F581 /* SourcesViewController.swift */,
@@ -461,6 +464,7 @@
 				FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */,
 				FF34718422DF82F70009CB40 /* Utilities.swift in Sources */,
 				FF53981E2315C6DC0067F3E9 /* SourceCell.swift in Sources */,
+				FFD63774238B0513003A4071 /* PhotoScrollView.swift in Sources */,
 				FF90732022BC12670052428E /* PhotoVendor.swift in Sources */,
 				FF9B7CFE231760AA0073E77E /* AppSecrets.swift in Sources */,
 				FFEEFCB72300F0750023F581 /* SourcesViewController.swift in Sources */,
