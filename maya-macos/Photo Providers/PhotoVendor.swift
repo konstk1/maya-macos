@@ -48,7 +48,11 @@ final class PhotoVendor: PhotoProviderDelegate {
         activeProvider = provider        // update to new provider
         activeProvider?.delegate = self  // connect new delegate
         
-        resetVendingState()
+        activeProvider?.refreshAssets(completion: { [weak self] result in
+            self?.resetVendingState()
+            self?.vendImage()
+        })
+        
     }
     
     /// PhotoProviderDelegate method

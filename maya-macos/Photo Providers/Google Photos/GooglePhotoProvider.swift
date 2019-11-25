@@ -60,7 +60,9 @@ final class GooglePhotoProvider {
         
         if let activeAlbumId = Settings.googlePhotos.activeAlbumId {
             activeAlbum = GooglePhotos.Album(id: activeAlbumId, title: "Loading...", productUrl: "", mediaItemsCount: nil, coverPhotoBaseUrl: "", coverPhotoMediaItemId: nil)
-            listPhotos(for: activeAlbum!) { _ in }
+            listPhotos(for: activeAlbum!) { [weak self] _ in
+                self?.delegate?.didUpdateAssets(assets: self?.photoDescriptors ?? [])
+            }
         }
     }
     
@@ -70,16 +72,7 @@ final class GooglePhotoProvider {
         Settings.googlePhotos.activeAlbumId = album.id
         
         listPhotos(for: album) { [weak self] result in
-            guard let strongSelf = self else { return }
-            
-            switch result {
-            case .success(let photos):
-                strongSelf.photos = photos
-            case .failure:
-                strongSelf.photos = []
-            }
-            
-            strongSelf.delegate?.didUpdateAssets(assets: strongSelf.photoDescriptors)
+            self?.delegate?.didUpdateAssets(assets: self?.photoDescriptors ?? [])
         }
     }
     

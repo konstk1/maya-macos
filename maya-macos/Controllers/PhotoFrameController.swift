@@ -82,8 +82,9 @@ class PhotoFrameWindowController: NSWindowController {
         photoVendor.add(provider: LocalFolderPhotoProvider.shared)
         photoVendor.add(provider: GooglePhotoProvider.shared)
         
-        // load active provider from settings
+        photoVendor.delegate = self
         
+        // load active provider from settings
         switch Settings.app.activeProvider {
         case .none:
             log.info("No active Photo Provider")
@@ -92,9 +93,6 @@ class PhotoFrameWindowController: NSWindowController {
         case .googlePhotos:
             photoVendor.setActiveProvider(GooglePhotoProvider.shared)
         }
-
-        photoVendor.delegate = self
-        photoVendor.vendImage()
         
         observers = [
             Settings.photos.observe(\.autoSwitchPhoto, options: [.initial, .new], changeHandler: { [weak self] (_, _) in
