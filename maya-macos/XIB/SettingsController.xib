@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14865.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14865.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -128,9 +127,9 @@
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="e3f-k7-4UT">
                                             <rect key="frame" x="162" y="-1" width="130" height="23"/>
-                                            <popUpButtonCell key="cell" type="roundTextured" title="show notification" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" selectedItem="yug-ao-KYD" id="7UU-QX-PDy">
+                                            <popUpButtonCell key="cell" type="roundTextured" title="update icon" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" inset="2" selectedItem="yug-ao-KYD" id="7UU-QX-PDy">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
+                                                <font key="font" metaFont="system"/>
                                                 <menu key="menu" id="9bs-YP-czD">
                                                     <items>
                                                         <menuItem title="update icon" id="5W1-93-AUZ"/>
@@ -191,7 +190,7 @@
                                             <rect key="frame" x="173" y="-1" width="95" height="23"/>
                                             <popUpButtonCell key="cell" type="roundTextured" title="10 seconds" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" selectedItem="mq1-fN-kIT" id="g9Q-66-IPy">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
+                                                <font key="font" metaFont="system"/>
                                                 <menu key="menu" id="31m-02-ADU">
                                                     <items>
                                                         <menuItem title="5 seconds" id="EOD-Nt-uwg"/>
@@ -243,16 +242,16 @@
                     </customSpacing>
                 </stackView>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rJv-Na-OyJ" userLabel="Photos Stack View">
-                    <rect key="frame" x="119" y="66" width="275" height="41"/>
+                    <rect key="frame" x="119" y="67" width="275" height="40"/>
                     <subviews>
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4P4-4i-W0y">
-                            <rect key="frame" x="0.0" y="0.0" width="275" height="41"/>
+                            <rect key="frame" x="0.0" y="0.0" width="275" height="40"/>
                             <subviews>
                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="5" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="249.99998474121094" horizontalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mHd-YW-SyM">
-                                    <rect key="frame" x="0.0" y="18" width="275" height="23"/>
+                                    <rect key="frame" x="0.0" y="18" width="275" height="22"/>
                                     <subviews>
                                         <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="dcc-x4-LUV">
-                                            <rect key="frame" x="-2" y="3" width="146" height="18"/>
+                                            <rect key="frame" x="-2" y="2" width="146" height="18"/>
                                             <buttonCell key="cell" type="check" title="Switch photos every" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Okv-1k-QgS">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -282,17 +281,17 @@
                                             </connections>
                                         </textField>
                                         <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VA0-dS-qMC">
-                                            <rect key="frame" x="179" y="-2" width="19" height="27"/>
+                                            <rect key="frame" x="179" y="-3" width="19" height="28"/>
                                             <stepperCell key="cell" continuous="YES" alignment="left" maxValue="999" id="liu-3G-DJz"/>
                                             <connections>
                                                 <action selector="switchPhotosTimeStepped:" target="-2" id="Iet-p6-G67"/>
                                             </connections>
                                         </stepper>
                                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i9R-Lj-0mc">
-                                            <rect key="frame" x="200" y="0.0" width="75" height="23"/>
+                                            <rect key="frame" x="200" y="-1" width="75" height="23"/>
                                             <popUpButtonCell key="cell" type="roundTextured" title="minutes" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" selectedItem="Y1j-LJ-Vh0" id="0tE-VH-Zhz">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
+                                                <font key="font" metaFont="system"/>
                                                 <menu key="menu" id="Jlj-f8-IEg">
                                                     <items>
                                                         <menuItem title="minutes" state="on" id="Y1j-LJ-Vh0"/>
