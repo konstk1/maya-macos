@@ -16,6 +16,7 @@
 		FF39C02D2316F66E00203D7F /* GooglePhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39C02C2316F66E00203D7F /* GooglePhotoProvider.swift */; };
 		FF39C02F2316F74900203D7F /* GooglePhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39C02E2316F74900203D7F /* GooglePhotosViewController.swift */; };
 		FF39C03223171CF100203D7F /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = FF39C03123171CF100203D7F /* KeychainAccess */; };
+		FF3E18FD23CA6D3200E5002B /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E18FC23CA6D3200E5002B /* AboutView.swift */; };
 		FF53981E2315C6DC0067F3E9 /* SourceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF53981D2315C6DC0067F3E9 /* SourceCell.swift */; };
 		FF9072D222BB04CD0052428E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9072D122BB04CD0052428E /* AppDelegate.swift */; };
 		FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */; };
@@ -40,9 +41,10 @@
 		FFC22B6B22F2427A00121828 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFC22B6922F2427A00121828 /* MainMenu.xib */; };
 		FFD1D566230C840000D8F503 /* LocalFolderProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1D565230C840000D8F503 /* LocalFolderProviderViewController.swift */; };
 		FFD3698322F385AA00EC7A85 /* PhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */; };
+		FFD4C35B23CC0E8A007D1A27 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C35A23CC0E8A007D1A27 /* PreferencesView.swift */; };
+		FFD4C35D23CC11B2007D1A27 /* GeneralPrefsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C35C23CC11B2007D1A27 /* GeneralPrefsView.swift */; };
 		FFD63774238B0513003A4071 /* PhotoScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD63773238B0513003A4071 /* PhotoScrollView.swift */; };
 		FFDD944B23057E2300891545 /* AboutWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDD944923057E2300891545 /* AboutWindowController.swift */; };
-		FFDD944C23057E2300891545 /* AboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFDD944A23057E2300891545 /* AboutWindowController.xib */; };
 		FFE9162322E0F5C400687322 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */; };
 		FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE9162222E0F5C400687322 /* SettingsController.xib */; };
 		FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE7F22EF5CC7009411B8 /* Settings.swift */; };
@@ -80,6 +82,7 @@
 		FF34718322DF82F70009CB40 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		FF39C02C2316F66E00203D7F /* GooglePhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePhotoProvider.swift; sourceTree = "<group>"; };
 		FF39C02E2316F74900203D7F /* GooglePhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePhotosViewController.swift; sourceTree = "<group>"; };
+		FF3E18FC23CA6D3200E5002B /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		FF53981D2315C6DC0067F3E9 /* SourceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SourceCell.swift; path = "maya-macos/Controllers/SourceCell.swift"; sourceTree = SOURCE_ROOT; };
 		FF9072CE22BB04CD0052428E /* Maya.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maya.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF9072D122BB04CD0052428E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -113,9 +116,10 @@
 		FFC22B6A22F2427A00121828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		FFD1D565230C840000D8F503 /* LocalFolderProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocalFolderProviderViewController.swift; path = "maya-macos/Controllers/LocalFolderProviderViewController.swift"; sourceTree = SOURCE_ROOT; };
 		FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProvider.swift; sourceTree = "<group>"; };
+		FFD4C35A23CC0E8A007D1A27 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		FFD4C35C23CC11B2007D1A27 /* GeneralPrefsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsView.swift; sourceTree = "<group>"; };
 		FFD63773238B0513003A4071 /* PhotoScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoScrollView.swift; sourceTree = "<group>"; };
 		FFDD944923057E2300891545 /* AboutWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutWindowController.swift; sourceTree = "<group>"; };
-		FFDD944A23057E2300891545 /* AboutWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutWindowController.xib; sourceTree = "<group>"; };
 		FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		FFE9162222E0F5C400687322 /* SettingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsController.xib; sourceTree = "<group>"; };
 		FFEBBE7F22EF5CC7009411B8 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -158,12 +162,9 @@
 		FF206B0122F35C4A000C0FB3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FFDD944923057E2300891545 /* AboutWindowController.swift */,
 				FF39C02E2316F74900203D7F /* GooglePhotosViewController.swift */,
 				FFD1D565230C840000D8F503 /* LocalFolderProviderViewController.swift */,
-				FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */,
 				FFD63773238B0513003A4071 /* PhotoScrollView.swift */,
-				FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */,
 				FF53981D2315C6DC0067F3E9 /* SourceCell.swift */,
 				FFEEFCB52300F0750023F581 /* SourcesViewController.swift */,
 				FF90731D22BBFF4D0052428E /* StatusMenuController.swift */,
@@ -198,7 +199,6 @@
 		FF206B0422F35CEE000C0FB3 /* XIB */ = {
 			isa = PBXGroup;
 			children = (
-				FFDD944A23057E2300891545 /* AboutWindowController.xib */,
 				FF9072D822BB04CE0052428E /* MainMenu.xib */,
 				FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */,
 				FFE9162222E0F5C400687322 /* SettingsController.xib */,
@@ -217,6 +217,26 @@
 				FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		FF3E18FE23CA6D3F00E5002B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FF3E18FC23CA6D3200E5002B /* AboutView.swift */,
+				FFD4C35A23CC0E8A007D1A27 /* PreferencesView.swift */,
+				FFD4C35C23CC11B2007D1A27 /* GeneralPrefsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FF3E190223CBF49800E5002B /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				FFDD944923057E2300891545 /* AboutWindowController.swift */,
+				FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */,
+				FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */,
+			);
+			path = Windows;
 			sourceTree = "<group>";
 		};
 		FF9072C522BB04CD0052428E = {
@@ -243,7 +263,9 @@
 		FF9072D022BB04CD0052428E /* maya-macos */ = {
 			isa = PBXGroup;
 			children = (
+				FF3E18FE23CA6D3F00E5002B /* Views */,
 				FF9072D122BB04CD0052428E /* AppDelegate.swift */,
+				FF3E190223CBF49800E5002B /* Windows */,
 				FF206B0122F35C4A000C0FB3 /* Controllers */,
 				FF206B0322F35C64000C0FB3 /* Photo Providers */,
 				FF206B0222F35C5A000C0FB3 /* Utilities */,
@@ -415,7 +437,6 @@
 			files = (
 				FF9072D722BB04CE0052428E /* Assets.xcassets in Resources */,
 				FFEEFCB82300F0750023F581 /* SourcesViewController.xib in Resources */,
-				FFDD944C23057E2300891545 /* AboutWindowController.xib in Resources */,
 				FF14AD8D22BDB8B800C7518C /* PhotoFrameController.xib in Resources */,
 				FF9072DA22BB04CE0052428E /* MainMenu.xib in Resources */,
 				FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */,
@@ -454,6 +475,7 @@
 				FFD3698322F385AA00EC7A85 /* PhotoProvider.swift in Sources */,
 				FF90731E22BBFF4D0052428E /* StatusMenuController.swift in Sources */,
 				FF39C02D2316F66E00203D7F /* GooglePhotoProvider.swift in Sources */,
+				FFD4C35D23CC11B2007D1A27 /* GeneralPrefsView.swift in Sources */,
 				FF9B7D09231859F90073E77E /* GooglePhotosAPI.swift in Sources */,
 				FF9B7D0F2318BE700073E77E /* GooglePhotoAsset.swift in Sources */,
 				FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */,
@@ -462,9 +484,11 @@
 				FF9072D222BB04CD0052428E /* AppDelegate.swift in Sources */,
 				FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */,
 				FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */,
+				FF3E18FD23CA6D3200E5002B /* AboutView.swift in Sources */,
 				FF34718422DF82F70009CB40 /* Utilities.swift in Sources */,
 				FF53981E2315C6DC0067F3E9 /* SourceCell.swift in Sources */,
 				FFD63774238B0513003A4071 /* PhotoScrollView.swift in Sources */,
+				FFD4C35B23CC0E8A007D1A27 /* PreferencesView.swift in Sources */,
 				FF90732022BC12670052428E /* PhotoVendor.swift in Sources */,
 				FF9B7CFE231760AA0073E77E /* AppSecrets.swift in Sources */,
 				FFEEFCB72300F0750023F581 /* SourcesViewController.swift in Sources */,
@@ -569,7 +593,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -625,7 +649,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "";
@@ -641,7 +665,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "maya-macos/Other/maya_macos.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = LG2FJE6R72;
@@ -650,7 +674,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.3.6;
+				MARKETING_VERSION = 0.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos";
 				PRODUCT_NAME = Maya;
 				SWIFT_VERSION = 5.0;
@@ -662,7 +686,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "maya-macos/Other/maya_macos.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = LG2FJE6R72;
@@ -671,7 +695,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.3.6;
+				MARKETING_VERSION = 0.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos";
 				PRODUCT_NAME = Maya;
 				SWIFT_VERSION = 5.0;
@@ -727,7 +751,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "maya-macos-launcher/maya_macos_launcher.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = LG2FJE6R72;
@@ -749,7 +773,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "maya-macos-launcher/maya_macos_launcher.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = LG2FJE6R72;
