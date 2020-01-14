@@ -23,10 +23,10 @@ protocol PhotoAssetDescriptor: CustomStringConvertible {
     func fetchImage(completion: @escaping (Result<NSImage, Error>) -> Void)
 }
 
-enum PhotoProviderType: String {
-    case none
-    case localFolder
-    case googlePhotos
+enum PhotoProviderType: String, PListCodable {
+    case none = "none"
+    case localFolder = "localFolder"
+    case googlePhotos = "googlePhotos"
 }
 
 enum PhotoProviderError: Error {

@@ -7,7 +7,21 @@
 //
 
 import Foundation
+import Combine
 import ServiceManagement
+
+//fileprivate protocol ObservableSettings: ObservableObject {
+//    var notificationSubscription: AnyCancellable? { get set }
+//    init()
+//}
+//
+//extension ObservableSettings {
+//    init() {
+//        notificationSubscription = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification).sink { _ in
+//            self.objectWillChange.send()
+//        }
+//    }
+//}
 
 enum Settings {
 
@@ -17,128 +31,151 @@ enum Settings {
     static let localFolderProvider = LocalFolderProviderSettings.shared
     static let googlePhotos = GooglePhotosProviderSettings.shared
     
-    class AppSettings: NSObject {
-        fileprivate static let shared = AppSettings()
-        private override init() { super.init() }
+    class ObservableSettings: ObservableObject {
+        var notificationSubscription: AnyCancellable?
         
-        @UserDefault(makeKey(type: AppSettings.self, keypath: \.openAtLogin), defaultValue: false)
-        @objc dynamic var openAtLogin: Bool {
+        fileprivate init() {
+            notificationSubscription = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification).sink { _ in
+                self.objectWillChange.send()
+            }
+        }
+    }
+    
+    class AppSettings: ObservableSettings {
+        fileprivate static let shared = AppSettings()
+        
+        @PublishedUserDefault("AppSettings.openAtLogin", defaultValue: false)
+        var openAtLogin: Bool {
             didSet {
                 // TODO: move this to app delegate
                 SMLoginItemSetEnabled(launcherAppId as CFString, openAtLogin)
             }
         }
         
-        @UserDefaultEnum("AppSettings.activeProvider", defaultValue: .none)
+        @PublishedUserDefault("AppSettings.activeProvider", defaultValue: .none)
         var activeProvider: PhotoProviderType
     }
     
-    class FrameSettings: NSObject {
+    class FrameSettings: ObservableSettings {
         fileprivate static let shared = FrameSettings()
-        private override init() { super.init() }
-        
-        // enums can't be @objc so we need to make our own key
-        @UserDefaultEnum("FrameSettings.newPhotoAction", defaultValue: .popupFrame)
+                
+        @PublishedUserDefault("FrameSettings.newPhotoAction", defaultValue: .popupFrame)
         var newPhotoAction: NewPhotoAction
         
-        @UserDefault(makeKey(type: FrameSettings.self, keypath: \.autoCloseFrame), defaultValue: false)
-        @objc dynamic var autoCloseFrame: Bool
+        @PublishedUserDefault("FrameSettings..autoCloseFrame", defaultValue: false)
+        var autoCloseFrame: Bool
         
-        @UserDefault(makeKey(type: FrameSettings.self, keypath: \.autoCloseFrameAfter), defaultValue: .seconds(10))
-        @objc dynamic var autoCloseFrameAfter: TimePeriod
+        @PublishedUserDefault("FrameSettings.autoCloseFrameAfter", defaultValue: .seconds(10))
+        var autoCloseFrameAfter: TimePeriod
     }
     
-    class PhotosSettings: NSObject {
+    class PhotosSettings: ObservableSettings {
         fileprivate static let shared = PhotosSettings()
-        private override init() { super.init() }
         
-        @UserDefault(makeKey(type: PhotosSettings.self, keypath: \.autoSwitchPhoto), defaultValue: true)
-        @objc dynamic var autoSwitchPhoto: Bool
+        @PublishedUserDefault("PhotosSettings.autoSwitchPhoto", defaultValue: true)
+        var autoSwitchPhoto: Bool
         
-        @UserDefault(makeKey(type: PhotosSettings.self, keypath: \.autoSwitchPhotoPeriod), defaultValue: .minutes(10))
-        @objc dynamic var autoSwitchPhotoPeriod: TimePeriod
+        @PublishedUserDefault("PhotosSettings.autoSwitchPhotoPeriod", defaultValue: .minutes(10))
+        var autoSwitchPhotoPeriod: TimePeriod
     }
     
-    class LocalFolderProviderSettings: NSObject {
+    class LocalFolderProviderSettings: ObservableSettings {
         fileprivate static let shared = LocalFolderProviderSettings()
-        private override init() { super.init() }
         
-        @UserDefault(makeKey(type: LocalFolderProviderSettings.self, keypath: \.recentFolders), defaultValue: [])
-        @objc dynamic var recentFolders: [URL]
+        @PublishedUserDefault("LocalFolderProviderSettings.recentFolders", defaultValue: [])
+        var recentFolders: [URL]
         
-        @UserDefault(makeKey(type: LocalFolderProviderSettings.self, keypath: \.bookmarks), defaultValue: [:])
-        @objc dynamic var bookmarks: [URL: Data]
+        @PublishedUserDefault("LocalFolderProviderSettings.bookmarks", defaultValue: [:])
+        var bookmarks: [URL: Data]
     }
     
-    class GooglePhotosProviderSettings: NSObject {
+    class GooglePhotosProviderSettings: ObservableSettings {
         fileprivate static let shared = GooglePhotosProviderSettings()
-        private override init() { super.init() }
         
-        @UserDefault(makeKey(type: GooglePhotosProviderSettings.self, keypath: \.activeAlbumId), defaultValue: nil)
-        @objc dynamic var activeAlbumId: String?
-    }
-    
-    /// Makes UserDefaults key from type and keypath.
-    /// - Warning: `keypath` must reference an `@objc` property,
-    /// otherwise `_kvcKeyPathString` is nil and app will abort.
-    /// This is intentional because there is no default behavior to save such a value.
-    private static func makeKey<T,U>(type: T.Type, keypath: KeyPath<T,U>) -> String {
-        guard let keyPathString = keypath._kvcKeyPathString else {
-            fatalError("Attempt to make key from non-@objc property!")
-        }
-        return "\(type).\(keyPathString)"
+        @PublishedUserDefault("GooglePhotosProviderSettings.activeAlbumId", defaultValue: nil)
+        var activeAlbumId: String?
     }
 }
 
-@propertyWrapper struct UserDefault<T: Codable> {
-    let key: String
-    let defaultValue: T
+@propertyWrapper struct PublishedUserDefault<Value: Codable>: Publisher {
+    typealias Output = Value
+    typealias Failure = Never
     
-    init(_ key: String, defaultValue: T) {
+    let key: String
+    let defaultValue: Value
+    private var publisher: CurrentValueSubject<Value, Never>?
+    
+    init(_ key: String, defaultValue: Value) {
         self.key = key
         self.defaultValue = defaultValue
     }
-    
-    var wrappedValue: T {
+        
+    public var wrappedValue: Value {
         get {
             let object = UserDefaults.standard.object(forKey: key)
             // first try to decode object as property list
             // if that fails, value is most likely a basic type that can be cast directly to object
-            if let data = object as? Data, let value = try? PropertyListDecoder().decode(T.self, from: data) {
+            if let data = object as? Data, let value = try? PropertyListDecoder().decode(Value.self, from: data) {
                 return value
             }
-            return object as? T ?? defaultValue
+            return (object as? Value) ?? defaultValue
         }
         set {
+            publisher?.send(newValue)
             // first see if value is a property list convertible struct
             // if that fails, value is most likely a basic type that can be stored directly into user defaults
             let propList = try? PropertyListEncoder().encode(newValue)
-            UserDefaults.standard.set(propList ?? newValue, forKey: key)
+            UserDefaults.standard.set(propList ?? newValue, forKey:  key)
         }
+    }
+    
+//    public var wrappedValue: Value {
+//        get { fatalError() }
+//        set { fatalError() } // swiftlint:disable:this unused_setter_value
+//    }
+    
+//    public static subscript<EnclosingSelf: ObservableObject>(
+//        _enclosingInstance instance: EnclosingSelf,
+//        wrapped wrappedKeyPath: ReferenceWritableKeyPath<EnclosingSelf, Value>,
+//        storage storageKeyPath: ReferenceWritableKeyPath<EnclosingSelf, Self>) -> Value {
+//        get {
+//            let prop = instance[keyPath: storageKeyPath]
+//            let object = UserDefaults.standard.object(forKey: prop.key)
+//            // first try to decode object as property list
+//            // if that fails, value is most likely a basic type that can be cast directly to object
+//            if let data = object as? Data, let value = try? PropertyListDecoder().decode(Value.self, from: data) {
+//                return value
+//            }
+//            return object as? Value ?? prop.defaultValue
+//        }
+//        set {
+//            let prop = instance[keyPath: storageKeyPath]
+//            prop.publisher?.send(newValue)
+//            // first see if value is a property list convertible struct
+//            // if that fails, value is most likely a basic type that can be stored directly into user defaults
+//            let propList = try? PropertyListEncoder().encode(newValue)
+//            UserDefaults.standard.set(propList ?? newValue, forKey: prop.key)
+//        }
+//    }
+    
+    // Allows for $ syntax to get publisher
+    public var projectedValue: CurrentValueSubject<Value, Never> {
+        mutating get {
+            if let publisher = publisher {
+                return publisher
+            }
+            let publisher = CurrentValueSubject<Value, Never>(wrappedValue)
+            self.publisher = publisher
+            return publisher
+        }
+    }
+    
+    func receive<S>(subscriber: S) where S : Subscriber, Failure == S.Failure, Output == S.Input {
+        publisher?.receive(subscriber: subscriber)
     }
 }
 
-@propertyWrapper struct UserDefaultEnum<T: RawRepresentable> {
-    let key: String
-    let defaultValue: T
-    
-    init(_ key: String, defaultValue: T) {
-        self.key = key
-        self.defaultValue = defaultValue
-    }
-    
-    var wrappedValue: T {
-        get {
-            guard let rawValue = UserDefaults.standard.object(forKey: key) as? T.RawValue else { return defaultValue }
-            return T.init(rawValue: rawValue) ?? defaultValue
-        }
-        set {
-            UserDefaults.standard.set(newValue.rawValue, forKey: key)
-        }
-    }
-}
-
-enum NewPhotoAction: String, Codable, CaseIterable {
+enum NewPhotoAction: String, CaseIterable, PListCodable {
     case updateIcon = "updateIcon"
     case showNotification = "showNotification"
     case popupFrame = "popupFrame"
