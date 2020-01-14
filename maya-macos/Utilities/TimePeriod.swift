@@ -10,20 +10,13 @@ import Foundation
 
 enum TimeUnit: String, CaseIterable, Codable {
     case seconds, minutes, hours, days
-    
-//    var timeInterval: TimeInterval {
-//        switch self {
-//        case .seconds(let val): return TimeInterval(val)
-//        case .minutes(let val): return TimeInterval(val * 60)
-//        case .hours(let val): return TimeInterval(val * 60 * 60)
-//        case .days(let val): return TimeInterval(val * 60 * 60 * 24)
-//        }
-//    }
 }
 
-class TimePeriod: NSObject, Codable {
+struct TimePeriod: Codable, CustomStringConvertible {
+    // Note: Changing these properties will invalidate User Defaults setting
     let value: Int
     let unit: TimeUnit
+    // end Note
     
     var timeInterval: TimeInterval {
         switch unit {
@@ -34,12 +27,11 @@ class TimePeriod: NSObject, Codable {
         }
     }
     
-    override var description: String { "\(value) \(unit)" }
+    var description: String { "\(value) \(unit)" }
     
     init(value: Int, unit: TimeUnit) {
         self.value = value
         self.unit = unit
-        super.init()
     }
     
     static func seconds(_ val: Int) -> TimePeriod {

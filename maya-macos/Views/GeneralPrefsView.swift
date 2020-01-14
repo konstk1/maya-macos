@@ -21,6 +21,9 @@ struct GeneralPrefsView: View {
     @State private var autoSwitchPeriodStr = ""
     @State private var autoSwitchUnitSelection = 0
     
+    @ObservedObject private var frameSettings = Settings.frame
+    private var autoCloseTest = Settings.frame.$autoCloseFrame
+    
     struct HintText: ViewModifier {
         func body(content: Content) -> some View {
             content
@@ -52,8 +55,10 @@ struct GeneralPrefsView: View {
                     Text("Action to take when new photo is ready.").modifier(HintText())
                     
                     HStack {
-                        Toggle(isOn: $autoClose) {
+                        Toggle(isOn: $frameSettings.autoCloseFrame) {
                             Text("Automatically close after")
+                        }.onReceive(frameSettings.$autoCloseFrame) { (output) in
+                            print("Auto close \(self.frameSettings.autoCloseFrame)")
                         }
                         Picker("", selection: $autoCloseTimeSelection) {
                             Text("one").tag(0)

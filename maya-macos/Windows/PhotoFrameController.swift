@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 
 extension NSNotification.Name {
     static let photoFrameStatus = NSNotification.Name("photoFrameStatus")
@@ -26,7 +27,7 @@ class PhotoView: NSImageView {
     override var mouseDownCanMoveWindow: Bool { return true }
 }
 
-class PhotoFrameWindowController: NSWindowController {
+class PhotoFrameWindowController: NSWindowController, ObservableObject {
     // MARK: - Properties
     private(set) var status: PhotoFrameStatus = .idle {
         didSet {
@@ -50,11 +51,11 @@ class PhotoFrameWindowController: NSWindowController {
 
     // Window properties
     // TODO: move this to Settings
-    @UserDefault("PhotoFrame.windowSize", defaultValue: NSSize(width: 400, height: 400))
+    @PublishedUserDefault("PhotoFrame.windowSize", defaultValue: NSSize(width: 400, height: 400))
     private var windowSize
     
     /// Offset of the top left corner from the reference window specified in show(relativeTo:)
-    @UserDefault("PhotoFrame.windowOffset", defaultValue: NSPoint(x: 0, y: -1))
+    @PublishedUserDefault("PhotoFrame.windowOffset", defaultValue: NSPoint(x: 0, y: -1))
     private var windowOffset;
         
     weak var referenceWindow: NSWindow?
@@ -65,6 +66,7 @@ class PhotoFrameWindowController: NSWindowController {
     }
     
     private var observers: [NSKeyValueObservation] = []
+    private var subs: Set<AnyCancellable> = []
     
     var autoCloseWorkItem: DispatchWorkItem?
     
@@ -94,14 +96,14 @@ class PhotoFrameWindowController: NSWindowController {
             photoVendor.setActiveProvider(GooglePhotoProvider.shared)
         }
         
-        observers = [
-            Settings.photos.observe(\.autoSwitchPhoto, options: [.initial, .new], changeHandler: { [weak self] (_, _) in
-                self?.updatePhotoTiming()
-            }),
-            Settings.photos.observe(\.autoSwitchPhotoPeriod, options: [.initial, .new], changeHandler: { [weak self] (_, _) in
-                self?.updatePhotoTiming()
-            }),
-        ]
+        Settings.photos.$autoSwitchPhoto.sink { [weak self] in
+            self?.updatePhotoTiming(autoSwitchPhoto: $0, autoSwitchPeriod: Settings.photos.autoSwitchPhotoPeriod)
+
+        }.store(in: &subs)
+        
+        Settings.photos.$autoSwitchPhotoPeriod.sink { [weak self] in
+            self?.updatePhotoTiming(autoSwitchPhoto: Settings.photos.autoSwitchPhoto, autoSwitchPeriod: $0)
+        }.store(in: &subs)
     }
     
     override func windowDidLoad() {
@@ -124,14 +126,14 @@ class PhotoFrameWindowController: NSWindowController {
     }
     
     /// Determines next photo timing.  If auto-switch enabled, [re]sets the timer to vend new image.
-    func updatePhotoTiming() {
+    func updatePhotoTiming(autoSwitchPhoto: Bool, autoSwitchPeriod: TimePeriod) {
         // invalidate current timer, if running
         vendTimer?.invalidate()
         
         // set new timer based on settings
-        if Settings.photos.autoSwitchPhoto {
-            log.info("Auto next photo in \(Settings.photos.autoSwitchPhotoPeriod)")
-            vendTimer = Timer.scheduledTimer(withTimeInterval: Settings.photos.autoSwitchPhotoPeriod.timeInterval, repeats: false, block: { [weak self] (_) in
+        if autoSwitchPhoto {
+            log.info("Auto next photo in \(autoSwitchPeriod)")
+            vendTimer = Timer.scheduledTimer(withTimeInterval: autoSwitchPeriod.timeInterval, repeats: false, block: { [weak self] (_) in
                 self?.shouldPopupOnVend = (Settings.frame.newPhotoAction == .popupFrame)
                 self?.photoVendor.vendImage()
             })
@@ -185,7 +187,7 @@ extension PhotoFrameWindowController: PhotoVendorDelegate {
         }
         
         // restart photo timers
-        updatePhotoTiming()
+        updatePhotoTiming(autoSwitchPhoto: Settings.photos.autoSwitchPhoto, autoSwitchPeriod: Settings.photos.autoSwitchPhotoPeriod)
     }
     
     func didFailToVend(error: Error?) {

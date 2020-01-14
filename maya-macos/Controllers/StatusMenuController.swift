@@ -122,6 +122,12 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
         prefController.showWindow(sender)
     }
     
+    @IBAction func swiftUIClicked(_ sender: NSMenuItem) {
+        NSApp.activate(ignoringOtherApps: true)
+        let vc = PrefsWindowController()
+        vc.showWindow(sender)
+    }
+    
     @IBAction func quitClicked(_ sender: NSMenuItem) {
         NSApplication.shared.terminate(self)
     }
