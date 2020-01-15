@@ -12,10 +12,10 @@ enum TimeUnit: String, CaseIterable, Codable {
     case seconds, minutes, hours, days
 }
 
-struct TimePeriod: Codable, CustomStringConvertible {
+struct TimePeriod: Codable, Equatable, CustomStringConvertible {
     // Note: Changing these properties will invalidate User Defaults setting
-    let value: Int
-    let unit: TimeUnit
+    var value: Int
+    var unit: TimeUnit
     // end Note
     
     var timeInterval: TimeInterval {

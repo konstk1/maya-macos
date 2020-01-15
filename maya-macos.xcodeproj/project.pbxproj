@@ -47,6 +47,7 @@
 		FFD4C35F23CCF203007D1A27 /* PrefsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C35E23CCF203007D1A27 /* PrefsWindowController.swift */; };
 		FFD63774238B0513003A4071 /* PhotoScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD63773238B0513003A4071 /* PhotoScrollView.swift */; };
 		FFDD944B23057E2300891545 /* AboutWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDD944923057E2300891545 /* AboutWindowController.swift */; };
+		FFDED62023CF784B00C678EB /* GeneralPrefsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */; };
 		FFE9162322E0F5C400687322 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */; };
 		FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE9162222E0F5C400687322 /* SettingsController.xib */; };
 		FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE7F22EF5CC7009411B8 /* Settings.swift */; };
@@ -123,6 +124,7 @@
 		FFD4C35E23CCF203007D1A27 /* PrefsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWindowController.swift; sourceTree = "<group>"; };
 		FFD63773238B0513003A4071 /* PhotoScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoScrollView.swift; sourceTree = "<group>"; };
 		FFDD944923057E2300891545 /* AboutWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutWindowController.swift; sourceTree = "<group>"; };
+		FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsViewModel.swift; sourceTree = "<group>"; };
 		FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		FFE9162222E0F5C400687322 /* SettingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsController.xib; sourceTree = "<group>"; };
 		FFEBBE7F22EF5CC7009411B8 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				FF3E18FC23CA6D3200E5002B /* AboutView.swift */,
 				FFD4C35A23CC0E8A007D1A27 /* PreferencesView.swift */,
 				FFD4C35C23CC11B2007D1A27 /* GeneralPrefsView.swift */,
+				FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 				FF3E18FD23CA6D3200E5002B /* AboutView.swift in Sources */,
 				FF34718422DF82F70009CB40 /* Utilities.swift in Sources */,
 				FF53981E2315C6DC0067F3E9 /* SourceCell.swift in Sources */,
+				FFDED62023CF784B00C678EB /* GeneralPrefsViewModel.swift in Sources */,
 				FFD63774238B0513003A4071 /* PhotoScrollView.swift in Sources */,
 				FFD4C35B23CC0E8A007D1A27 /* PreferencesView.swift in Sources */,
 				FF90732022BC12670052428E /* PhotoVendor.swift in Sources */,

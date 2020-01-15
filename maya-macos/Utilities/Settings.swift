@@ -10,19 +10,6 @@ import Foundation
 import Combine
 import ServiceManagement
 
-//fileprivate protocol ObservableSettings: ObservableObject {
-//    var notificationSubscription: AnyCancellable? { get set }
-//    init()
-//}
-//
-//extension ObservableSettings {
-//    init() {
-//        notificationSubscription = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification).sink { _ in
-//            self.objectWillChange.send()
-//        }
-//    }
-//}
-
 enum Settings {
 
     static let app = AppSettings.shared
