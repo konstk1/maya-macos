@@ -48,6 +48,9 @@
 		FFD63774238B0513003A4071 /* PhotoScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD63773238B0513003A4071 /* PhotoScrollView.swift */; };
 		FFDD944B23057E2300891545 /* AboutWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDD944923057E2300891545 /* AboutWindowController.swift */; };
 		FFDED62023CF784B00C678EB /* GeneralPrefsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */; };
+		FFDED62223CF9C1D00C678EB /* SourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDED62123CF9C1D00C678EB /* SourcesView.swift */; };
+		FFDED62423CF9E4E00C678EB /* LocalFolderSourceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDED62323CF9E4E00C678EB /* LocalFolderSourceDetailView.swift */; };
+		FFDED62623CF9F1100C678EB /* ApiSourceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDED62523CF9F1100C678EB /* ApiSourceDetailView.swift */; };
 		FFE9162322E0F5C400687322 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */; };
 		FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE9162222E0F5C400687322 /* SettingsController.xib */; };
 		FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE7F22EF5CC7009411B8 /* Settings.swift */; };
@@ -125,6 +128,9 @@
 		FFD63773238B0513003A4071 /* PhotoScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoScrollView.swift; sourceTree = "<group>"; };
 		FFDD944923057E2300891545 /* AboutWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutWindowController.swift; sourceTree = "<group>"; };
 		FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsViewModel.swift; sourceTree = "<group>"; };
+		FFDED62123CF9C1D00C678EB /* SourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesView.swift; sourceTree = "<group>"; };
+		FFDED62323CF9E4E00C678EB /* LocalFolderSourceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderSourceDetailView.swift; sourceTree = "<group>"; };
+		FFDED62523CF9F1100C678EB /* ApiSourceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiSourceDetailView.swift; sourceTree = "<group>"; };
 		FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		FFE9162222E0F5C400687322 /* SettingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsController.xib; sourceTree = "<group>"; };
 		FFEBBE7F22EF5CC7009411B8 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -228,9 +234,12 @@
 			isa = PBXGroup;
 			children = (
 				FF3E18FC23CA6D3200E5002B /* AboutView.swift */,
-				FFD4C35A23CC0E8A007D1A27 /* PreferencesView.swift */,
 				FFD4C35C23CC11B2007D1A27 /* GeneralPrefsView.swift */,
 				FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */,
+				FFD4C35A23CC0E8A007D1A27 /* PreferencesView.swift */,
+				FFDED62123CF9C1D00C678EB /* SourcesView.swift */,
+				FFDED62323CF9E4E00C678EB /* LocalFolderSourceDetailView.swift */,
+				FFDED62523CF9F1100C678EB /* ApiSourceDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -478,13 +487,16 @@
 				FFE9162322E0F5C400687322 /* PreferencesWindowController.swift in Sources */,
 				FF39C02F2316F74900203D7F /* GooglePhotosViewController.swift in Sources */,
 				FFAF7AF423CF667400763CC1 /* EnumCodable.swift in Sources */,
+				FFDED62423CF9E4E00C678EB /* LocalFolderSourceDetailView.swift in Sources */,
 				FFEBBE8422EF834F009411B8 /* TimePeriod.swift in Sources */,
 				FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */,
 				FFD3698322F385AA00EC7A85 /* PhotoProvider.swift in Sources */,
 				FF90731E22BBFF4D0052428E /* StatusMenuController.swift in Sources */,
 				FF39C02D2316F66E00203D7F /* GooglePhotoProvider.swift in Sources */,
+				FFDED62223CF9C1D00C678EB /* SourcesView.swift in Sources */,
 				FFD4C35D23CC11B2007D1A27 /* GeneralPrefsView.swift in Sources */,
 				FF9B7D09231859F90073E77E /* GooglePhotosAPI.swift in Sources */,
+				FFDED62623CF9F1100C678EB /* ApiSourceDetailView.swift in Sources */,
 				FF9B7D0F2318BE700073E77E /* GooglePhotoAsset.swift in Sources */,
 				FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */,
 				FF9B7D0223181AF00073E77E /* Keychain.swift in Sources */,
