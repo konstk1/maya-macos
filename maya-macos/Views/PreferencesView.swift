@@ -9,17 +9,22 @@
 import SwiftUI
 
 struct PreferencesView: View {
+    @State private var selectedTab = 0
+    
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             GeneralPrefsView().tabItem {
-                Image(nsImage: NSImage(named: NSImage.preferencesGeneralName)!)
+                Image(nsImage: NSImage(named: NSImage.preferencesGeneralName)!).frame(width: 40, height: 40)
                 Text("General")
-            }.tag(0)
-            Text("Sources").tabItem {
-                Image(nsImage: NSImage(named: "SourcesIcon")!)
+            }
+            SourcesView().tabItem {
+                Image(nsImage: NSImage(named: "SourcesIcon")!).frame(width: 40, height: 40)
                 Text("Sources")
-            }.tag(0)
-        }
+            }
+            Image(nsImage: NSImage(named: "SourcesIcon")!).frame(width: 40, height: 40).tabItem {
+                Text("Image")
+            }
+        }.frame(width: 500, height: 320).padding()
     }
 }
 
