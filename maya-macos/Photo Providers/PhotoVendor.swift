@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 
 protocol PhotoVendorDelegate: class {
     func didVendNewImage(image: NSImage)
@@ -17,7 +18,7 @@ enum PhotoVendorError: Error {
     case noActiveProvider
 }
 
-final class PhotoVendor: PhotoProviderDelegate {
+final class PhotoVendor: ObservableObject, PhotoProviderDelegate {
     static let shared = PhotoVendor()
     
     /// Whether to show photos in random order. Defaults to `true`.

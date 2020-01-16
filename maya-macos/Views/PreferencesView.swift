@@ -14,17 +14,17 @@ struct PreferencesView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             GeneralPrefsView().tabItem {
-                Image(nsImage: NSImage(named: NSImage.preferencesGeneralName)!).frame(width: 40, height: 40)
+//                Image(nsImage: NSImage(named: NSImage.preferencesGeneralName)!).frame(width: 40, height: 40)
                 Text("General")
-            }
+            }.tag(0)
             SourcesView().tabItem {
-                Image(nsImage: NSImage(named: "SourcesIcon")!).frame(width: 40, height: 40)
+//                Image(nsImage: NSImage(named: "SourcesIcon")!).frame(width: 40, height: 40)
                 Text("Sources")
-            }
+            }.tag(1)
             Image(nsImage: NSImage(named: "SourcesIcon")!).frame(width: 40, height: 40).tabItem {
                 Text("Image")
-            }
-        }.frame(width: 500, height: 320).padding()
+            }.tag(2)
+        }.frame(width: 500, height: 320)
     }
 }
 
