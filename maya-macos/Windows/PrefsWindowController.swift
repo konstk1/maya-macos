@@ -12,7 +12,7 @@ import SwiftUI
 class PrefsWindowController: NSWindowController {
     
     init() {
-        let prefsView = SourcesView()
+        let prefsView = PreferencesView().environmentObject(PhotoVendor.shared)
         let hostingController = NSHostingController(rootView: prefsView)
         let window = NSWindow(contentViewController: hostingController)
         window.title = "Maya - Preferences"
