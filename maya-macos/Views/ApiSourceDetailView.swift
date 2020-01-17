@@ -10,9 +10,7 @@ import SwiftUI
 
 struct ApiSourceDetailView: View {
     var body: some View {
-        GeometryReader { g in
-            Text("API source").frame(width: g.size.width, height: g.size.height)
-        }
+        Text("API source")
     }
 }
 

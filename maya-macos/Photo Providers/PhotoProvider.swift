@@ -7,10 +7,12 @@
 //
 
 import Cocoa
+import Combine
 
 protocol PhotoProvider: class {
     var delegate: PhotoProviderDelegate? { get set }
     var photoDescriptors: [PhotoAssetDescriptor] { get }
+    var photoCountPublisher: CurrentValueSubject<Int, Never> { get }
     func refreshAssets(completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void)
 }
 

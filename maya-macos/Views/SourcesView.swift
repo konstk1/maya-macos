@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Combine
 import SwiftyBeaver
 
 struct ProviderRow: View {
@@ -16,6 +17,10 @@ struct ProviderRow: View {
     var isActive: Bool {
         return providerIndex == photoVendor.photoProviders.firstIndex { $0 === photoVendor.activeProvider }
     }
+    
+    @State private var photoCount = 0
+    
+    @State private var subs: Set<AnyCancellable> = []
     
     var providerInfo: (name: String, image: NSImage) {
         switch photoVendor.photoProviders[providerIndex] {
@@ -40,10 +45,22 @@ struct ProviderRow: View {
                     }
                 }.padding(.leading, 5)
                 Image(nsImage: self.providerInfo.image).resizable().frame(width: 30, height: 30)
-                Text(self.providerInfo.name)
-                
+                Text(self.providerInfo.name).lineLimit(1)
+                Spacer()
+                Text("\(self.photoCount)")
+                    .padding(.horizontal, 5).frame(minWidth: 35, minHeight: 20)
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundColor(.white)
+                    .background(Color.gray)
+                    .clipShape(Capsule())
+                    .padding(.trailing, 10)
             }
             .frame(width: g.size.width, height: g.size.height, alignment: .leading)
+        }.onAppear {
+            self.photoVendor.photoProviders[self.providerIndex].photoCountPublisher
+            .receive(on: RunLoop.main)
+            .assign(to: \Self.photoCount, on: self)
+                .store(in: &self.subs)
         }
     }
 }
@@ -55,7 +72,7 @@ struct SourcesView: View {
     
     func makeRow(at index: Int) -> some View {
         ZStack(alignment: .leading) {
-            ProviderRow(providerIndex: index).frame(height: 40)
+            ProviderRow(providerIndex: index).environmentObject(self.photoVendor).frame(height: 40)
                 .contentShape(Rectangle())
                 .onTapGesture { self.selectedProviderIdx = index }
             
@@ -81,9 +98,9 @@ struct SourcesView: View {
                         self.makeRow(at: i)
                     }
                     Spacer()
-                }.frame(width: 200, height: g.size.height, alignment: .leading).background(Color.white)
+                }.frame(width: 220, height: g.size.height, alignment: .leading).background(Color.white)
                 Divider()
-                self.detailView(for: self.selectedProviderIdx)
+                self.detailView(for: self.selectedProviderIdx).frame(width: g.size.width - 220, height: g.size.height, alignment: .top).offset(x: 0, y: 10)
             }
         }
     }
