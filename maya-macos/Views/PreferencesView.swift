@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct PreferencesView: View {
-    @State private var selectedTab = 0
+    @State private var selectedTab = 1
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -21,15 +21,12 @@ struct PreferencesView: View {
 //                Image(nsImage: NSImage(named: "SourcesIcon")!).frame(width: 40, height: 40)
                 Text("Sources")
             }.tag(1)
-            Image(nsImage: NSImage(named: "SourcesIcon")!).frame(width: 40, height: 40).tabItem {
-                Text("Image")
-            }.tag(2)
         }.frame(width: 500, height: 320)
     }
 }
 
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
-        PreferencesView()
+        PreferencesView().environmentObject(PhotoVendor.shared)
     }
 }

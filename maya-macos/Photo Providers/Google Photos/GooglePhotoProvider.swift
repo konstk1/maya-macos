@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 import Alamofire
 import OAuthSwift
 import OAuthSwiftAlamofire
@@ -32,6 +33,8 @@ final class GooglePhotoProvider {
     
     /// Photos in active album
     private(set) var photos: [GooglePhotos.MediaItem] = []
+    
+    lazy var photoCountPublisher = CurrentValueSubject<Int, Never>(photos.count)
     
     private lazy var oauthswift = OAuth2Swift(
         consumerKey: Secrets.GoogleAPI.clientId,
@@ -174,6 +177,7 @@ final class GooglePhotoProvider {
                 } else {
                     print("Success: photos \(strongSelf.photos.count)")
                     NotificationCenter.default.post(name: .updatePhotoCount, object: self, userInfo: ["photoCount": photos.count])
+                    strongSelf.photoCountPublisher.send(photos.count)
                     completion(.success(strongSelf.photos))
                 }
             case .failure(let error):

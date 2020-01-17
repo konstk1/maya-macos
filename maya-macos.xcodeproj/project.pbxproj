@@ -35,6 +35,7 @@
 		FF9B7D09231859F90073E77E /* GooglePhotosAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9B7D08231859F90073E77E /* GooglePhotosAPI.swift */; };
 		FF9B7D0F2318BE700073E77E /* GooglePhotoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9B7D0E2318BE700073E77E /* GooglePhotoAsset.swift */; };
 		FFAF7AF423CF667400763CC1 /* EnumCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAF7AF323CF667400763CC1 /* EnumCodable.swift */; };
+		FFB1234423D246700068A9A6 /* LocalFolderSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB1234323D246700068A9A6 /* LocalFolderSourceViewModel.swift */; };
 		FFC22B5922F2378300121828 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC22B5822F2378300121828 /* AppDelegate.swift */; };
 		FFC22B5B22F2378400121828 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFC22B5A22F2378400121828 /* Assets.xcassets */; };
 		FFC22B6522F2387600121828 /* Maya Launcher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = FFC22B5622F2378300121828 /* Maya Launcher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -113,6 +114,7 @@
 		FF9B7D0D231874880073E77E /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		FF9B7D0E2318BE700073E77E /* GooglePhotoAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePhotoAsset.swift; sourceTree = "<group>"; };
 		FFAF7AF323CF667400763CC1 /* EnumCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumCodable.swift; sourceTree = "<group>"; };
+		FFB1234323D246700068A9A6 /* LocalFolderSourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderSourceViewModel.swift; sourceTree = "<group>"; };
 		FFC22B5622F2378300121828 /* Maya Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Maya Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFC22B5822F2378300121828 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FFC22B5A22F2378400121828 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -234,12 +236,13 @@
 			isa = PBXGroup;
 			children = (
 				FF3E18FC23CA6D3200E5002B /* AboutView.swift */,
+				FFDED62523CF9F1100C678EB /* ApiSourceDetailView.swift */,
 				FFD4C35C23CC11B2007D1A27 /* GeneralPrefsView.swift */,
 				FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */,
 				FFD4C35A23CC0E8A007D1A27 /* PreferencesView.swift */,
-				FFDED62123CF9C1D00C678EB /* SourcesView.swift */,
 				FFDED62323CF9E4E00C678EB /* LocalFolderSourceDetailView.swift */,
-				FFDED62523CF9F1100C678EB /* ApiSourceDetailView.swift */,
+				FFB1234323D246700068A9A6 /* LocalFolderSourceViewModel.swift */,
+				FFDED62123CF9C1D00C678EB /* SourcesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -501,6 +504,7 @@
 				FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */,
 				FF9B7D0223181AF00073E77E /* Keychain.swift in Sources */,
 				FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */,
+				FFB1234423D246700068A9A6 /* LocalFolderSourceViewModel.swift in Sources */,
 				FF9072D222BB04CD0052428E /* AppDelegate.swift in Sources */,
 				FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */,
 				FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */,

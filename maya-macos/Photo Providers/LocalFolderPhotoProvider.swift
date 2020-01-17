@@ -7,8 +7,9 @@
 //
 
 import Cocoa
+import Combine
 
-final class LocalFolderPhotoProvider {
+final class LocalFolderPhotoProvider: ObservableObject {
     static let shared = LocalFolderPhotoProvider()
     
     weak var delegate: PhotoProviderDelegate?
@@ -25,8 +26,11 @@ final class LocalFolderPhotoProvider {
     private var photoURLs: [URL] = [] {
         didSet {
             NotificationCenter.default.post(name: .updatePhotoCount, object: self, userInfo: ["photoCount": photoURLs.count])
+            photoCountPublisher.send(photoURLs.count)
         }
     }
+    
+    lazy var photoCountPublisher = CurrentValueSubject<Int, Never>(photoURLs.count)
     
     /// Supported photo file extensions
     private let supportedExtension = ["png", "jpg", "jpeg"]

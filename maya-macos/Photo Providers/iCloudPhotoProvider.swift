@@ -7,10 +7,13 @@
 //
 
 import Cocoa
+import Combine
 import Photos
 
 final class iCloudPhotoProvider {
     weak var delegate: PhotoProviderDelegate?
+    
+    lazy var photoCountPublisher = CurrentValueSubject<Int, Never>(0)
     
     init() {
         
