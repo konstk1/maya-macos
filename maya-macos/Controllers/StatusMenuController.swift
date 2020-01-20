@@ -29,8 +29,8 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
         NSEvent.addLocalMonitorForEvents(matching: mouseEventMask, handler: localEventHandler)
         
         NotificationCenter.default.addObserver(forName: .photoFrameStatus, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
-            guard let strongSelf = self else { return }
-            strongSelf.setIcon()
+            guard let self = self else { return }
+            self.setIcon()
         }
         
         NSUserNotificationCenter.default.delegate = self

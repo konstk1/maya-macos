@@ -20,8 +20,6 @@ class PrefsWindowController: NSWindowController {
         window.center()
         window.setFrameAutosaveName("Prefs window")
         super.init(window: window)
-        
-//        window.delegate = self
     }
     
     required init?(coder: NSCoder) {

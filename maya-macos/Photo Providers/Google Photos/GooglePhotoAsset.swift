@@ -7,12 +7,15 @@
 //
 
 import Cocoa
+import Combine
 
 struct GooglePhotoAsset: PhotoAssetDescriptor {
+    
     var photoId: String
     var description: String { "/* TODO: Implement this */" }
     
-    func fetchImage(completion: @escaping (Result<NSImage, Error>) -> Void) {
-        GooglePhotoProvider.shared.getPhoto(id: photoId, completion: completion)
+    func fetchImage() -> Future<NSImage, Error> {
+        fatalError("Not implemented")
+//        GooglePhotoProvider.shared.getPhoto(id: photoId, completion: completion)
     }
 }

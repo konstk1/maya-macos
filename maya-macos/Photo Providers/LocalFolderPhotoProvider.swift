@@ -12,7 +12,9 @@ import Combine
 final class LocalFolderPhotoProvider: ObservableObject {
     static let shared = LocalFolderPhotoProvider()
     
-    weak var delegate: PhotoProviderDelegate?
+    let id = UUID()
+    
+//    weak var delegate: PhotoProviderDelegate?
     
     /// List of recently used folders
     var recentFolders: [URL] {
@@ -26,11 +28,11 @@ final class LocalFolderPhotoProvider: ObservableObject {
     private var photoURLs: [URL] = [] {
         didSet {
             NotificationCenter.default.post(name: .updatePhotoCount, object: self, userInfo: ["photoCount": photoURLs.count])
-            photoCountPublisher.send(photoURLs.count)
+            photoDescriptorsPublisher.send(photoURLs.map { LocalPhotoAsset(photoURL: $0) })
         }
     }
     
-    lazy var photoCountPublisher = CurrentValueSubject<Int, Never>(photoURLs.count)
+    var photoDescriptorsPublisher = CurrentValueSubject<[PhotoAssetDescriptor], Error>([])
     
     /// Supported photo file extensions
     private let supportedExtension = ["png", "jpg", "jpeg"]
@@ -72,7 +74,7 @@ final class LocalFolderPhotoProvider: ObservableObject {
         updateRecents(with: url)
         
         // notify delegate that assets were updated
-        delegate?.didUpdateAssets(assets: photoDescriptors)
+//        delegate?.didUpdateAssets(assets: photoDescriptors)
     }
     
     private func loadBookmark(for url: URL) throws -> URL {
@@ -135,41 +137,58 @@ final class LocalFolderPhotoProvider: ObservableObject {
     }
 }
 
-struct LocalPhotoAsset: PhotoAssetDescriptor {
-    var photoURL: URL
-    var description: String { photoURL.path }
-    
-    func fetchImage(completion: (Result<NSImage, Error>) -> Void) {
-        try? LocalFolderPhotoProvider.shared.startFolderAccess()
-        defer {
-            LocalFolderPhotoProvider.shared.stopFolderAccess()
-        }
-        guard let image = NSImage(contentsOf: photoURL) else {
-            log.error("Failed to read file \(photoURL.path)")
-            completion(.failure(PhotoProviderError.failedReadLocalFile))
-            return
-        }
-        
-        completion(.success(image))
-    }
-}
-
+// MARK: PhotoProvider
 extension LocalFolderPhotoProvider: PhotoProvider {
     var photoDescriptors: [PhotoAssetDescriptor] {
         return photoURLs.map { LocalPhotoAsset(photoURL: $0) }
     }
     
-    func refreshAssets(completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void) {
-        try? startFolderAccess()
-        defer {
-            stopFolderAccess()
-        }
-        let result = Result { () -> [PhotoAssetDescriptor] in
-            photoURLs = try updatePhotoList()
-            return photoDescriptors
+    func refreshAssets() -> Future<[PhotoAssetDescriptor], Error> {
+        return Future { [weak self] promise in
+            guard let self = self else {
+                log.error("Self no longer exists")
+                promise(.failure(PhotoProviderError.unknown))
+                return
+            }
+            
+            try? self.startFolderAccess()
+            defer {
+                self.stopFolderAccess()
+            }
+            
+            let result = Result { () -> [PhotoAssetDescriptor] in
+                self.photoURLs = try self.updatePhotoList()
+                return self.photoDescriptors
+            }
+            
+            promise(result)
         }
 
-        completion(result)
+    }
+}
+
+struct LocalPhotoAsset: PhotoAssetDescriptor {
+    var photoURL: URL
+    var description: String { photoURL.path }
+    
+    func fetchImage() -> Future<NSImage, Error> {
+        let photoURL = self.photoURL
+        let photoProvider = LocalFolderPhotoProvider.shared
+        
+        return Future { promise in
+            try? photoProvider.startFolderAccess()
+            defer {
+                photoProvider.stopFolderAccess()
+            }
+            
+            guard let image = NSImage(contentsOf: photoURL) else {
+                log.error("Failed to read file \(photoURL.path)")
+                promise(.failure(PhotoProviderError.failedReadLocalFile))
+                return
+            }
+            
+            promise(.success(image))
+        }
     }
 }
 

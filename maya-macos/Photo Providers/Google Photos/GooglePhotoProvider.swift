@@ -16,7 +16,10 @@ import KeychainAccess
 final class GooglePhotoProvider {
     static let shared = GooglePhotoProvider()
     
-    weak var delegate: PhotoProviderDelegate?
+    let id = UUID()
+    
+//    weak var delegate: PhotoProviderDelegate?
+    var photoDescriptorsPublisher = CurrentValueSubject<[PhotoAssetDescriptor], Error>([])
     
     private lazy var alamo = Session(interceptor: oauthswift.requestInterceptor)
     
@@ -64,7 +67,8 @@ final class GooglePhotoProvider {
         if let activeAlbumId = Settings.googlePhotos.activeAlbumId {
             activeAlbum = GooglePhotos.Album(id: activeAlbumId, title: "Loading...", productUrl: "", mediaItemsCount: nil, coverPhotoBaseUrl: "", coverPhotoMediaItemId: nil)
             listPhotos(for: activeAlbum!) { [weak self] _ in
-                self?.delegate?.didUpdateAssets(assets: self?.photoDescriptors ?? [])
+                fatalError("Not implemented")
+//                self?.delegate?.didUpdateAssets(assets: self?.photoDescriptors ?? [])
             }
         }
     }
@@ -75,7 +79,8 @@ final class GooglePhotoProvider {
         Settings.googlePhotos.activeAlbumId = album.id
         
         listPhotos(for: album) { [weak self] result in
-            self?.delegate?.didUpdateAssets(assets: self?.photoDescriptors ?? [])
+            fatalError("Not implemented")
+//            self?.delegate?.didUpdateAssets(assets: self?.photoDescriptors ?? [])
         }
     }
     
@@ -139,16 +144,16 @@ final class GooglePhotoProvider {
         log.debug("Requesting \(endpoint.absoluteString)")
         alamo.request(endpoint, parameters: params).validate().responseDecodable { [weak self] (response: AFDataResponse<GooglePhotos.Albums.ListResponse>) in
             log.debug("Fetching \(response.request!.url!.absoluteString)")
-            guard let strongSelf = self else { return }
+            guard let self = self else { return }
             switch response.result {
             case .success(let albumList):
-                strongSelf.albums.append(contentsOf: albumList.albums)
+                self.albums.append(contentsOf: albumList.albums)
                 if let nextPageToken = albumList.nextPageToken {
-                    strongSelf.listAlbums(pageToken: nextPageToken, completion: completion)
+                    self.listAlbums(pageToken: nextPageToken, completion: completion)
                 } else {
-                    print("Success: \(strongSelf.albums.count) albums")
-                    strongSelf.updateActiveAlbumDetails()
-                    completion(.success(strongSelf.albums))
+                    print("Success: \(self.albums.count) albums")
+                    self.updateActiveAlbumDetails()
+                    completion(.success(self.albums))
                 }
             case .failure(let error):
                 log.error("Album list failed: HTTP \(response.response?.statusCode ?? 0) - \(error)")
@@ -167,18 +172,18 @@ final class GooglePhotoProvider {
         
         alamo.request(endpoint, method: .post, parameters: params).validate().responseDecodable { [weak self] (response: AFDataResponse<GooglePhotos.Albums.ContentsResponse>) in
             log.debug("Fetching \(response.request!.url!.absoluteString)")
-            guard let strongSelf = self else { return }
+            guard let self = self else { return }
             switch response.result {
             case .success(let contents):
                 let photos = contents.mediaItems.filter { $0.isPhoto }  // filter out non-photo items
-                strongSelf.photos.append(contentsOf: photos)
+                self.photos.append(contentsOf: photos)
                 if let nextPageToken = contents.nextPageToken {
-                    strongSelf.listPhotos(for: album, pageToken: nextPageToken, completion: completion)
+                    self.listPhotos(for: album, pageToken: nextPageToken, completion: completion)
                 } else {
-                    print("Success: photos \(strongSelf.photos.count)")
+                    print("Success: photos \(self.photos.count)")
                     NotificationCenter.default.post(name: .updatePhotoCount, object: self, userInfo: ["photoCount": photos.count])
-                    strongSelf.photoCountPublisher.send(photos.count)
-                    completion(.success(strongSelf.photos))
+                    self.photoCountPublisher.send(photos.count)
+                    completion(.success(self.photos))
                 }
             case .failure(let error):
                 log.error("Failed to get contents of album \(album.title): \(error)")
@@ -223,25 +228,28 @@ final class GooglePhotoProvider {
     }
 }
 
-extension GooglePhotoProvider: PhotoProvider {    
+extension GooglePhotoProvider: PhotoProvider {
     var photoDescriptors: [PhotoAssetDescriptor] {
         return photos.map { GooglePhotoAsset(photoId: $0.id) }
     }
     
-    func refreshAssets(completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void) {
+    func refreshAssets() -> Future<[PhotoAssetDescriptor], Error> {
+//    (completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void) {
+        fatalError("Not yet implemented")
+        
         let google = GooglePhotoProvider.shared
         
-        if let activeAlbum = google.activeAlbum {
-            GooglePhotoProvider.shared.listPhotos(for: activeAlbum) { (result) in
-                let newResult = result.map { (photos) -> [PhotoAssetDescriptor] in
-                    self.photos = photos
-                    return self.photoDescriptors
-                }
-                completion(newResult)
-            }
-        } else {
-            // if no active album, return failure
-            completion(.failure(PhotoProviderError.noActiveAlbum))
-        }
+//        if let activeAlbum = google.activeAlbum {
+//            GooglePhotoProvider.shared.listPhotos(for: activeAlbum) { (result) in
+//                let newResult = result.map { (photos) -> [PhotoAssetDescriptor] in
+//                    self.photos = photos
+//                    return self.photoDescriptors
+//                }
+//                completion(newResult)
+//            }
+//        } else {
+//            // if no active album, return failure
+//            completion(.failure(PhotoProviderError.noActiveAlbum))
+//        }
     }
 }

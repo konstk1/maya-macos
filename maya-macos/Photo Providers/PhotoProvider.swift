@@ -10,19 +10,31 @@ import Cocoa
 import Combine
 
 protocol PhotoProvider: class {
-    var delegate: PhotoProviderDelegate? { get set }
+    var id: UUID { get }
+
     var photoDescriptors: [PhotoAssetDescriptor] { get }
-    var photoCountPublisher: CurrentValueSubject<Int, Never> { get }
-    func refreshAssets(completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void)
+    var photoDescriptorsPublisher: CurrentValueSubject<[PhotoAssetDescriptor], Error> { get }
+    func refreshAssets() -> Future<[PhotoAssetDescriptor], Error>
 }
 
-protocol PhotoProviderDelegate: class {
-    func didUpdateAssets(assets: [PhotoAssetDescriptor])
+extension PhotoProvider {
+    /// enum value describing type of photo provider (used for savings to UserDefaults)
+    var type: PhotoProviderType {
+        switch self {
+        case is LocalFolderPhotoProvider:
+            return .localFolder
+        case is GooglePhotoProvider:
+            return .googlePhotos
+        default:
+            log.warning("Unimplemented photo provider type")
+            return .none
+        }
+    }
 }
 
 protocol PhotoAssetDescriptor: CustomStringConvertible {
     // fetches an image for underlying photo asset
-    func fetchImage(completion: @escaping (Result<NSImage, Error>) -> Void)
+    func fetchImage() -> Future<NSImage, Error>
 }
 
 enum PhotoProviderType: String, PListCodable {
@@ -36,6 +48,7 @@ enum PhotoProviderError: Error {
     case failedFetchURL
     case failedAuth
     case noActiveAlbum
+    case unknown
 }
 
 extension Notification.Name {

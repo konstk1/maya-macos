@@ -42,7 +42,7 @@ class LocalFolderViewModel: ObservableObject {
         
         NotificationCenter.default.publisher(for: .updatePhotoCount, object: localPhotoProvider).receive(on: RunLoop.main).sink { [weak self] in
             self?.photoCount = $0.userInfo?["photoCount"] as? Int ?? 0
-            print("Updated photo count: \(self?.photoCount)")
+            print("Updated photo count: \(self?.photoCount ?? -1)")
         }.store(in: &subs)
     }
 
@@ -53,15 +53,15 @@ class LocalFolderViewModel: ObservableObject {
         panel.allowsMultipleSelection = false
         
         panel.begin { [weak self] (response) in
-            guard let strongSelf = self else { log.error("self doesn't exist anymore"); return }
+            guard let self = self else { log.error("self doesn't exist anymore"); return }
             
             if response == .OK {
                 if let selectedUrl = panel.url {
-                    strongSelf.updateFolderSelection(url: selectedUrl)
+                    self.updateFolderSelection(url: selectedUrl)
                 }
             } else {
                 // cancel clicked, restore previously selected item (first item in the list)
-                strongSelf.folderSelection = 0
+                self.folderSelection = 0
             }
         }
     }
