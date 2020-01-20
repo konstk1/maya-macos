@@ -22,7 +22,7 @@ class PhotoProviderTests: XCTestCase {
     func testBookmark() {
         let url = URL(fileURLWithPath: "/home/kon/")
         let data = try? url.bookmarkData(options: [.withSecurityScope, .securityScopeAllowOnlyReadAccess])
-        print("Bookmark data: ", data)
+        print("Bookmark data: ", data as Any)
     }
 
     func testICloud() {

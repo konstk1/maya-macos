@@ -36,6 +36,7 @@
 		FF9B7D0F2318BE700073E77E /* GooglePhotoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9B7D0E2318BE700073E77E /* GooglePhotoAsset.swift */; };
 		FFAF7AF423CF667400763CC1 /* EnumCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAF7AF323CF667400763CC1 /* EnumCodable.swift */; };
 		FFB1234423D246700068A9A6 /* LocalFolderSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB1234323D246700068A9A6 /* LocalFolderSourceViewModel.swift */; };
+		FFB1234623D3A6CD0068A9A6 /* PhotoFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB1234523D3A6CD0068A9A6 /* PhotoFrameView.swift */; };
 		FFC22B5922F2378300121828 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC22B5822F2378300121828 /* AppDelegate.swift */; };
 		FFC22B5B22F2378400121828 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFC22B5A22F2378400121828 /* Assets.xcassets */; };
 		FFC22B6522F2387600121828 /* Maya Launcher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = FFC22B5622F2378300121828 /* Maya Launcher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -115,6 +116,7 @@
 		FF9B7D0E2318BE700073E77E /* GooglePhotoAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePhotoAsset.swift; sourceTree = "<group>"; };
 		FFAF7AF323CF667400763CC1 /* EnumCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumCodable.swift; sourceTree = "<group>"; };
 		FFB1234323D246700068A9A6 /* LocalFolderSourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderSourceViewModel.swift; sourceTree = "<group>"; };
+		FFB1234523D3A6CD0068A9A6 /* PhotoFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameView.swift; sourceTree = "<group>"; };
 		FFC22B5622F2378300121828 /* Maya Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Maya Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFC22B5822F2378300121828 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FFC22B5A22F2378400121828 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				FFDED62323CF9E4E00C678EB /* LocalFolderSourceDetailView.swift */,
 				FFB1234323D246700068A9A6 /* LocalFolderSourceViewModel.swift */,
 				FFDED62123CF9C1D00C678EB /* SourcesView.swift */,
+				FFB1234523D3A6CD0068A9A6 /* PhotoFrameView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -282,8 +285,8 @@
 		FF9072D022BB04CD0052428E /* maya-macos */ = {
 			isa = PBXGroup;
 			children = (
-				FF3E18FE23CA6D3F00E5002B /* Views */,
 				FF9072D122BB04CD0052428E /* AppDelegate.swift */,
+				FF3E18FE23CA6D3F00E5002B /* Views */,
 				FF3E190223CBF49800E5002B /* Windows */,
 				FF206B0122F35C4A000C0FB3 /* Controllers */,
 				FF206B0322F35C64000C0FB3 /* Photo Providers */,
@@ -513,6 +516,7 @@
 				FF53981E2315C6DC0067F3E9 /* SourceCell.swift in Sources */,
 				FFDED62023CF784B00C678EB /* GeneralPrefsViewModel.swift in Sources */,
 				FFD63774238B0513003A4071 /* PhotoScrollView.swift in Sources */,
+				FFB1234623D3A6CD0068A9A6 /* PhotoFrameView.swift in Sources */,
 				FFD4C35B23CC0E8A007D1A27 /* PreferencesView.swift in Sources */,
 				FF90732022BC12670052428E /* PhotoVendor.swift in Sources */,
 				FF9B7CFE231760AA0073E77E /* AppSecrets.swift in Sources */,

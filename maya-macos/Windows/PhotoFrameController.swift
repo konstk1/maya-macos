@@ -83,9 +83,7 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         
         photoVendor.add(provider: LocalFolderPhotoProvider.shared)
         photoVendor.add(provider: GooglePhotoProvider.shared)
-        
-        photoVendor.delegate = self
-        
+                
         // load active provider from settings
         switch Settings.app.activeProvider {
         case .none:

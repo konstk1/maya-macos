@@ -11,9 +11,9 @@ import Combine
 import Photos
 
 final class iCloudPhotoProvider {
-    weak var delegate: PhotoProviderDelegate?
-    
-    lazy var photoCountPublisher = CurrentValueSubject<Int, Never>(0)
+    let id = UUID()
+    var photoCountPublisher = CurrentValueSubject<Int, Never>(0)
+    var photoDescriptorsPublisher = CurrentValueSubject<[PhotoAssetDescriptor], Error>([])
     
     init() {
         
@@ -26,8 +26,7 @@ extension iCloudPhotoProvider: PhotoProvider {
         return []
     }
     
-    func refreshAssets(completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void) {
-        log.warning("iCloud not implemented")
-        completion(.success([]))
+    func refreshAssets() -> Future<[PhotoAssetDescriptor], Error> {
+        fatalError("iCloud not implemented")
     }
 }

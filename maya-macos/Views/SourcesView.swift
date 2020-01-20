@@ -14,19 +14,29 @@ struct ProviderRow: View {
     @EnvironmentObject var photoVendor: PhotoVendor
 
     var providerIndex: Int
-    var isActive: Bool {
+    
+    // this needs to be a computed property as lazy vars are mutating and photoVendor is not yet available during init()
+    // TODO: can this be made into a "computed-once property"?
+    var photoCountPublisher: AnyPublisher<Int, Never> {
+        print("Making count publisher for index \(providerIndex)")
+        let currentCount = photoVendor.photoProviders[providerIndex].photoDescriptors.count
+        let currentSubject = CurrentValueSubject<Int, Never>(currentCount)
+        let countPublisher = NotificationCenter.default.publisher(for: .updatePhotoCount, object: photoVendor.photoProviders[providerIndex])
+            .map { $0.userInfo?["photoCount"] as? Int ?? 0 }
+        return currentSubject.merge(with: countPublisher).receive(on: RunLoop.main).eraseToAnyPublisher()
+    }
+    
+    private var isActive: Bool {
         return providerIndex == photoVendor.photoProviders.firstIndex { $0 === photoVendor.activeProvider }
     }
     
     @State private var photoCount = 0
-    
-    @State private var subs: Set<AnyCancellable> = []
-    
+        
     var providerInfo: (name: String, image: NSImage) {
-        switch photoVendor.photoProviders[providerIndex] {
-        case is LocalFolderPhotoProvider:
+        switch photoVendor.photoProviders[providerIndex].type {
+        case .localFolder:
             return (name: "Local Folder", image: NSImage(named: NSImage.folderName)!)
-        case is GooglePhotoProvider:
+        case .googlePhotos:
             return (name: "Google Photos", image: NSImage(named: "GooglePhotos")!)
         default:
             log.warning("No view implemented for this provider")
@@ -40,6 +50,10 @@ struct ProviderRow: View {
             HStack {
                 ZStack {
                     Rectangle().frame(width: 20, height: 20).foregroundColor(.clear).border(Color.black, width: 1)
+                    .contentShape(Rectangle()).onTapGesture {
+                        print("Activating \(self.providerIndex)")
+                        self.photoVendor.setActiveProvider(self.photoVendor.photoProviders[self.providerIndex])
+                    }
                     if self.isActive {
                         Image(nsImage: NSImage(named: NSImage.menuOnStateTemplateName)!)
                     }
@@ -54,13 +68,11 @@ struct ProviderRow: View {
                     .background(Color.gray)
                     .clipShape(Capsule())
                     .padding(.trailing, 10)
+                    .onReceive(self.photoCountPublisher) { photoCount in
+                        self.photoCount = photoCount
+                    }
             }
             .frame(width: g.size.width, height: g.size.height, alignment: .leading)
-        }.onAppear {
-            self.photoVendor.photoProviders[self.providerIndex].photoCountPublisher
-            .receive(on: RunLoop.main)
-            .assign(to: \Self.photoCount, on: self)
-                .store(in: &self.subs)
         }
     }
 }
@@ -77,7 +89,8 @@ struct SourcesView: View {
                 .onTapGesture { self.selectedProviderIdx = index }
             
             if index == self.selectedProviderIdx {
-                Rectangle().foregroundColor(Color.secondary.opacity(0.1)).frame(height: 40)
+                // disallow hit testing to send taps to provider row below
+                Rectangle().foregroundColor(Color.secondary.opacity(0.1)).frame(height: 40).allowsHitTesting(false)
             }
         }
     }

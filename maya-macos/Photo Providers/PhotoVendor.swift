@@ -18,8 +18,10 @@ enum PhotoVendorError: Error {
     case noActiveProvider
 }
 
-final class PhotoVendor: ObservableObject, PhotoProviderDelegate {
+final class PhotoVendor: ObservableObject {
     static let shared = PhotoVendor()
+    
+    @Published var currentImage: NSImage?
     
     /// Whether to show photos in random order. Defaults to `true`.
     var shufflePhotos: Bool = true {
@@ -28,7 +30,8 @@ final class PhotoVendor: ObservableObject, PhotoProviderDelegate {
         }
     }
     
-    weak var delegate: PhotoVendorDelegate?
+    var vendImageSub: AnyCancellable?
+    var refreshAssetsSub: AnyCancellable?
     
     private(set) var activeProvider: PhotoProvider?
     var photoProviders: [PhotoProvider] = []
@@ -45,21 +48,23 @@ final class PhotoVendor: ObservableObject, PhotoProviderDelegate {
     
     /// Set new provider of photos.
     func setActiveProvider(_ provider: PhotoProvider) {
-        activeProvider?.delegate = nil   // disconnect previous active provider
         activeProvider = provider        // update to new provider
-        activeProvider?.delegate = self  // connect new delegate
         
-        activeProvider?.refreshAssets(completion: { [weak self] result in
-            self?.resetVendingState()
-            self?.vendImage()
+        // overwriting subscription, will destroy previous sub and hook up new one
+        refreshAssetsSub = activeProvider?.refreshAssets().sink(receiveCompletion: { completion in
+            if case .failure(let error) = completion {
+                log.error("Error: \(error.localizedDescription)")
+            }
+        }, receiveValue: { [weak self] assets in
+            guard let self = self else { return; }
+            self.processNewAssetList(assets)
+            self.vendImage()
         })
         
-    }
-    
-    /// PhotoProviderDelegate method
-    func didUpdateAssets(assets: [PhotoAssetDescriptor] ) {
-        processNewAssetList(assets)
-        vendImage()
+        // TODO: how to handle errors
+        
+        // save to settings
+        Settings.app.activeProvider = provider.type
     }
     
     /// Clear all vending state, including shown photos, etc.
@@ -81,7 +86,8 @@ final class PhotoVendor: ObservableObject, PhotoProviderDelegate {
     func vendImage() {
         guard activeProvider != nil else {
             log.warning("No active photo provider")
-            delegate?.didFailToVend(error: PhotoVendorError.noActiveProvider)
+            fatalError("Not implemented")
+//            delegate?.didFailToVend(error: PhotoVendorError.noActiveProvider)
             return
         }
         
@@ -93,7 +99,8 @@ final class PhotoVendor: ObservableObject, PhotoProviderDelegate {
         // at this point, list shouldn't be empty, if it is, just return
         guard !unshownPhotos.isEmpty else {
             log.warning("Photo vendor doesn't have any photos")
-            delegate?.didFailToVend(error: nil)
+//            delegate?.didFailToVend(error: nil)
+            fatalError("Not implemented")
             return
         }
         
@@ -101,14 +108,15 @@ final class PhotoVendor: ObservableObject, PhotoProviderDelegate {
         let nextPhoto = unshownPhotos.removeFirst()
         shownPhotos.append(nextPhoto)
         
-        nextPhoto.fetchImage { [weak self] (result) in
-            switch result {
-            case .success(let image):
-                self?.delegate?.didVendNewImage(image: image)
-            case .failure(let error):
+        vendImageSub = nextPhoto.fetchImage().receive(on: RunLoop.main).sink(receiveCompletion: { completion in
+            if case .failure(let error) = completion {
                 log.error("Error converting descriptor to image (error: \(error.localizedDescription))")
-                self?.delegate?.didFailToVend(error: error)
+                // TODO: notify delegate?
+                // self?.delegate?.didFailToVend(error: error)
             }
+        }) { [weak self] image in
+            guard let self = self else { return }
+            self.currentImage = image
         }
         
         // TODO: how often to refresh assets? (especially for remote providers)
@@ -118,13 +126,13 @@ final class PhotoVendor: ObservableObject, PhotoProviderDelegate {
     func refreshAssets() {
         guard let activeProvider = activeProvider else { return }
         
-        activeProvider.refreshAssets { [weak self] (result) in
-            switch result {
-            case .success(let assets):
-                self?.processNewAssetList(assets)
-            case .failure(let error):
+        refreshAssetsSub = activeProvider.refreshAssets().sink(receiveCompletion: { (completion) in
+            if case .failure(let error) = completion {
                 log.error("Error refreshing assets \(error.localizedDescription)")
             }
+        }) { [weak self] (photoAssets) in
+            guard let self = self else { return }
+            self.processNewAssetList(photoAssets)
         }
     }
     
@@ -133,9 +141,7 @@ final class PhotoVendor: ObservableObject, PhotoProviderDelegate {
         // just need to filter OUT any assets that have been shown
         // everything else is going to become unshown
         unshownPhotos = assets.filter { asset in
-            !shownPhotos.contains { photo in
-                photo.description == asset.description
-            }
+            !shownPhotos.contains { photo in photo.description == asset.description }
         }
         
         if shufflePhotos {

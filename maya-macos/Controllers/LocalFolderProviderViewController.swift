@@ -28,15 +28,15 @@ class LocalFolderProviderViewController: NSViewController {
         panel.allowsMultipleSelection = false
         
         panel.begin { [weak self] (response) in
-            guard let strongSelf = self else { log.error("self doesn't exist anymore"); return }
+            guard let self = self else { log.error("self doesn't exist anymore"); return }
             
             if response == .OK {
                 if let selectedUrl = panel.url {
-                    strongSelf.updateFolderSelection(url: selectedUrl)
+                    self.updateFolderSelection(url: selectedUrl)
                 }
             } else {
                 // cancel clicked, restore previously selected item (first item in the list)
-                strongSelf.folderSelectionDropdown.selectItem(at: 0)
+                self.folderSelectionDropdown.selectItem(at: 0)
             }
         }
     }
