@@ -94,6 +94,11 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
             photoVendor.setActiveProvider(GooglePhotoProvider.shared)
         }
         
+        // subscribe to new images
+        photoVendor.$currentImage.compactMap { $0 }.receive(on: RunLoop.main).sink { [weak self] image in
+            self?.didVendNewImage(image: image)
+        }.store(in: &subs)
+        
         Settings.photos.$autoSwitchPhoto.sink { [weak self] in
             self?.updatePhotoTiming(autoSwitchPhoto: $0, autoSwitchPeriod: Settings.photos.autoSwitchPhotoPeriod)
 
