@@ -29,12 +29,12 @@ class LocalFolderViewModel: ObservableObject {
     
     private var settings = Settings.localFolderProvider
     
-    
-    private lazy var localPhotoProvider = LocalFolderPhotoProvider.shared
+    private var localPhotoProvider: LocalFolderPhotoProvider
     
     private var subs: Set<AnyCancellable> = []
     
-    init() {
+    init(provider: LocalFolderPhotoProvider) {
+        localPhotoProvider = provider
         settings.$recentFolders.sink { [weak self] (recents) in
             print("Updating recent folders")
             self?.recentFolders = recents.map { $0.path }
@@ -67,25 +67,25 @@ class LocalFolderViewModel: ObservableObject {
     }
     
     private func updateFolderSelection(url: URL) {
-           do {
-               try localPhotoProvider.setActiveFolder(url: url)
-           } catch {
-               log.error("Failed to set active url \(error)")
-           }
-       }
-       
-       @IBAction func chooseClicked(_ sender: NSButton) {
-           chooseFolder()
-       }
-       
-       @IBAction func folderSelectionDropdownChanged(_ sender: NSPopUpButton) {
-           guard let path = sender.titleOfSelectedItem else {
-               log.error("nil path in folder dropdown")
-               return
-           }
-           
-           let url = URL(fileURLWithPath: path, isDirectory: true)
-           
-           updateFolderSelection(url: url)
-       }
+        do {
+            try localPhotoProvider.setActiveFolder(url: url)
+        } catch {
+            log.error("Failed to set active url \(error)")
+        }
+    }
+    
+//       @IBAction func chooseClicked(_ sender: NSButton) {
+//           chooseFolder()
+//       }
+//
+//       @IBAction func folderSelectionDropdownChanged(_ sender: NSPopUpButton) {
+//           guard let path = sender.titleOfSelectedItem else {
+//               log.error("nil path in folder dropdown")
+//               return
+//           }
+//
+//           let url = URL(fileURLWithPath: path, isDirectory: true)
+//
+//           updateFolderSelection(url: url)
+//       }
 }

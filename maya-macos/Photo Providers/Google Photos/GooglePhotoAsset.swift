@@ -10,12 +10,15 @@ import Cocoa
 import Combine
 
 struct GooglePhotoAsset: PhotoAssetDescriptor {
-    
     var photoId: String
     var description: String { "/* TODO: Implement this */" }
-    
-    func fetchImage() -> Future<NSImage, Error> {
-        fatalError("Not implemented")
-//        GooglePhotoProvider.shared.getPhoto(id: photoId, completion: completion)
+
+    func fetchImage(using provider: PhotoProvider) -> Future<NSImage, PhotoProviderError> {
+        guard let provider = provider as? GooglePhotoProvider else {
+            log.error("Invalid provider for \(self)")
+            return Future { $0(.failure(PhotoProviderError.unknown)) }
+        }
+
+        return provider.getPhoto(id: photoId)
     }
 }

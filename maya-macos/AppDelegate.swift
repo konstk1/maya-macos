@@ -42,10 +42,19 @@ extension Notification.Name {
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         let runningApps = NSWorkspace.shared.runningApplications
         let isRunning = runningApps.contains { $0.bundleIdentifier == launcherAppId }
+        
+        #if DEBUG
+        // Don't start rest of the app if running unit tests
+        let isUnitTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        guard !isUnitTesting else {
+            log.warning("Unit testing... skipping main app.")
+            return
+        }
+        #endif
         
         SMLoginItemSetEnabled(launcherAppId as CFString, Settings.app.openAtLogin)
         
@@ -60,6 +69,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     /// URL event handler to pass callbacks to OAuth
     @objc func handleGetURL(event: NSAppleEventDescriptor!, withReplyEvent: NSAppleEventDescriptor!) {
+//        log.debug("Handle URL: \(event)")
         if let urlString = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject))?.stringValue, let url = URL(string: urlString) {
             log.debug("URL: \(urlString)")
             OAuthSwift.handle(url: url)

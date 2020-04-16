@@ -9,8 +9,12 @@
 import SwiftUI
 
 struct LocalFolderSourceDetailView: View {
-    @ObservedObject private var model = LocalFolderViewModel()
-    
+    @ObservedObject private var model: LocalFolderViewModel
+
+    init(provider: LocalFolderPhotoProvider) {
+        model = LocalFolderViewModel(provider: provider)
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Show photos from this location")

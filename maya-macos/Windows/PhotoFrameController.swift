@@ -81,17 +81,18 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     init() {
         super.init(window: nil)
         
-        photoVendor.add(provider: LocalFolderPhotoProvider.shared)
-        photoVendor.add(provider: GooglePhotoProvider.shared)
+        photoVendor.add(provider: LocalFolderPhotoProvider())
+        photoVendor.add(provider: GooglePhotoProvider())
                 
         // load active provider from settings
         switch Settings.app.activeProvider {
         case .none:
             log.info("No active Photo Provider")
         case .localFolder:
-            photoVendor.setActiveProvider(LocalFolderPhotoProvider.shared)
+            // TODO: rework this!
+            photoVendor.setActiveProvider(photoVendor.photoProviders[0])
         case .googlePhotos:
-            photoVendor.setActiveProvider(GooglePhotoProvider.shared)
+            photoVendor.setActiveProvider(photoVendor.photoProviders[1])
         }
         
         // subscribe to new images
@@ -161,7 +162,7 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
 }
 
 // MARK: - PhotoVendorDelegate
-extension PhotoFrameWindowController: PhotoVendorDelegate {
+extension PhotoFrameWindowController {
     func didVendNewImage(image: NSImage) {
         log.verbose("Vending new image")
         currentPhoto = image

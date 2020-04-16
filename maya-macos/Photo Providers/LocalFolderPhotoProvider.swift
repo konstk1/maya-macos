@@ -9,13 +9,7 @@
 import Cocoa
 import Combine
 
-final class LocalFolderPhotoProvider: ObservableObject {
-    static let shared = LocalFolderPhotoProvider()
-    
-    let id = UUID()
-    
-//    weak var delegate: PhotoProviderDelegate?
-    
+final class LocalFolderPhotoProvider: PhotoProvider {
     /// List of recently used folders
     var recentFolders: [URL] {
         Settings.localFolderProvider.recentFolders
@@ -28,12 +22,10 @@ final class LocalFolderPhotoProvider: ObservableObject {
     private var photoURLs: [URL] = [] {
         didSet {
             NotificationCenter.default.post(name: .updatePhotoCount, object: self, userInfo: ["photoCount": photoURLs.count])
-            photoDescriptorsPublisher.send(photoURLs.map { LocalPhotoAsset(photoURL: $0) })
+            photoDescriptors = photoURLs.map { LocalPhotoAsset(photoURL: $0) }
         }
     }
-    
-    var photoDescriptorsPublisher = CurrentValueSubject<[PhotoAssetDescriptor], Error>([])
-    
+
     /// Supported photo file extensions
     private let supportedExtension = ["png", "jpg", "jpeg"]
     
@@ -41,14 +33,22 @@ final class LocalFolderPhotoProvider: ObservableObject {
     
     private var activeFolder: URL = URL(fileURLWithPath: "")
     
-    private init() {
+    override init() {
+        super.init()
+
+        print("LocalPhotoProvider init")
+        
         guard let lastActiveFolder = Settings.localFolderProvider.recentFolders.first else { return }
         
         do {
             activeFolder = try loadBookmark(for: lastActiveFolder)
             photoURLs = try updatePhotoList()
+        } catch let error as PhotoProviderError {
+            log.error("Failed initialize Local Folder provider: \(error)")
+            self.error = error
         } catch {
-            print("Failed initialize Local Folder provider: \(error)")
+            log.error("Failed initialize Local Folder provider: \(error)")
+            self.error = .unknown
         }
     }
     
@@ -72,9 +72,6 @@ final class LocalFolderPhotoProvider: ObservableObject {
             
         // save most recent folders
         updateRecents(with: url)
-        
-        // notify delegate that assets were updated
-//        delegate?.didUpdateAssets(assets: photoDescriptors)
     }
     
     private func loadBookmark(for url: URL) throws -> URL {
@@ -135,35 +132,39 @@ final class LocalFolderPhotoProvider: ObservableObject {
         let urls = try fileManager.contentsOfDirectory(at: activeFolder, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsPackageDescendants])
         return urls.filter { supportedExtension.contains($0.pathExtension) }
     }
-}
-
-// MARK: PhotoProvider
-extension LocalFolderPhotoProvider: PhotoProvider {
-    var photoDescriptors: [PhotoAssetDescriptor] {
-        return photoURLs.map { LocalPhotoAsset(photoURL: $0) }
-    }
     
-    func refreshAssets() -> Future<[PhotoAssetDescriptor], Error> {
+    internal func clearPhotoAssets() {
+        photoURLs.removeAll()
+    }
+
+    @discardableResult
+    override func refreshAssets() -> Future<[PhotoAssetDescriptor], PhotoProviderError> {
         return Future { [weak self] promise in
             guard let self = self else {
-                log.error("Self no longer exists")
                 promise(.failure(PhotoProviderError.unknown))
                 return
             }
-            
-            try? self.startFolderAccess()
-            defer {
-                self.stopFolderAccess()
-            }
-            
-            let result = Result { () -> [PhotoAssetDescriptor] in
-                self.photoURLs = try self.updatePhotoList()
-                return self.photoDescriptors
-            }
-            
-            promise(result)
-        }
 
+            do {
+                try self.startFolderAccess()
+                defer {
+                    self.stopFolderAccess()
+                }
+
+                self.photoURLs = try self.updatePhotoList() // setting photoURLs will also update photoDescriptors
+                self.error = nil
+            } catch let error as PhotoProviderError {
+                self.error = error
+            } catch {
+                self.error = .unknown
+            }
+
+            if let error = self.error {
+                promise(.failure(error))
+            } else {
+                promise(.success(self.photoDescriptors))
+            }
+        }
     }
 }
 
@@ -171,19 +172,24 @@ struct LocalPhotoAsset: PhotoAssetDescriptor {
     var photoURL: URL
     var description: String { photoURL.path }
     
-    func fetchImage() -> Future<NSImage, Error> {
+    func fetchImage(using provider: PhotoProvider) -> Future<NSImage, PhotoProviderError> {
         let photoURL = self.photoURL
-        let photoProvider = LocalFolderPhotoProvider.shared
-        
+
         return Future { promise in
-            try? photoProvider.startFolderAccess()
+            guard let provider = provider as? LocalFolderPhotoProvider else {
+                log.error("Invalid provider for \(self)")
+                promise(.failure(.unknown))
+                return
+            }
+
+            try? provider.startFolderAccess()
             defer {
-                photoProvider.stopFolderAccess()
+                provider.stopFolderAccess()
             }
             
             guard let image = NSImage(contentsOf: photoURL) else {
                 log.error("Failed to read file \(photoURL.path)")
-                promise(.failure(PhotoProviderError.failedReadLocalFile))
+                promise(.failure(.failedReadLocalFile))
                 return
             }
             

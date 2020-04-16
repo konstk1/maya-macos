@@ -9,16 +9,15 @@
 import Cocoa
 import Combine
 
-protocol PhotoProvider: class {
-    var id: UUID { get }
+class PhotoProvider: ObservableObject {
+    let id = UUID()
+    
+    @Published var photoDescriptors: [PhotoAssetDescriptor] = []
+    @Published var albumList: [String] = []
 
-    var photoDescriptors: [PhotoAssetDescriptor] { get }
-    var photoDescriptorsPublisher: CurrentValueSubject<[PhotoAssetDescriptor], Error> { get }
-    func refreshAssets() -> Future<[PhotoAssetDescriptor], Error>
-}
+    @Published var error: PhotoProviderError?
 
-extension PhotoProvider {
-    /// enum value describing type of photo provider (used for savings to UserDefaults)
+    /// `enum` value describing type of photo provider (used for savings to UserDefaults)
     var type: PhotoProviderType {
         switch self {
         case is LocalFolderPhotoProvider:
@@ -26,15 +25,20 @@ extension PhotoProvider {
         case is GooglePhotoProvider:
             return .googlePhotos
         default:
-            log.warning("Unimplemented photo provider type")
-            return .none
+            fatalError("Unimplemented photo provider type")
         }
+    }
+
+    /// To be implemented by each subclass
+    @discardableResult
+    func refreshAssets() -> Future<[PhotoAssetDescriptor], PhotoProviderError> {
+        fatalError("refreshAssets not implemented for this class")
     }
 }
 
 protocol PhotoAssetDescriptor: CustomStringConvertible {
     // fetches an image for underlying photo asset
-    func fetchImage() -> Future<NSImage, Error>
+    func fetchImage(using provider: PhotoProvider) -> Future<NSImage, PhotoProviderError>
 }
 
 enum PhotoProviderType: String, PListCodable {

@@ -7,10 +7,13 @@
 //
 
 import XCTest
+import Combine
 @testable import Maya
 
 class GoogePhotoProviderTests: XCTestCase {
-    let provider = GooglePhotoProvider.shared
+    let google = GooglePhotoProvider()
+    
+    var subs: Set<AnyCancellable> = []
 
     override func setUp() {
     }
@@ -20,28 +23,54 @@ class GoogePhotoProviderTests: XCTestCase {
 
     func testAuth() {
         let expectation = XCTestExpectation(description: "Google OAuth")
-        
-        provider.authorize { result in
-            switch result {
-            case .success:
-                expectation.fulfill()
-            case .failure:
-                XCTFail("Failed auth")
+
+        google.authorize().sink(receiveCompletion: { [weak self] completion in
+            switch completion {
+            case .finished:
+                break
+            case .failure(let error):
+                XCTFail("Failed auth: \(error.localizedDescription)")
             }
-        }
+            expectation.fulfill()
+        }) { _ in /* nothing to do here */ }.store(in: &subs)
         
-        wait(for: [expectation], timeout: 20.0)
+        wait(for: [expectation], timeout: 5.0)
     }
     
     func testAlbumList() {
         let expectation = XCTestExpectation(description: "Get album list")
         
-        provider.listAlbums { result in
-            defer { expectation.fulfill() }
-            guard case let .success(albums) = result else { XCTFail("Non success result"); return }
-            XCTAssert(albums.count > 0, "No albums present in response")
-        }
-        
+        google.listAlbums().sink(receiveCompletion: { completion in
+            if case .failure(let error) = completion {
+                XCTFail("Non success result: \(error.localizedDescription)")
+                expectation.fulfill()
+            }
+        }) { albums in
+            XCTAssert(albums.count > 51, "No albums present in response")
+            expectation.fulfill()
+        }.store(in: &subs)
+
+        wait(for: [expectation], timeout: 10.0)
+    }
+
+    func testAlbumListPublisher() {
+        let expectation = XCTestExpectation(description: "Get album list")
+
+        var callCount = 0
+
+        google.albumsPublisher.sink { albums in
+            callCount += 1
+            print("Sinking publisher results \(callCount) - \(albums.count)")
+            if callCount == 1 {
+                XCTAssert(albums.count == 0, "Non zero albums on init")
+            } else if callCount == 4 {
+                XCTAssertGreaterThan(albums.count, 51, "Not all albums listed")
+                expectation.fulfill()
+            }
+        }.store(in: &subs)
+
+        google.listAlbums()
+
         wait(for: [expectation], timeout: 10.0)
     }
     
@@ -49,14 +78,13 @@ class GoogePhotoProviderTests: XCTestCase {
         let expectation = self.expectation(description: "Get album contents")
         
         let album = GooglePhotos.Album(id: "AHSlkqOFrKbKoVNTsYL7lrtF6Y8MHnwVMZeKKs0rnY9E30ZCNzTgWWlsGDQT58lCH2CM8r6FLmmu", title: "", productUrl: "", mediaItemsCount: "", coverPhotoBaseUrl: "", coverPhotoMediaItemId: "")
-        
-        provider.listPhotos(for: album) { (result) in
-            defer { expectation.fulfill() }
-            guard case let .success(photos) = result else { XCTFail("Non success result"); return }
-            print(photos.first!.id)
-            XCTAssert(photos.count > 0, "No albums present in response")
-        }
-        
+
+        google.listPhotos(for: album).sink(receiveCompletion: { _ in }) { photos in
+            print(photos.first!.description)
+            XCTAssert(photos.count > 0, "No photos present in response")
+            expectation.fulfill()
+        }.store(in: &subs)
+
         waitForExpectations(timeout: 10.0, handler: nil)
     }
     
@@ -64,13 +92,12 @@ class GoogePhotoProviderTests: XCTestCase {
         let expectation = self.expectation(description: "Get photo")
     
         let photoId = "AHSlkqOwJsY7KZT4P7sestzFTKnw1GWiHKlMoJePb7AFmz_poNdeXDjuZ2BogLFg6UKY3XBqcElwJHF-avti-_EeMW_WH0Zj7A"
-        
-        provider.getPhoto(id: photoId) { (result) in
-            defer { expectation.fulfill() }
-            guard case .success(let image) = result else { XCTFail("Failed to get image"); return }
+
+        google.getPhoto(id: photoId).sink(receiveCompletion: { _ in }) { image in
             print("Image size \(image.size)")
             XCTAssert(image.size.height > 0, "Zero height")
-        }
+            expectation.fulfill()
+        }.store(in: &subs)
         
         waitForExpectations(timeout: 10.0, handler: nil)
     }
