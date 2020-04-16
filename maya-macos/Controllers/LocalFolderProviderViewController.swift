@@ -10,7 +10,7 @@ import Cocoa
 
 class LocalFolderProviderViewController: NSViewController {
     
-    lazy var localPhotoProvider = LocalFolderPhotoProvider.shared
+    lazy var localPhotoProvider = LocalFolderPhotoProvider()
 
     @IBOutlet weak var folderSelectionDropdown: NSPopUpButton!
     

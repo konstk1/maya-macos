@@ -10,23 +10,11 @@ import Cocoa
 import Combine
 import Photos
 
-final class iCloudPhotoProvider {
-    let id = UUID()
-    var photoCountPublisher = CurrentValueSubject<Int, Never>(0)
-    var photoDescriptorsPublisher = CurrentValueSubject<[PhotoAssetDescriptor], Error>([])
-    
-    init() {
-        
-    }
-}
+final class iCloudPhotoProvider: PhotoProvider {
 
-extension iCloudPhotoProvider: PhotoProvider {
-    var photoDescriptors: [PhotoAssetDescriptor] {
-        log.warning("iCloud not implemented")
-        return []
-    }
-    
-    func refreshAssets() -> Future<[PhotoAssetDescriptor], Error> {
+    @discardableResult
+    override func refreshAssets() -> Future<[PhotoAssetDescriptor], PhotoProviderError> {
         fatalError("iCloud not implemented")
     }
 }
+

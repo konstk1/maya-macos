@@ -13,32 +13,29 @@ import OAuthSwift
 import OAuthSwiftAlamofire
 import KeychainAccess
 
-final class GooglePhotoProvider {
-    static let shared = GooglePhotoProvider()
-    
-    let id = UUID()
-    
-//    weak var delegate: PhotoProviderDelegate?
-    var photoDescriptorsPublisher = CurrentValueSubject<[PhotoAssetDescriptor], Error>([])
-    
+final class GooglePhotoProvider: PhotoProvider {
     private lazy var alamo = Session(interceptor: oauthswift.requestInterceptor)
     
     private let authURL = "https://accounts.google.com/o/oauth2/v2/auth"
     private let tokenURL = "https://www.googleapis.com/oauth2/v4/token"
     private let scope = "https://www.googleapis.com/auth/photoslibrary.readonly"
     private let callbackURL = URL(string: "com.kk.maya-macos:/oauth-callback/google")!
-    
+
     private let baseURL = URL(string: "https://photoslibrary.googleapis.com/v1/")!
     
-    private(set) var albums: [GooglePhotos.Album] = []
+    private(set) var albums: [GooglePhotos.Album] = [] {
+        didSet {
+            print("Setting albums")
+            albumsPublisher.send(albums)
+        }
+    }
+    var albumsPublisher = CurrentValueSubject<[GooglePhotos.Album], Never>([])
     
     private var activeAlbum: GooglePhotos.Album?
     
     /// Photos in active album
-    private(set) var photos: [GooglePhotos.MediaItem] = []
-    
-    lazy var photoCountPublisher = CurrentValueSubject<Int, Never>(photos.count)
-    
+    private var photos: [GooglePhotos.MediaItem] = []       // don't update photoDescriptors here on didSet because of pagination
+
     private lazy var oauthswift = OAuth2Swift(
         consumerKey: Secrets.GoogleAPI.clientId,
         consumerSecret: "",
@@ -57,7 +54,8 @@ final class GooglePhotoProvider {
         return oauthTokenExpiresAt > Date()
     }
     
-    private init() {
+    override init() {
+        super.init()
         log.verbose("Google Photo Provider init")
         if let token = oauthToken, let refreshToken = oauthRefreshToken {
             oauthswift.client.credential.oauthToken = token
@@ -67,7 +65,7 @@ final class GooglePhotoProvider {
         if let activeAlbumId = Settings.googlePhotos.activeAlbumId {
             activeAlbum = GooglePhotos.Album(id: activeAlbumId, title: "Loading...", productUrl: "", mediaItemsCount: nil, coverPhotoBaseUrl: "", coverPhotoMediaItemId: nil)
             listPhotos(for: activeAlbum!) { [weak self] _ in
-                fatalError("Not implemented")
+//                fatalError("Not implemented")
 //                self?.delegate?.didUpdateAssets(assets: self?.photoDescriptors ?? [])
             }
         }
@@ -80,6 +78,7 @@ final class GooglePhotoProvider {
         
         listPhotos(for: album) { [weak self] result in
             fatalError("Not implemented")
+            
 //            self?.delegate?.didUpdateAssets(assets: self?.photoDescriptors ?? [])
         }
     }
@@ -95,44 +94,66 @@ final class GooglePhotoProvider {
         self.activeAlbum = album
     }
     
-    func authorize(completion: @escaping (Result<Void, PhotoProviderError>) -> Void) {
-        let authCompletionHandler: OAuthSwift.TokenCompletionHandler = { [weak self] result in
-            switch result {
-            case .success(let (credential, _, _)):
-                self?.oauthToken = credential.oauthToken
-                self?.oauthTokenExpiresAt = credential.oauthTokenExpiresAt
-                self?.oauthRefreshToken = credential.oauthRefreshToken
-                log.verbose("Auth success done")
-            case .failure(let error):
-                switch error {
-                case .configurationError(let message):
-                    print(message)
-                default:
-                    print(error.localizedDescription)
+    func authorize() -> Future<Void, PhotoProviderError> {
+        return Future { [weak self] promise in
+            guard let self = self else { return }
+
+            let authCompletionHandler: OAuthSwift.TokenCompletionHandler = { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let (credential, _, _)):
+                    self.oauthToken = credential.oauthToken
+                    self.oauthTokenExpiresAt = credential.oauthTokenExpiresAt
+                    self.oauthRefreshToken = credential.oauthRefreshToken
+                    log.verbose("Auth success done")
+                case .failure(let error):
+                    switch error {
+                    case .configurationError(let message):
+                        print("\(error) : message: \(message)")
+                    default:
+                        print("Unknown error: \(error) \(error.localizedDescription)")
+                    }
                 }
+                // convert OAuthSwiftResult into our own
+                let newResult = result
+                    .map { _ -> Void in
+                        self.handleError(error: nil)    // clear error
+                        return ()                       // success result is just void
+                } .mapError { _ in
+                    // error is simply failed auth
+                    self.handleError(error: PhotoProviderError.failedAuth) ?? .unknown
+                }
+
+                promise(newResult)
             }
-            // convert OAuthSwiftResult into our own
-            let newResult = result.flatMap { _ in .success(()) }.flatMapError { _ in .failure(PhotoProviderError.failedAuth) }
-            completion(newResult)
+
+            if self.isAuthorized {
+                log.verbose("Current token is valid")
+                self.handleError(error: nil)
+                promise(.success(()))
+            }
+            else if let refreshToken = self.oauthRefreshToken {
+                log.verbose("Refreshing...")
+                self.oauthswift.renewAccessToken(withRefreshToken: refreshToken, completionHandler: authCompletionHandler)
+            } else {
+                log.verbose("Authorizing...")
+                // if neither token nor refresh token are valid, need to re-authorize from scratch
+                let state = generateState(withLength: 20)
+                self.oauthswift.authorize(withCallbackURL: self.callbackURL, scope: self.scope, state: state, completionHandler: authCompletionHandler)
+            }
         }
-        
-        if isAuthorized {
-            log.verbose("Current token is valid")
-            completion(.success(()))
-            return
-        }
-        else if let refreshToken = oauthRefreshToken {
-            log.verbose("Refreshing...")
-            oauthswift.renewAccessToken(withRefreshToken: refreshToken, completionHandler: authCompletionHandler)
-        } else {
-            log.verbose("Authorizing...")
-            // if neither token nor refresh token are valid, need to re-authorize from scratch
-            let state = generateState(withLength: 20)
-            oauthswift.authorize(withCallbackURL: callbackURL, scope: scope, state: state, completionHandler: authCompletionHandler)
+    }
+
+    @discardableResult
+    func listAlbums() -> Future<[GooglePhotos.Album], Error> {
+        return Future { [weak self] promise in
+            self?.listAlbums(pageToken: nil) { result in
+                promise(result)
+            }
         }
     }
     
-    func listAlbums(pageToken: String? = nil, completion: @escaping (Result<[GooglePhotos.Album], Error>) -> Void) {
+    private func listAlbums(pageToken: String?, completion: @escaping (Result<[GooglePhotos.Album], Error>) -> Void) {
         let endpoint = baseURL.appendingPathComponent("albums")
         let params = GooglePhotos.Albums.ListRequest(pageToken: pageToken)
         
@@ -156,13 +177,33 @@ final class GooglePhotoProvider {
                     completion(.success(self.albums))
                 }
             case .failure(let error):
+//                log.debug(String(data: response.data!, encoding: .utf8))
                 log.error("Album list failed: HTTP \(response.response?.statusCode ?? 0) - \(error)")
                 completion(.failure(error))
             }
         }
     }
+
+    @discardableResult
+    func listPhotos(for album: GooglePhotos.Album) -> Future<[PhotoAssetDescriptor], PhotoProviderError> {
+        return Future { [weak self] promise in
+            guard let self = self else { return }
+            self.listPhotos(for: album, pageToken: nil, completion: { result in
+                switch result {
+                case .success(let photos):
+                    // update descriptors to trigger the publisher
+                    self.photoDescriptors = photos.map { GooglePhotoAsset(photoId: $0.id) }
+                    promise(.success(self.photoDescriptors))
+                case .failure(let error):
+                    // TODO: map AFError to PhotoProviderError
+                    self.error = .unknown
+                    promise(.failure(.unknown))
+                }
+            })
+        }
+    }
     
-    func listPhotos(for album: GooglePhotos.Album, pageToken: String? = nil, completion: @escaping (Result<[GooglePhotos.MediaItem], Error>) -> Void) {
+    private func listPhotos(for album: GooglePhotos.Album, pageToken: String? = nil, completion: @escaping (Result<[GooglePhotos.MediaItem], Error>) -> Void) {
         let endpoint = baseURL.appendingPathComponent("mediaItems:search")
         let params = GooglePhotos.Albums.ContentsRequest(albumId: album.id, pageToken: pageToken)
         
@@ -182,7 +223,6 @@ final class GooglePhotoProvider {
                 } else {
                     print("Success: photos \(self.photos.count)")
                     NotificationCenter.default.post(name: .updatePhotoCount, object: self, userInfo: ["photoCount": photos.count])
-                    self.photoCountPublisher.send(photos.count)
                     completion(.success(self.photos))
                 }
             case .failure(let error):
@@ -192,7 +232,7 @@ final class GooglePhotoProvider {
         }
     }
     
-    func getMediaItem(id: String, completion: @escaping (Result<GooglePhotos.MediaItem, AFError>) -> Void) {
+    private func getMediaItem(id: String, completion: @escaping (Result<GooglePhotos.MediaItem, AFError>) -> Void) {
         let endpoint = baseURL.appendingPathComponent("mediaItems/\(id)")
         print("Fetching \(endpoint.absoluteString)")
         alamo.request(endpoint).validate().responseDecodable { (response: AFDataResponse<GooglePhotos.MediaItem>) in
@@ -201,55 +241,49 @@ final class GooglePhotoProvider {
         }
     }
     
-//    func downloadImage(baseURL: URL, completion: @escaping (Result<NSImage, Error>) -> Void) {
-////        let endpoint = baseURL.appendingPathExtension("=wMAX_WIDTH-hMAX_HEIGHT")
-//        let endpoint = baseURL
-//        alamo.download(endpoint).validate().response { (response) in
-//            print(response.fileURL)
-//            let image = NSImage(contentsOf: <#T##URL#>)
-//            completion
-//        }
-//    }
-    
-    func getPhoto(id: String, completion: @escaping (Result<NSImage, Error>) -> Void) {
-        getMediaItem(id: id) { (result) in
-            switch result {
-            case .success(let mediaItem):
-                if let image = NSImage(contentsOf: URL(string: mediaItem.baseUrl)!) {
-                    completion(.success(image))
-                } else {
-                    completion(.failure(PhotoProviderError.failedFetchURL))
-                }
-            case .failure(let error):
-                log.error("Failed to get media item: \(error)")
-                completion(.failure(error))
+    func getPhoto(id: String) -> Future<NSImage, PhotoProviderError> {
+        return Future { [weak self] promise in
+            guard let self = self else { return }
+            self.getMediaItem(id: id) { result in
+                let newResult = result
+                    .mapError { $0 as Error } // cast from AFError to Error
+                    .flatMap { mediaItem -> Result<NSImage, Error> in
+                        if let image = NSImage(contentsOf: URL(string: mediaItem.baseUrl)!) {
+                            self.handleError(error: nil)    // clear error
+                            return .success(image)
+                        } else {
+                            return .failure(PhotoProviderError.failedFetchURL)
+                        }
+                    }
+                    .mapError { return self.handleError(error: $0) ?? .unknown }
+
+                promise(newResult)
             }
         }
     }
-}
 
-extension GooglePhotoProvider: PhotoProvider {
-    var photoDescriptors: [PhotoAssetDescriptor] {
-        return photos.map { GooglePhotoAsset(photoId: $0.id) }
+    @discardableResult
+    override func refreshAssets() -> Future<[PhotoAssetDescriptor], PhotoProviderError> {
+        guard let activeAlbum = activeAlbum else {
+            error = .noActiveAlbum
+            return Future { $0(.failure(.noActiveAlbum))}
+        }
+
+        return listPhotos(for: activeAlbum)
     }
-    
-    func refreshAssets() -> Future<[PhotoAssetDescriptor], Error> {
-//    (completion: @escaping (Result<[PhotoAssetDescriptor], Error>) -> Void) {
-        fatalError("Not yet implemented")
-        
-        let google = GooglePhotoProvider.shared
-        
-//        if let activeAlbum = google.activeAlbum {
-//            GooglePhotoProvider.shared.listPhotos(for: activeAlbum) { (result) in
-//                let newResult = result.map { (photos) -> [PhotoAssetDescriptor] in
-//                    self.photos = photos
-//                    return self.photoDescriptors
-//                }
-//                completion(newResult)
-//            }
-//        } else {
-//            // if no active album, return failure
-//            completion(.failure(PhotoProviderError.noActiveAlbum))
-//        }
+
+
+    /// Handles error by mapping to corresponding PhotoProviderError and updating the error publisher.
+    /// - Parameter error: Arbitrary error.
+    /// - Returns: The PhotoProvider error that best represents specified `error`.
+    @discardableResult
+    private func handleError(error: Error?) -> PhotoProviderError? {
+        // TODO: map errors
+        if let error = error as? PhotoProviderError {
+            self.error = error
+        } else {
+            self.error = error == nil ? nil : .unknown
+        }
+        return self.error
     }
 }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */; };
 		FF14AD8D22BDB8B800C7518C /* PhotoFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */; };
+		FF279CF0244CD77F004E47C3 /* LocalFolderProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF279CEF244CD77F004E47C3 /* LocalFolderProviderTests.swift */; };
 		FF32154123200EC60054DF2A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FF32154023200EC60054DF2A /* Alamofire */; };
 		FF32154F23216F2F0054DF2A /* OAuthSwiftAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FF32154E23216F2F0054DF2A /* OAuthSwiftAlamofire */; };
 		FF34717F22D63A780009CB40 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = FF34717E22D63A780009CB40 /* SwiftyBeaver */; };
@@ -34,6 +35,8 @@
 		FF9B7D0423182D5F0073E77E /* GoogePhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9B7D0323182D5F0073E77E /* GoogePhotoProviderTests.swift */; };
 		FF9B7D09231859F90073E77E /* GooglePhotosAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9B7D08231859F90073E77E /* GooglePhotosAPI.swift */; };
 		FF9B7D0F2318BE700073E77E /* GooglePhotoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9B7D0E2318BE700073E77E /* GooglePhotoAsset.swift */; };
+		FFAAE72824211E6900DD3B3C /* GoogleSourceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAAE72724211E6900DD3B3C /* GoogleSourceDetailView.swift */; };
+		FFAAE72A24211E8100DD3B3C /* GoogleSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAAE72924211E8100DD3B3C /* GoogleSourceViewModel.swift */; };
 		FFAF7AF423CF667400763CC1 /* EnumCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAF7AF323CF667400763CC1 /* EnumCodable.swift */; };
 		FFB1234423D246700068A9A6 /* LocalFolderSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB1234323D246700068A9A6 /* LocalFolderSourceViewModel.swift */; };
 		FFB1234623D3A6CD0068A9A6 /* PhotoFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB1234523D3A6CD0068A9A6 /* PhotoFrameView.swift */; };
@@ -87,6 +90,7 @@
 /* Begin PBXFileReference section */
 		FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameController.swift; sourceTree = "<group>"; };
 		FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoFrameController.xib; sourceTree = "<group>"; };
+		FF279CEF244CD77F004E47C3 /* LocalFolderProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderProviderTests.swift; sourceTree = "<group>"; };
 		FF34718322DF82F70009CB40 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		FF39C02C2316F66E00203D7F /* GooglePhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePhotoProvider.swift; sourceTree = "<group>"; };
 		FF39C02E2316F74900203D7F /* GooglePhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePhotosViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +118,8 @@
 		FF9B7D08231859F90073E77E /* GooglePhotosAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePhotosAPI.swift; sourceTree = "<group>"; };
 		FF9B7D0D231874880073E77E /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		FF9B7D0E2318BE700073E77E /* GooglePhotoAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePhotoAsset.swift; sourceTree = "<group>"; };
+		FFAAE72724211E6900DD3B3C /* GoogleSourceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSourceDetailView.swift; sourceTree = "<group>"; };
+		FFAAE72924211E8100DD3B3C /* GoogleSourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSourceViewModel.swift; sourceTree = "<group>"; };
 		FFAF7AF323CF667400763CC1 /* EnumCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumCodable.swift; sourceTree = "<group>"; };
 		FFB1234323D246700068A9A6 /* LocalFolderSourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderSourceViewModel.swift; sourceTree = "<group>"; };
 		FFB1234523D3A6CD0068A9A6 /* PhotoFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameView.swift; sourceTree = "<group>"; };
@@ -241,6 +247,8 @@
 				FFDED62523CF9F1100C678EB /* ApiSourceDetailView.swift */,
 				FFD4C35C23CC11B2007D1A27 /* GeneralPrefsView.swift */,
 				FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */,
+				FFAAE72724211E6900DD3B3C /* GoogleSourceDetailView.swift */,
+				FFAAE72924211E8100DD3B3C /* GoogleSourceViewModel.swift */,
 				FFD4C35A23CC0E8A007D1A27 /* PreferencesView.swift */,
 				FFDED62323CF9E4E00C678EB /* LocalFolderSourceDetailView.swift */,
 				FFB1234323D246700068A9A6 /* LocalFolderSourceViewModel.swift */,
@@ -303,6 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				FF9B7D0323182D5F0073E77E /* GoogePhotoProviderTests.swift */,
+				FF279CEF244CD77F004E47C3 /* LocalFolderProviderTests.swift */,
 				FF90732322BC13840052428E /* PhotoProviderTests.swift */,
 				FF9B7D0D231874880073E77E /* TestPlan.xctestplan */,
 				FF9072E722BB04CE0052428E /* Info.plist */,
@@ -410,7 +419,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = KK;
 				TargetAttributes = {
 					FF9072CD22BB04CD0052428E = {
@@ -505,6 +514,7 @@
 				FFDED62623CF9F1100C678EB /* ApiSourceDetailView.swift in Sources */,
 				FF9B7D0F2318BE700073E77E /* GooglePhotoAsset.swift in Sources */,
 				FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */,
+				FFAAE72824211E6900DD3B3C /* GoogleSourceDetailView.swift in Sources */,
 				FF9B7D0223181AF00073E77E /* Keychain.swift in Sources */,
 				FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */,
 				FFB1234423D246700068A9A6 /* LocalFolderSourceViewModel.swift in Sources */,
@@ -520,6 +530,7 @@
 				FFD4C35B23CC0E8A007D1A27 /* PreferencesView.swift in Sources */,
 				FF90732022BC12670052428E /* PhotoVendor.swift in Sources */,
 				FF9B7CFE231760AA0073E77E /* AppSecrets.swift in Sources */,
+				FFAAE72A24211E8100DD3B3C /* GoogleSourceViewModel.swift in Sources */,
 				FFEEFCB72300F0750023F581 /* SourcesViewController.swift in Sources */,
 				FFDD944B23057E2300891545 /* AboutWindowController.swift in Sources */,
 				FFD4C35F23CCF203007D1A27 /* PrefsWindowController.swift in Sources */,
@@ -530,6 +541,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF279CF0244CD77F004E47C3 /* LocalFolderProviderTests.swift in Sources */,
 				FF90732422BC13840052428E /* PhotoProviderTests.swift in Sources */,
 				FF9B7D0423182D5F0073E77E /* GoogePhotoProviderTests.swift in Sources */,
 			);
@@ -695,10 +707,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "maya-macos/Other/maya_macos.entitlements";
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = LG2FJE6R72;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "maya-macos/Other/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -707,6 +720,7 @@
 				MARKETING_VERSION = 0.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos";
 				PRODUCT_NAME = Maya;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -716,10 +730,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "maya-macos/Other/maya_macos.entitlements";
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = LG2FJE6R72;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "maya-macos/Other/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -728,6 +743,7 @@
 				MARKETING_VERSION = 0.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos";
 				PRODUCT_NAME = Maya;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -749,6 +765,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya.maya-macosTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Maya.app/Contents/MacOS/Maya";
 			};
@@ -771,6 +788,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya.maya-macosTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Maya.app/Contents/MacOS/Maya";
 			};
@@ -781,10 +799,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "maya-macos-launcher/maya_macos_launcher.entitlements";
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = LG2FJE6R72;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "maya-macos-launcher/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -803,10 +822,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "maya-macos-launcher/maya_macos_launcher.entitlements";
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = LG2FJE6R72;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "maya-macos-launcher/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

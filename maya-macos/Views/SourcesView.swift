@@ -96,8 +96,11 @@ struct SourcesView: View {
     }
     
     func detailView(for idx: Int) -> AnyView {
+        // TODO: rework this!
         if self.selectedProviderIdx == 0 {
-            return AnyView(LocalFolderSourceDetailView())
+            return AnyView(LocalFolderSourceDetailView(provider: photoVendor.photoProviders[selectedProviderIdx] as! LocalFolderPhotoProvider))
+        } else if self.selectedProviderIdx == 1 {
+            return AnyView(GoogleSourceDetailView(google: photoVendor.photoProviders[selectedProviderIdx] as! GooglePhotoProvider))
         } else {
             return AnyView(ApiSourceDetailView())
         }

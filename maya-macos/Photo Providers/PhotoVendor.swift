@@ -9,19 +9,22 @@
 import Cocoa
 import Combine
 
-protocol PhotoVendorDelegate: class {
-    func didVendNewImage(image: NSImage)
-    func didFailToVend(error: Error?)
-}
+//protocol PhotoVendorDelegate: class {
+//    func didVendNewImage(image: NSImage)
+//    func didFailToVend(error: Error?)
+//}
 
 enum PhotoVendorError: Error {
     case noActiveProvider
+    case noPhotos
+    case providerError(error: PhotoProviderError)
 }
 
 final class PhotoVendor: ObservableObject {
     static let shared = PhotoVendor()
     
     @Published var currentImage: NSImage?
+    @Published var error: Error?
     
     /// Whether to show photos in random order. Defaults to `true`.
     var shufflePhotos: Bool = true {
@@ -50,17 +53,9 @@ final class PhotoVendor: ObservableObject {
     func setActiveProvider(_ provider: PhotoProvider) {
         activeProvider = provider        // update to new provider
         
-        // overwriting subscription, will destroy previous sub and hook up new one
-        refreshAssetsSub = activeProvider?.refreshAssets().sink(receiveCompletion: { completion in
-            if case .failure(let error) = completion {
-                log.error("Error: \(error.localizedDescription)")
-            }
-        }, receiveValue: { [weak self] assets in
-            guard let self = self else { return; }
-            self.processNewAssetList(assets)
-            self.vendImage()
-        })
-        
+        // since changing providers, vend new image after refreshing assets
+        refreshAssets(shouldVend: true)
+                
         // TODO: how to handle errors
         
         // save to settings
@@ -82,57 +77,64 @@ final class PhotoVendor: ObservableObject {
         }
     }
     
-    /// Fetches next image and calls the delegate to notify when next image is ready
-    func vendImage() {
-        guard activeProvider != nil else {
-            log.warning("No active photo provider")
-            fatalError("Not implemented")
-//            delegate?.didFailToVend(error: PhotoVendorError.noActiveProvider)
-            return
-        }
-        
-        // if reached end of photos, reset the vending state (reload the list)
-        if unshownPhotos.isEmpty {
-            resetVendingState()
-        }
-        
-        // at this point, list shouldn't be empty, if it is, just return
-        guard !unshownPhotos.isEmpty else {
-            log.warning("Photo vendor doesn't have any photos")
-//            delegate?.didFailToVend(error: nil)
-            fatalError("Not implemented")
-            return
-        }
-        
-        // pop from unshown and add to shown
-        let nextPhoto = unshownPhotos.removeFirst()
-        shownPhotos.append(nextPhoto)
-        
-        vendImageSub = nextPhoto.fetchImage().receive(on: RunLoop.main).sink(receiveCompletion: { completion in
-            if case .failure(let error) = completion {
-                log.error("Error converting descriptor to image (error: \(error.localizedDescription))")
-                // TODO: notify delegate?
-                // self?.delegate?.didFailToVend(error: error)
-            }
-        }) { [weak self] image in
+    /// Fetches next image returning Future that resolves to NSImage.
+    /// Also, sets the published `currentImage` property
+    @discardableResult
+    func vendImage() -> Future<NSImage, Error> {
+        return Future { [weak self] promise in
             guard let self = self else { return }
-            self.currentImage = image
+            guard let activeProvider = self.activeProvider else {
+                log.warning("No active photo provider")
+                promise(.failure(PhotoVendorError.noActiveProvider))
+                return
+            }
+            
+            // if reached end of photos, reset the vending state (reload the list)
+            if self.unshownPhotos.isEmpty {
+                self.resetVendingState()
+            }
+            
+            // at this point, list shouldn't be empty, if it is, just return
+            guard !self.unshownPhotos.isEmpty else {
+                log.warning("Photo vendor doesn't have any photos")
+                promise(.failure(PhotoVendorError.noPhotos))
+                return
+            }
+            
+            // pop from unshown and add to shown
+            let nextPhoto = self.unshownPhotos.removeFirst()
+            self.shownPhotos.append(nextPhoto)
+            
+            self.vendImageSub = nextPhoto.fetchImage(using: activeProvider).receive(on: RunLoop.main).sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    log.error("Error converting descriptor to image (error: \(error.localizedDescription))")
+                    promise(.failure(error))
+                }
+            }) { image in
+                self.currentImage = image
+                promise(.success(image))
+            }
+            
+            // TODO: how often to refresh assets? (especially for remote providers)
+            self.refreshAssets()
         }
-        
-        // TODO: how often to refresh assets? (especially for remote providers)
-        refreshAssets()
     }
     
-    func refreshAssets() {
+    func refreshAssets(shouldVend: Bool = false) {
         guard let activeProvider = activeProvider else { return }
         
-        refreshAssetsSub = activeProvider.refreshAssets().sink(receiveCompletion: { (completion) in
+        // overwriting subscription, will destroy previous sub and hook up new one
+        refreshAssetsSub = activeProvider.refreshAssets().sink(receiveCompletion: { completion in
             if case .failure(let error) = completion {
                 log.error("Error refreshing assets \(error.localizedDescription)")
             }
-        }) { [weak self] (photoAssets) in
+        }) { [weak self] assets in
             guard let self = self else { return }
-            self.processNewAssetList(photoAssets)
+            self.processNewAssetList(assets)
+            if shouldVend {
+                // TODO: how to manage subscription
+                self.vendImage()
+            }
         }
     }
     

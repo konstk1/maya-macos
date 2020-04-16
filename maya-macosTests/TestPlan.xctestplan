@@ -19,9 +19,7 @@
   "testTargets" : [
     {
       "skippedTests" : [
-        "GoogePhotoProviderTests\/testAlbumContents()",
-        "GoogePhotoProviderTests\/testAlbumList()",
-        "GoogePhotoProviderTests\/testAuth()",
+        "GoogePhotoProviderTests\/testAlbumListPublisher()",
         "GoogePhotoProviderTests\/testPerformanceExample()",
         "PhotoProviderTests"
       ],

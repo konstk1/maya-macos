@@ -9,18 +9,18 @@
 import Foundation
 import KeychainAccess
 
-//fileprivate let keychain = Keychain(service: Bundle.main.bundleIdentifier!).accessibility(.afterFirstUnlock)
+fileprivate let keychain = Keychain(service: Bundle.main.bundleIdentifier!).accessibility(.afterFirstUnlock)
 
 @propertyWrapper struct KeychainSecureString {
     let key: String
     
     var wrappedValue: String? {
         get {
-//            keychain[key]
-            ""
+            keychain[key]
+//            ""
         }
         set {
-//            keychain[key] = newValue
+            keychain[key] = newValue
         }
     }
     

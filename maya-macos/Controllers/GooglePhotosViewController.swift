@@ -9,7 +9,7 @@
 import Cocoa
 
 class GooglePhotosViewController: NSViewController {
-    let google = GooglePhotoProvider.shared
+    let google = GooglePhotoProvider()
 
     @IBOutlet weak var albumDropdown: NSPopUpButton!
     
@@ -18,9 +18,9 @@ class GooglePhotosViewController: NSViewController {
         
         log.verbose("GooglePhotosViewController loaded")
         
-        google.listAlbums { [weak self] (result) in
-            self?.refreshAlbumDropdown()
-        }
+//        google.listAlbums { [weak self] (result) in
+//            self?.refreshAlbumDropdown()
+//        }
     }
     
     func refreshAlbumDropdown() {
@@ -55,16 +55,14 @@ class GooglePhotosViewController: NSViewController {
     
     @IBAction func authorizedClicked(_ sender: NSButton) {
         print("Google Auth")
-        google.authorize { [weak self] result in
-            switch result {
-            case .success:
-                self?.google.listAlbums { (result) in
-                    self?.refreshAlbumDropdown()
-                }
+        _ = google.authorize().sink(receiveCompletion: { [weak self] completion in
+            switch completion {
+            case .finished:
+//                self?.google.listAlbums()
+                break
             case .failure(let error):
                 log.error("Failed Google Auth: \(error)")
-                // TODO: show alert popup or some other indicator of failure
             }
-        }
+        }) { _ in /* nothing to do here */ }
     }
 }
