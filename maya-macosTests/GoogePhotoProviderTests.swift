@@ -24,7 +24,7 @@ class GoogePhotoProviderTests: XCTestCase {
     func testAuth() {
         let expectation = XCTestExpectation(description: "Google OAuth")
 
-        google.authorize().sink(receiveCompletion: { [weak self] completion in
+        google.authorize().sink(receiveCompletion: { completion in
             switch completion {
             case .finished:
                 break
@@ -99,7 +99,37 @@ class GoogePhotoProviderTests: XCTestCase {
             expectation.fulfill()
         }.store(in: &subs)
         
-        waitForExpectations(timeout: 10.0, handler: nil)
+        waitForExpectations(timeout: 3.0, handler: nil)
+    }
+
+    func testGetPhotoError() {
+        let exp1 = self.expectation(description: "Future promise")
+        let exp2 = self.expectation(description: "Published promise")
+
+        let photoId = "AHS"
+
+        let sub = google.$error.sink { error in
+            if error != .none {
+                print("Published error: \(error)")
+                exp2.fulfill()
+            }
+        }
+
+        google.getPhoto(id: photoId).sink(receiveCompletion: { completion in
+            switch completion {
+            case .failure(let error):
+                print("Future error: \(error)")
+                break   // expected case, nothing to do
+            case .finished:
+                XCTFail("Unexpected finished")
+            }
+            exp1.fulfill()
+        }) { image in
+            XCTFail("Unexpected image procuded")
+            exp1.fulfill()
+        }.store(in: &subs)
+
+        waitForExpectations(timeout: 3.0, handler: nil)
     }
 
 }

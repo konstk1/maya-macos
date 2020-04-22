@@ -15,7 +15,7 @@ class PhotoProvider: ObservableObject {
     @Published var photoDescriptors: [PhotoAssetDescriptor] = []
     @Published var albumList: [String] = []
 
-    @Published var error: PhotoProviderError?
+    @Published var error: PhotoProviderError = .none
 
     /// `enum` value describing type of photo provider (used for savings to UserDefaults)
     var type: PhotoProviderType {
@@ -48,10 +48,13 @@ enum PhotoProviderType: String, PListCodable {
 }
 
 enum PhotoProviderError: Error {
+    case none
     case failedReadLocalFile
     case failedFetchURL
     case failedAuth
+    case unauthorized
     case noActiveAlbum
+    case failedToListAlbums
     case unknown
 }
 

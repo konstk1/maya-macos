@@ -152,15 +152,15 @@ final class LocalFolderPhotoProvider: PhotoProvider {
                 }
 
                 self.photoURLs = try self.updatePhotoList() // setting photoURLs will also update photoDescriptors
-                self.error = nil
+                self.error = .none
             } catch let error as PhotoProviderError {
                 self.error = error
             } catch {
                 self.error = .unknown
             }
 
-            if let error = self.error {
-                promise(.failure(error))
+            if self.error != .none {
+                promise(.failure(self.error))
             } else {
                 promise(.success(self.photoDescriptors))
             }

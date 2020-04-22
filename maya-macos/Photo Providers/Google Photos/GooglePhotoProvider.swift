@@ -64,10 +64,7 @@ final class GooglePhotoProvider: PhotoProvider {
         
         if let activeAlbumId = Settings.googlePhotos.activeAlbumId {
             activeAlbum = GooglePhotos.Album(id: activeAlbumId, title: "Loading...", productUrl: "", mediaItemsCount: nil, coverPhotoBaseUrl: "", coverPhotoMediaItemId: nil)
-            listPhotos(for: activeAlbum!) { [weak self] _ in
-//                fatalError("Not implemented")
-//                self?.delegate?.didUpdateAssets(assets: self?.photoDescriptors ?? [])
-            }
+            refreshAssets()
         }
     }
     
@@ -76,11 +73,7 @@ final class GooglePhotoProvider: PhotoProvider {
         // persist active album selection
         Settings.googlePhotos.activeAlbumId = album.id
         
-        listPhotos(for: album) { [weak self] result in
-            fatalError("Not implemented")
-            
-//            self?.delegate?.didUpdateAssets(assets: self?.photoDescriptors ?? [])
-        }
+        listPhotos(for: album)
     }
     
     func updateActiveAlbumDetails() {
@@ -121,7 +114,7 @@ final class GooglePhotoProvider: PhotoProvider {
                         return ()                       // success result is just void
                 } .mapError { _ in
                     // error is simply failed auth
-                    self.handleError(error: PhotoProviderError.failedAuth) ?? .unknown
+                    self.handleError(error: PhotoProviderError.failedAuth)
                 }
 
                 promise(newResult)
@@ -145,10 +138,18 @@ final class GooglePhotoProvider: PhotoProvider {
     }
 
     @discardableResult
-    func listAlbums() -> Future<[GooglePhotos.Album], Error> {
+    func listAlbums() -> Future<[GooglePhotos.Album], PhotoProviderError> {
         return Future { [weak self] promise in
             self?.listAlbums(pageToken: nil) { result in
-                promise(result)
+                let newResult = result.map { albums -> [GooglePhotos.Album] in
+                    self?.handleError(error: nil)
+                    return albums
+                }.mapError { error -> PhotoProviderError in
+                    let newError = PhotoProviderError.failedToListAlbums
+                    self?.handleError(error: newError)
+                    return newError
+                }
+                promise(newResult)
             }
         }
     }
@@ -193,11 +194,14 @@ final class GooglePhotoProvider: PhotoProvider {
                 case .success(let photos):
                     // update descriptors to trigger the publisher
                     self.photoDescriptors = photos.map { GooglePhotoAsset(photoId: $0.id) }
+                    self.handleError(error: nil)    // clear error
                     promise(.success(self.photoDescriptors))
                 case .failure(let error):
                     // TODO: map AFError to PhotoProviderError
-                    self.error = .unknown
-                    promise(.failure(.unknown))
+//                    print("List photos error: \(error)")
+
+                    let newError = self.handleError(error: error)
+                    promise(.failure(newError))
                 }
             })
         }
@@ -223,10 +227,11 @@ final class GooglePhotoProvider: PhotoProvider {
                 } else {
                     print("Success: photos \(self.photos.count)")
                     NotificationCenter.default.post(name: .updatePhotoCount, object: self, userInfo: ["photoCount": photos.count])
+                    self.handleError(error: nil)    // clear error
                     completion(.success(self.photos))
                 }
             case .failure(let error):
-                log.error("Failed to get contents of album \(album.title): \(error)")
+                log.error("Failed to get contents of album \(album.title): \(error.localizedDescription)")
                 completion(.failure(error))
             }
         }
@@ -234,7 +239,7 @@ final class GooglePhotoProvider: PhotoProvider {
     
     private func getMediaItem(id: String, completion: @escaping (Result<GooglePhotos.MediaItem, AFError>) -> Void) {
         let endpoint = baseURL.appendingPathComponent("mediaItems/\(id)")
-        print("Fetching \(endpoint.absoluteString)")
+        log.debug("Fetching \(endpoint.absoluteString)")
         alamo.request(endpoint).validate().responseDecodable { (response: AFDataResponse<GooglePhotos.MediaItem>) in
             // pass result directly to callback
             completion(response.result)
@@ -255,7 +260,7 @@ final class GooglePhotoProvider: PhotoProvider {
                             return .failure(PhotoProviderError.failedFetchURL)
                         }
                     }
-                    .mapError { return self.handleError(error: $0) ?? .unknown }
+                    .mapError { return self.handleError(error: $0) }
 
                 promise(newResult)
             }
@@ -277,13 +282,32 @@ final class GooglePhotoProvider: PhotoProvider {
     /// - Parameter error: Arbitrary error.
     /// - Returns: The PhotoProvider error that best represents specified `error`.
     @discardableResult
-    private func handleError(error: Error?) -> PhotoProviderError? {
+    private func handleError(error: Error?) -> PhotoProviderError {
+        var nextError: PhotoProviderError = .unknown
         // TODO: map errors
-        if let error = error as? PhotoProviderError {
-            self.error = error
-        } else {
-            self.error = error == nil ? nil : .unknown
+        if error == nil {
+            nextError = .none
         }
-        return self.error
+        if let error = error as? PhotoProviderError {
+            nextError = error
+        } else if let error = error as? AFError {
+            log.debug("AFError: \(error)")
+            if case .responseValidationFailed(let reason) = error {
+                log.error("Response validation \(reason)")
+            } else if let error = error.underlyingError as? OAuthSwiftError {
+                switch error {
+                case .requestError(let error as NSError, let request):
+                    nextError = .unauthorized
+                    log.error("Request: \(request) Error: \(error.localizedDescription)")
+                default:
+                    nextError = .failedAuth
+                    log.error("Unexpected OAuth error: \(error.localizedDescription)")
+                    break
+                }
+            }
+        }
+
+        self.error = nextError
+        return nextError
     }
 }
