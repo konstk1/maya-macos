@@ -5,9 +5,45 @@
         "package": "Alamofire",
         "repositoryURL": "https://github.com/Alamofire/Alamofire",
         "state": {
-          "branch": "5.0.0-rc.1",
-          "revision": "82cc60d703dbced153baa04e26c6296ba9690a2d",
-          "version": null
+          "branch": null,
+          "revision": "fca036f7aeca07124067cb6e0c12b0ad6359e3d4",
+          "version": "5.1.0"
+        }
+      },
+      {
+        "package": "BrightFutures",
+        "repositoryURL": "https://github.com/Thomvis/BrightFutures.git",
+        "state": {
+          "branch": null,
+          "revision": "9279defa6bdc21501ce740266e5a14d0119ddc63",
+          "version": "8.0.1"
+        }
+      },
+      {
+        "package": "Erik",
+        "repositoryURL": "https://github.com/phimage/Erik.git",
+        "state": {
+          "branch": null,
+          "revision": "109a130e9cdb00789a43a7a625293eeb12d22989",
+          "version": "5.1.0"
+        }
+      },
+      {
+        "package": "FileKit",
+        "repositoryURL": "https://github.com/nvzqz/FileKit.git",
+        "state": {
+          "branch": null,
+          "revision": "826d9161b184509f80d85c28cd612d630646de98",
+          "version": "6.0.0"
+        }
+      },
+      {
+        "package": "Kanna",
+        "repositoryURL": "https://github.com/tid-kijyun/Kanna.git",
+        "state": {
+          "branch": null,
+          "revision": "609367a2cd84827a33383cf7923cb4fe8f69ee0a",
+          "version": "5.2.2"
         }
       },
       {
@@ -15,26 +51,35 @@
         "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
         "state": {
           "branch": null,
-          "revision": "0046db4ab8fd7be31a59e57912dbb96639ad8ce9",
-          "version": "3.2.0"
+          "revision": "8d33ffd6f74b3bcfc99af759d4204c6395a3f918",
+          "version": "3.2.1"
         }
       },
       {
         "package": "OAuthSwift",
         "repositoryURL": "https://github.com/OAuthSwift/OAuthSwift",
         "state": {
-          "branch": "2.1.0",
-          "revision": "4aae467bb6aa3c8437b4aba31578a0087bbf6738",
-          "version": null
+          "branch": null,
+          "revision": "2e75d626532c2c6373e603312c0f1207e7e778ea",
+          "version": "2.1.0"
         }
       },
       {
         "package": "OAuthSwiftAlamofire",
-        "repositoryURL": "https://github.com/kostyan5/OAuthSwiftAlamofire",
+        "repositoryURL": "https://github.com/OAuthSwift/OAuthSwiftAlamofire",
         "state": {
           "branch": "master",
-          "revision": "4053686c824d4841be47985843c9021a60901ae1",
+          "revision": "765093b8ab4ea32b2d39dd23ff4a047c68fadd21",
           "version": null
+        }
+      },
+      {
+        "package": "Swifter",
+        "repositoryURL": "https://github.com/httpswift/swifter.git",
+        "state": {
+          "branch": null,
+          "revision": "8b5afb48ae64d4f729f0489ddcfe09c62b9c3687",
+          "version": "1.4.7"
         }
       },
       {
@@ -42,8 +87,8 @@
         "repositoryURL": "https://github.com/SwiftyBeaver/SwiftyBeaver",
         "state": {
           "branch": null,
-          "revision": "0660621f44378cd110fcf18525fd042ea11924b4",
-          "version": "1.7.1"
+          "revision": "e0fb3a74cb993d7dcf1e56734cdc98ad6e6d8176",
+          "version": "1.9.1"
         }
       }
     ]

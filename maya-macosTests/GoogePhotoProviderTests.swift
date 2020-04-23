@@ -20,7 +20,7 @@ class GoogePhotoProviderTests: XCTestCase {
 
     override func tearDown() {
     }
-
+    
     func testAuth() {
         let expectation = XCTestExpectation(description: "Google OAuth")
 
