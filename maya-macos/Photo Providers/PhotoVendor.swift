@@ -76,11 +76,12 @@ final class PhotoVendor: ObservableObject {
             unshownPhotos.shuffle()
         }
     }
-    
-    /// Fetches next image returning Future that resolves to NSImage.
-    /// Also, sets the published `currentImage` property
+
+    /// Fetches next image
+    /// - Parameter shouldRefresh: whether to refresh assets (rescan album)
+    /// - Returns: Future that resolves to NSImage on success or Error on failure
     @discardableResult
-    func vendImage() -> Future<NSImage, Error> {
+    func vendImage(shouldRefresh: Bool) -> Future<NSImage, Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
             guard let activeProvider = self.activeProvider else {
@@ -116,7 +117,9 @@ final class PhotoVendor: ObservableObject {
             }
             
             // TODO: how often to refresh assets? (especially for remote providers)
-            self.refreshAssets()
+            if shouldRefresh {
+                self.refreshAssets()
+            }
         }
     }
     
@@ -133,7 +136,7 @@ final class PhotoVendor: ObservableObject {
             self.processNewAssetList(assets)
             if shouldVend {
                 // TODO: how to manage subscription
-                self.vendImage()
+                self.vendImage(shouldRefresh: false)
             }
         }
     }

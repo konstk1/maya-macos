@@ -12,6 +12,7 @@ struct GoogleSourceDetailView: View {
     @ObservedObject private var model: GoogleSourceViewModel
 
     init(google: GooglePhotoProvider) {
+        log.info("Init GoogleSourceDetailView")
         model = GoogleSourceViewModel(google: google)
     }
     

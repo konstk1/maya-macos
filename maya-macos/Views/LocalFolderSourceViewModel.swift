@@ -17,7 +17,9 @@ class LocalFolderViewModel: ObservableObject {
             }
             print("Selected \(folderSelection)")
             if folderSelection < settings.recentFolders.count {
+                // this will refresh assets so vend doesn't need to refresh
                 updateFolderSelection(url: settings.recentFolders[folderSelection])
+                PhotoVendor.shared.refreshAssets(shouldVend: true)
             } else if folderSelection == 5 {
                 chooseFolder()
             }
@@ -34,6 +36,7 @@ class LocalFolderViewModel: ObservableObject {
     private var subs: Set<AnyCancellable> = []
     
     init(provider: LocalFolderPhotoProvider) {
+        log.warning("Init LocalFolderSourceViewModel")
         localPhotoProvider = provider
         settings.$recentFolders.sink { [weak self] (recents) in
             print("Updating recent folders")
@@ -41,8 +44,9 @@ class LocalFolderViewModel: ObservableObject {
         }.store(in: &subs)
         
         NotificationCenter.default.publisher(for: .updatePhotoCount, object: localPhotoProvider).receive(on: RunLoop.main).sink { [weak self] in
-            self?.photoCount = $0.userInfo?["photoCount"] as? Int ?? 0
-            print("Updated photo count: \(self?.photoCount ?? -1)")
+            guard let self = self else { return }
+            self.photoCount = $0.userInfo?["photoCount"] as? Int ?? 0
+            print("Updated photo count: \(self.photoCount)")
         }.store(in: &subs)
     }
 
@@ -73,19 +77,4 @@ class LocalFolderViewModel: ObservableObject {
             log.error("Failed to set active url \(error)")
         }
     }
-    
-//       @IBAction func chooseClicked(_ sender: NSButton) {
-//           chooseFolder()
-//       }
-//
-//       @IBAction func folderSelectionDropdownChanged(_ sender: NSPopUpButton) {
-//           guard let path = sender.titleOfSelectedItem else {
-//               log.error("nil path in folder dropdown")
-//               return
-//           }
-//
-//           let url = URL(fileURLWithPath: path, isDirectory: true)
-//
-//           updateFolderSelection(url: url)
-//       }
 }

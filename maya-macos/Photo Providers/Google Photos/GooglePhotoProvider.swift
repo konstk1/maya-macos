@@ -22,7 +22,10 @@ final class GooglePhotoProvider: PhotoProvider {
     private let callbackURL = URL(string: "com.kk.maya-macos:/oauth-callback/google")!
 
     private let baseURL = URL(string: "https://photoslibrary.googleapis.com/v1/")!
-    
+
+    /// temporary storage while album list is being paged in
+    private var tempAlbums: [GooglePhotos.Album] = []
+
     private(set) var albums: [GooglePhotos.Album] = [] {
         didSet {
             print("Setting albums")
@@ -68,12 +71,12 @@ final class GooglePhotoProvider: PhotoProvider {
         }
     }
     
-    func setActiveAlbum(album: GooglePhotos.Album) {
+    func setActiveAlbum(album: GooglePhotos.Album) -> Future<[PhotoAssetDescriptor], PhotoProviderError>  {
         activeAlbum = album
         // persist active album selection
         Settings.googlePhotos.activeAlbumId = album.id
         
-        listPhotos(for: album)
+        return listPhotos(for: album)
     }
     
     func updateActiveAlbumDetails() {
@@ -160,7 +163,7 @@ final class GooglePhotoProvider: PhotoProvider {
         
         // if not continuing pagination, reset album list
         if pageToken == nil {
-            albums.removeAll()
+            tempAlbums.removeAll()
         }
         
         log.debug("Requesting \(endpoint.absoluteString)")
@@ -169,12 +172,13 @@ final class GooglePhotoProvider: PhotoProvider {
             guard let self = self else { return }
             switch response.result {
             case .success(let albumList):
-                self.albums.append(contentsOf: albumList.albums)
+                self.tempAlbums.append(contentsOf: albumList.albums)
                 if let nextPageToken = albumList.nextPageToken {
                     self.listAlbums(pageToken: nextPageToken, completion: completion)
                 } else {
-                    print("Success: \(self.albums.count) albums")
+                    self.albums = self.tempAlbums   // update album list once all albums are paged in
                     self.updateActiveAlbumDetails()
+                    print("Success: \(self.albums.count) albums")
                     completion(.success(self.albums))
                 }
             case .failure(let error):

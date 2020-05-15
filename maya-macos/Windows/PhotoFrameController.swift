@@ -139,7 +139,7 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
             log.info("Auto next photo in \(autoSwitchPeriod)")
             vendTimer = Timer.scheduledTimer(withTimeInterval: autoSwitchPeriod.timeInterval, repeats: false, block: { [weak self] (_) in
                 self?.shouldPopupOnVend = (Settings.frame.newPhotoAction == .popupFrame)
-                self?.photoVendor.vendImage()
+                self?.photoVendor.vendImage(shouldRefresh: false)
             })
         } else {
             log.info("Auto photo switch off")
@@ -153,7 +153,7 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     
     func forceNext() {
         shouldPopupOnVend = true
-        photoVendor.vendImage()
+        photoVendor.vendImage(shouldRefresh: false)
     }
     
     func globalEventHandler(event: NSEvent) {
