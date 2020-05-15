@@ -12,6 +12,7 @@ struct LocalFolderSourceDetailView: View {
     @ObservedObject private var model: LocalFolderViewModel
 
     init(provider: LocalFolderPhotoProvider) {
+        log.warning("Init LocalFolderSourceDetailView")
         model = LocalFolderViewModel(provider: provider)
     }
 

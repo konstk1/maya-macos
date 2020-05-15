@@ -10,7 +10,11 @@ import SwiftUI
 
 struct PreferencesView: View {
     @State private var selectedTab = 1
-    
+
+    init() {
+        log.info("Init prefs view")
+    }
+
     var body: some View {
         TabView(selection: $selectedTab) {
             GeneralPrefsView().tabItem {

@@ -14,6 +14,7 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     
     var photoFrame = PhotoFrameWindowController()
     lazy var prefController = PreferencesWindowController(windowNibName: "SettingsController")
+    lazy var prefWinController = PrefsWindowController()
     lazy var aboutController = AboutWindowController()
     
     let mouseEventMask: NSEvent.EventTypeMask = [.leftMouseDown, .rightMouseDown]
@@ -124,8 +125,7 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     
     @IBAction func swiftUIClicked(_ sender: NSMenuItem) {
         NSApp.activate(ignoringOtherApps: true)
-        let vc = PrefsWindowController()
-        vc.showWindow(sender)
+        prefWinController.showWindow(sender)
     }
     
     @IBAction func quitClicked(_ sender: NSMenuItem) {

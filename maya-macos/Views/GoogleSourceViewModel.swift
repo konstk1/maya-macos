@@ -12,11 +12,16 @@ import Combine
 class GoogleSourceViewModel: ObservableObject {
     @Published var albumSelection: Int = 0 {
         didSet {
-            google.setActiveAlbum(album: google.albums[albumSelection])
+            print("Album sel \(albumSelection)")
+            google.setActiveAlbum(album: google.albums[albumSelection]).sink(receiveCompletion: { completion in
+                if case .finished = completion {
+                    PhotoVendor.shared.refreshAssets(shouldVend: true)
+                }
+            }, receiveValue: { _ in }).store(in: &subs)
         }
     }
     
-    @Published var albumTitles: [String] = []
+    @Published private(set) var albumTitles: [String] = []
     
     var google: GooglePhotoProvider
     
@@ -29,7 +34,13 @@ class GoogleSourceViewModel: ObservableObject {
                 log.error("Error list google albums \(error.localizedDescription)")
             }
         }) { [weak self] albumList in
-            self?.albumTitles = albumList.map { $0.title }
+            if self!.albumTitles.isEmpty {
+                self?.albumTitles = albumList.map { $0.title }
+            }
+//            if let selectedIndex = google.albums.firstIndex(where: { $0.id == Settings.googlePhotos.activeAlbumId }) {
+//                self?.albumSelection = selectedIndex
+//            }
+            print("Album sel after list \(self!.albumSelection)")
         }.store(in: &subs)
         
         _ = self.google.listAlbums()

@@ -81,6 +81,10 @@ struct SourcesView: View {
     @EnvironmentObject var photoVendor: PhotoVendor
 
     @State private var selectedProviderIdx: Int = 0
+
+    init() {
+        log.info("Sources view init")
+    }
     
     func makeRow(at index: Int) -> some View {
         ZStack(alignment: .leading) {
