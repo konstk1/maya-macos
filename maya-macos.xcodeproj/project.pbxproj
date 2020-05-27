@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B531AAF2247F346500F3C355 /* AppleSourceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531AAF1247F346500F3C355 /* AppleSourceDetailView.swift */; };
+		B531AAF4247F347A00F3C355 /* AppleSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531AAF3247F347A00F3C355 /* AppleSourceViewModel.swift */; };
+		B5421E5A247DE5C700F02345 /* ApplePhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5421E59247DE5C700F02345 /* ApplePhotoProviderTests.swift */; };
 		B5A5A8C4245210CF003B282D /* OAuthSwiftAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B5A5A8C3245210CF003B282D /* OAuthSwiftAlamofire */; };
 		FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */; };
 		FF14AD8D22BDB8B800C7518C /* PhotoFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */; };
@@ -26,7 +29,7 @@
 		FF9072F122BBD9230052428E /* Todo.txt in Resources */ = {isa = PBXBuildFile; fileRef = FF9072F022BBD9230052428E /* Todo.txt */; };
 		FF90731E22BBFF4D0052428E /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90731D22BBFF4D0052428E /* StatusMenuController.swift */; };
 		FF90732022BC12670052428E /* PhotoVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90731F22BC12670052428E /* PhotoVendor.swift */; };
-		FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */; };
+		FF90732222BC12E10052428E /* ApplePhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732122BC12E10052428E /* ApplePhotoProvider.swift */; };
 		FF90732422BC13840052428E /* PhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732322BC13840052428E /* PhotoProviderTests.swift */; };
 		FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */; };
 		FF9B7CFA23175F0B0073E77E /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FF9B7CF923175F0B0073E77E /* OAuthSwift */; };
@@ -88,6 +91,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B531AAF1247F346500F3C355 /* AppleSourceDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleSourceDetailView.swift; sourceTree = "<group>"; };
+		B531AAF3247F347A00F3C355 /* AppleSourceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleSourceViewModel.swift; sourceTree = "<group>"; };
+		B5421E59247DE5C700F02345 /* ApplePhotoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePhotoProviderTests.swift; sourceTree = "<group>"; };
 		FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameController.swift; sourceTree = "<group>"; };
 		FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoFrameController.xib; sourceTree = "<group>"; };
 		FF279CEF244CD77F004E47C3 /* LocalFolderProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderProviderTests.swift; sourceTree = "<group>"; };
@@ -108,7 +114,7 @@
 		FF9072F022BBD9230052428E /* Todo.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Todo.txt; sourceTree = "<group>"; };
 		FF90731D22BBFF4D0052428E /* StatusMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuController.swift; sourceTree = "<group>"; };
 		FF90731F22BC12670052428E /* PhotoVendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoVendor.swift; sourceTree = "<group>"; };
-		FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudPhotoProvider.swift; sourceTree = "<group>"; };
+		FF90732122BC12E10052428E /* ApplePhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePhotoProvider.swift; sourceTree = "<group>"; };
 		FF90732322BC13840052428E /* PhotoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProviderTests.swift; sourceTree = "<group>"; };
 		FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderPhotoProvider.swift; sourceTree = "<group>"; };
 		FF9B7CFB2317603A0073E77E /* AppSecrets.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecrets.example.swift; sourceTree = "<group>"; };
@@ -209,7 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				FF9B7D0A23185A040073E77E /* Google Photos */,
-				FF90732122BC12E10052428E /* iCloudPhotoProvider.swift */,
+				FF90732122BC12E10052428E /* ApplePhotoProvider.swift */,
 				FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */,
 				FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */,
 				FF90731F22BC12670052428E /* PhotoVendor.swift */,
@@ -247,6 +253,8 @@
 				FFDED62523CF9F1100C678EB /* ApiSourceDetailView.swift */,
 				FFD4C35C23CC11B2007D1A27 /* GeneralPrefsView.swift */,
 				FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */,
+				B531AAF1247F346500F3C355 /* AppleSourceDetailView.swift */,
+				B531AAF3247F347A00F3C355 /* AppleSourceViewModel.swift */,
 				FFAAE72724211E6900DD3B3C /* GoogleSourceDetailView.swift */,
 				FFAAE72924211E8100DD3B3C /* GoogleSourceViewModel.swift */,
 				FFD4C35A23CC0E8A007D1A27 /* PreferencesView.swift */,
@@ -310,6 +318,7 @@
 		FF9072E422BB04CE0052428E /* maya-macosTests */ = {
 			isa = PBXGroup;
 			children = (
+				B5421E59247DE5C700F02345 /* ApplePhotoProviderTests.swift */,
 				FF9B7D0323182D5F0073E77E /* GoogePhotoProviderTests.swift */,
 				FF279CEF244CD77F004E47C3 /* LocalFolderProviderTests.swift */,
 				FF90732322BC13840052428E /* PhotoProviderTests.swift */,
@@ -513,7 +522,7 @@
 				FF9B7D09231859F90073E77E /* GooglePhotosAPI.swift in Sources */,
 				FFDED62623CF9F1100C678EB /* ApiSourceDetailView.swift in Sources */,
 				FF9B7D0F2318BE700073E77E /* GooglePhotoAsset.swift in Sources */,
-				FF90732222BC12E10052428E /* iCloudPhotoProvider.swift in Sources */,
+				FF90732222BC12E10052428E /* ApplePhotoProvider.swift in Sources */,
 				FFAAE72824211E6900DD3B3C /* GoogleSourceDetailView.swift in Sources */,
 				FF9B7D0223181AF00073E77E /* Keychain.swift in Sources */,
 				FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */,
@@ -522,6 +531,7 @@
 				FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */,
 				FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */,
 				FF3E18FD23CA6D3200E5002B /* AboutView.swift in Sources */,
+				B531AAF4247F347A00F3C355 /* AppleSourceViewModel.swift in Sources */,
 				FF34718422DF82F70009CB40 /* Utilities.swift in Sources */,
 				FF53981E2315C6DC0067F3E9 /* SourceCell.swift in Sources */,
 				FFDED62023CF784B00C678EB /* GeneralPrefsViewModel.swift in Sources */,
@@ -534,6 +544,7 @@
 				FFEEFCB72300F0750023F581 /* SourcesViewController.swift in Sources */,
 				FFDD944B23057E2300891545 /* AboutWindowController.swift in Sources */,
 				FFD4C35F23CCF203007D1A27 /* PrefsWindowController.swift in Sources */,
+				B531AAF2247F346500F3C355 /* AppleSourceDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,6 +554,7 @@
 			files = (
 				FF279CF0244CD77F004E47C3 /* LocalFolderProviderTests.swift in Sources */,
 				FF90732422BC13840052428E /* PhotoProviderTests.swift in Sources */,
+				B5421E5A247DE5C700F02345 /* ApplePhotoProviderTests.swift in Sources */,
 				FF9B7D0423182D5F0073E77E /* GoogePhotoProviderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

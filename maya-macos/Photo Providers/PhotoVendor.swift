@@ -18,6 +18,14 @@ enum PhotoVendorError: Error {
     case noActiveProvider
     case noPhotos
     case providerError(error: PhotoProviderError)
+
+    var localizedDescription: String {
+        switch self {
+        case .noActiveProvider: return "No active provider"
+        case .noPhotos: return "No photos in active album"
+        case .providerError(let providerError): return "Provider error \(providerError.localizedDescription)"
+        }
+    }
 }
 
 final class PhotoVendor: ObservableObject {
@@ -129,7 +137,7 @@ final class PhotoVendor: ObservableObject {
         // overwriting subscription, will destroy previous sub and hook up new one
         refreshAssetsSub = activeProvider.refreshAssets().sink(receiveCompletion: { completion in
             if case .failure(let error) = completion {
-                log.error("Error refreshing assets \(error.localizedDescription)")
+                log.error("Error refreshing assets: \(error.localizedDescription)")
             }
         }) { [weak self] assets in
             guard let self = self else { return }

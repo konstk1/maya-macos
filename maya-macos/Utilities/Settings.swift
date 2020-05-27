@@ -17,6 +17,7 @@ enum Settings {
     static let photos = PhotosSettings.shared
     static let localFolderProvider = LocalFolderProviderSettings.shared
     static let googlePhotos = GooglePhotosProviderSettings.shared
+    static let applePhotos = ApplePhotosProviderSettings.shared
     
     class ObservableSettings: ObservableObject {
         var notificationSubscription: AnyCancellable?
@@ -80,6 +81,13 @@ enum Settings {
         fileprivate static let shared = GooglePhotosProviderSettings()
         
         @PublishedUserDefault("GooglePhotosProviderSettings.activeAlbumId", defaultValue: nil)
+        var activeAlbumId: String?
+    }
+
+    class ApplePhotosProviderSettings: ObservableSettings {
+        fileprivate static let shared = ApplePhotosProviderSettings()
+
+        @PublishedUserDefault("ApplePhotosProviderSettings.activeAlbumId", defaultValue: nil)
         var activeAlbumId: String?
     }
 }

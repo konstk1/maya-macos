@@ -28,7 +28,6 @@ final class GooglePhotoProvider: PhotoProvider {
 
     private(set) var albums: [GooglePhotos.Album] = [] {
         didSet {
-            print("Setting albums")
             albumsPublisher.send(albums)
         }
     }

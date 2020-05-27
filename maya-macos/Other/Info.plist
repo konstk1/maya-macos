@@ -43,13 +43,13 @@
 	<string>Copyright © 2019 KK. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>This app uses photo library to show photos in the menu bar.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSSupportsAutomaticTermination</key>
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app uses photo library to show photos in the menu bar.</string>
 </dict>
 </plist>
