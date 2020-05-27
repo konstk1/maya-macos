@@ -18,7 +18,7 @@ struct ProviderRow: View {
     // this needs to be a computed property as lazy vars are mutating and photoVendor is not yet available during init()
     // TODO: can this be made into a "computed-once property"?
     var photoCountPublisher: AnyPublisher<Int, Never> {
-        print("Making count publisher for index \(providerIndex)")
+//        print("Making count publisher for index \(providerIndex)")
         let currentCount = photoVendor.photoProviders[providerIndex].photoDescriptors.count
         let currentSubject = CurrentValueSubject<Int, Never>(currentCount)
         let countPublisher = NotificationCenter.default.publisher(for: .updatePhotoCount, object: photoVendor.photoProviders[providerIndex])
@@ -38,6 +38,8 @@ struct ProviderRow: View {
             return (name: "Local Folder", image: NSImage(named: NSImage.folderName)!)
         case .googlePhotos:
             return (name: "Google Photos", image: NSImage(named: "GooglePhotos")!)
+        case .applePhotos:
+            return (name: "Apple Photos", image: NSImage(named: NSImage.everyoneName)!)
         default:
             log.warning("No view implemented for this provider")
             return (name: "Unknown", image: NSImage(named: NSImage.everyoneName)!)
@@ -100,13 +102,17 @@ struct SourcesView: View {
     }
     
     func detailView(for idx: Int) -> AnyView {
-        // TODO: rework this!
-        if self.selectedProviderIdx == 0 {
-            return AnyView(LocalFolderSourceDetailView(provider: photoVendor.photoProviders[selectedProviderIdx] as! LocalFolderPhotoProvider))
-        } else if self.selectedProviderIdx == 1 {
-            return AnyView(GoogleSourceDetailView(google: photoVendor.photoProviders[selectedProviderIdx] as! GooglePhotoProvider))
-        } else {
-            return AnyView(ApiSourceDetailView())
+        let provider = photoVendor.photoProviders[selectedProviderIdx]
+
+        switch provider {
+        case let provider as LocalFolderPhotoProvider:
+            return AnyView(LocalFolderSourceDetailView(provider: provider))
+        case let provider as GooglePhotoProvider:
+            return AnyView(GoogleSourceDetailView(google: provider))
+        case let provider as ApplePhotoProvider:
+            return AnyView(AppleSourceDetailView(apple: provider))
+        default:
+            fatalError("Unsupport photo provider")
         }
     }
     

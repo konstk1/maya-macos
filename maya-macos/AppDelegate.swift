@@ -36,6 +36,10 @@ let log: SwiftyBeaver.Type = {
 
 let launcherAppId = "com.kk.maya-macos-launcher"
 
+var isUnitTesting: Bool {
+    ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+}
+
 extension Notification.Name {
     static let killLauncher = Notification.Name("killLauncher")
 }
@@ -49,8 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         #if DEBUG
         // Don't start rest of the app if running unit tests
-        let isUnitTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-        guard !isUnitTesting else {
+        if isUnitTesting {
             log.warning("Unit testing... skipping main app.")
             return
         }

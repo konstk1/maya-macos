@@ -24,6 +24,8 @@ class PhotoProvider: ObservableObject {
             return .localFolder
         case is GooglePhotoProvider:
             return .googlePhotos
+        case is ApplePhotoProvider:
+            return .applePhotos
         default:
             fatalError("Unimplemented photo provider type")
         }
@@ -45,6 +47,7 @@ enum PhotoProviderType: String, PListCodable {
     case none = "none"
     case localFolder = "localFolder"
     case googlePhotos = "googlePhotos"
+    case applePhotos = "applePhotos"
 }
 
 enum PhotoProviderError: Error {
@@ -56,6 +59,19 @@ enum PhotoProviderError: Error {
     case noActiveAlbum
     case failedToListAlbums
     case unknown
+
+    var localizedDescription: String {
+        switch self {
+        case .none: return "None"
+        case .failedReadLocalFile: return "Failed to read local file"
+        case .failedFetchURL: return "Failed to fetch URL"
+        case .failedAuth: return "Failed auth"
+        case .unauthorized: return "Unauthorized"
+        case .noActiveAlbum: return "No active album"
+        case .failedToListAlbums: return "Failed to list albums"
+        case .unknown: return "Unknown"
+        }
+    }
 }
 
 extension Notification.Name {

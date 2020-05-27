@@ -80,9 +80,14 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     
     init() {
         super.init(window: nil)
+
+        if isUnitTesting {
+            return
+        }
         
         photoVendor.add(provider: LocalFolderPhotoProvider())
         photoVendor.add(provider: GooglePhotoProvider())
+        photoVendor.add(provider: ApplePhotoProvider())
                 
         // load active provider from settings
         switch Settings.app.activeProvider {
@@ -93,6 +98,8 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
             photoVendor.setActiveProvider(photoVendor.photoProviders[0])
         case .googlePhotos:
             photoVendor.setActiveProvider(photoVendor.photoProviders[1])
+        case .applePhotos:
+            photoVendor.setActiveProvider(photoVendor.photoProviders[2])
         }
         
         // subscribe to new images

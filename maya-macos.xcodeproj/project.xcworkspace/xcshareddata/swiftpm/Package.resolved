@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/Alamofire/Alamofire",
         "state": {
           "branch": null,
-          "revision": "fca036f7aeca07124067cb6e0c12b0ad6359e3d4",
-          "version": "5.1.0"
+          "revision": "2777659076fda38bd4e487739ee331c7a65b5924",
+          "version": "5.2.1"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/OAuthSwift/OAuthSwift",
         "state": {
           "branch": null,
-          "revision": "2e75d626532c2c6373e603312c0f1207e7e778ea",
-          "version": "2.1.0"
+          "revision": "fde77955e6983fbfaabd491709d52b8a82fda4d0",
+          "version": "2.1.2"
         }
       },
       {
@@ -69,7 +69,7 @@
         "repositoryURL": "https://github.com/OAuthSwift/OAuthSwiftAlamofire",
         "state": {
           "branch": "master",
-          "revision": "765093b8ab4ea32b2d39dd23ff4a047c68fadd21",
+          "revision": "460d13516b2bb7e85e735b06a2f46045a5b30d79",
           "version": null
         }
       },

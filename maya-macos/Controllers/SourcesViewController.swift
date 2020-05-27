@@ -93,6 +93,8 @@ class SourcesViewController: NSViewController {
             providerType = .localFolder
         case is GooglePhotoProvider:
             providerType = .googlePhotos
+        case is ApplePhotoProvider:
+            providerType = .applePhotos
         default:
             providerType = .none
             log.warning("Unimplemented photo provider type")
