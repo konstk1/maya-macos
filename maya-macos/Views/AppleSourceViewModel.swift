@@ -15,11 +15,16 @@ class AppleSourceViewModel: ObservableObject {
         didSet {
             print("Album sel \(albumSelection)")
             apple.setActiveAlbum(album: apple.albums[albumSelection])
-            PhotoVendor.shared.refreshAssets(shouldVend: true)
+            // only vend if this is active provider
+            if PhotoVendor.shared.activeProvider == apple {
+                PhotoVendor.shared.refreshAssets(shouldVend: true)
+            }
         }
     }
     
     @Published private(set) var albumTitles: [String] = []
+
+    @Published var isActive: Bool
 
     @Published private(set) var isAuthorized: Bool = false
 
@@ -30,11 +35,16 @@ class AppleSourceViewModel: ObservableObject {
     init(apple: ApplePhotoProvider) {
         self.apple = apple
 
-        self.apple.albumsPublisher
-            .map { $0.map { $0.localizedTitle ?? "Untitled" } }
-            .assign(to: \.albumTitles, on: self).store(in: &subs)
+        isActive = (PhotoVendor.shared.activeProvider == apple)
+        isAuthorized = (apple.authStatus == .authorized)
 
-        self.apple.$authStatus.receive(on: RunLoop.main).sink { status in
+        self.apple.albumsPublisher.sink { [weak self] albums in
+            guard let self = self else { return }
+            self.albumTitles = albums.map { $0.localizedTitle ?? "Untitled" }
+        }.store(in: &subs)
+
+        self.apple.$authStatus.receive(on: RunLoop.main).sink { [weak self] status in
+            guard let self = self else { return }
             log.info("Apple auth status \(status.rawValue)")
             if status == .authorized {
                 self.isAuthorized = true
@@ -42,17 +52,29 @@ class AppleSourceViewModel: ObservableObject {
             } else {
                 self.isAuthorized = false
             }
+        }.store(in: &subs)
+
+        if let selectedIndex = apple.albums.firstIndex(where: { $0.localIdentifier == Settings.applePhotos.activeAlbumId }) {
+            albumSelection = selectedIndex
         }
+    }
+
+    deinit {
+        log.warning("AppleSourceViewModel deinit")
     }
 
     func updateAlbums(albumList: [PHAssetCollection]) {
         albumTitles = albumList.map { $0.localizedTitle ?? "Untitled" }
-        //            if let selectedIndex = google.albums.firstIndex(where: { $0.id == Settings.googlePhotos.activeAlbumId }) {
-        //                self?.albumSelection = selectedIndex
-        //            }
+
         print("Album sel after list \(albumSelection)")
     }
-    
+
+    func activateClicked() {
+        log.info("Activating Apple Photos")
+        PhotoVendor.shared.setActiveProvider(apple)
+        isActive = true
+    }
+
     func authorizeClicked() {
         print("Apple Auth")
         apple.authorize()

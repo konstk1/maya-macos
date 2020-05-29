@@ -83,7 +83,6 @@ final class ApplePhotoProvider: PhotoProvider {
         for i in 0..<fetchResult.count {
             let collection = fetchResult.object(at: i)
             collections.append(collection)
-            print(collection)
         }
 
         albums = collections

@@ -28,6 +28,12 @@ struct LocalFolderSourceDetailView: View {
                     print("New folder")
                 }.tag(5)
             }.labelsHidden()
+
+            Spacer()
+
+            Button(action: model.activateClicked) {
+                Text(model.isActive ? "Active" : "Activate")
+            }.disabled(model.isActive)
         }.padding()
     }
 }

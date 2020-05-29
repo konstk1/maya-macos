@@ -89,18 +89,7 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         photoVendor.add(provider: GooglePhotoProvider())
         photoVendor.add(provider: ApplePhotoProvider())
                 
-        // load active provider from settings
-        switch Settings.app.activeProvider {
-        case .none:
-            log.info("No active Photo Provider")
-        case .localFolder:
-            // TODO: rework this!
-            photoVendor.setActiveProvider(photoVendor.photoProviders[0])
-        case .googlePhotos:
-            photoVendor.setActiveProvider(photoVendor.photoProviders[1])
-        case .applePhotos:
-            photoVendor.setActiveProvider(photoVendor.photoProviders[2])
-        }
+        photoVendor.loadActiveProviderFromSettings()
         
         // subscribe to new images
         photoVendor.$currentImage.compactMap { $0 }.receive(on: RunLoop.main).sink { [weak self] image in

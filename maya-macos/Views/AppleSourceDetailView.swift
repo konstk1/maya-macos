@@ -24,6 +24,13 @@ struct AppleSourceDetailView: View {
                     Text(self.model.albumTitles[$0]).truncationMode(.middle)
                 }
             }.labelsHidden()
+            
+            Spacer()
+
+            Button(action: model.activateClicked) {
+                Text(model.isActive ? "Active" : "Activate")
+            }.disabled(model.isActive)
+
             Button(action: model.authorizeClicked) {
                 Text(model.isAuthorized ? "Authorize" : "Authorized")
             }.disabled(model.isAuthorized)

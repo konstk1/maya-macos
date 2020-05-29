@@ -69,6 +69,14 @@ final class PhotoVendor: ObservableObject {
         // save to settings
         Settings.app.activeProvider = provider.type
     }
+
+    func loadActiveProviderFromSettings() {
+        if let activeProvider = photoProviders.first(where: { $0.type == Settings.app.activeProvider }) {
+            setActiveProvider(activeProvider)
+        } else {
+            setActiveProvider(photoProviders[0])
+        }
+    }
     
     /// Clear all vending state, including shown photos, etc.
     func resetVendingState() {
