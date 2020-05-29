@@ -19,7 +19,10 @@ class LocalFolderViewModel: ObservableObject {
             if folderSelection < settings.recentFolders.count {
                 // this will refresh assets so vend doesn't need to refresh
                 updateFolderSelection(url: settings.recentFolders[folderSelection])
-                PhotoVendor.shared.refreshAssets(shouldVend: true)
+                // only vend if this is active provider
+                if PhotoVendor.shared.activeProvider == localPhotoProvider {
+                    PhotoVendor.shared.refreshAssets(shouldVend: true)
+                }
             } else if folderSelection == 5 {
                 chooseFolder()
             }
@@ -28,6 +31,7 @@ class LocalFolderViewModel: ObservableObject {
     }
     @Published var recentFolders: [String] = []
     @Published var photoCount = 0
+    @Published var isActive: Bool
     
     private var settings = Settings.localFolderProvider
     
@@ -38,6 +42,8 @@ class LocalFolderViewModel: ObservableObject {
     init(provider: LocalFolderPhotoProvider) {
         log.warning("Init LocalFolderSourceViewModel")
         localPhotoProvider = provider
+        isActive = (PhotoVendor.shared.activeProvider == provider)
+
         settings.$recentFolders.sink { [weak self] (recents) in
             print("Updating recent folders")
             self?.recentFolders = recents.map { $0.path }
@@ -48,6 +54,10 @@ class LocalFolderViewModel: ObservableObject {
             self.photoCount = $0.userInfo?["photoCount"] as? Int ?? 0
             print("Updated photo count: \(self.photoCount)")
         }.store(in: &subs)
+    }
+
+    deinit {
+        log.warning("LocalFolderViewModel deinit")
     }
 
     func chooseFolder() {
@@ -76,5 +86,11 @@ class LocalFolderViewModel: ObservableObject {
         } catch {
             log.error("Failed to set active url \(error)")
         }
+    }
+
+    func activateClicked() {
+        log.info("Activating Apple Photos")
+        PhotoVendor.shared.setActiveProvider(localPhotoProvider)
+        isActive = true
     }
 }
