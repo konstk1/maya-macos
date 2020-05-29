@@ -43,8 +43,11 @@ struct SourcesView: View {
                 }.frame(width: 220, height: g.size.height, alignment: .leading).background(Color.white)
                 Divider()
                 DetailView(provider: self.photoVendor.photoProviders[self.selectedProviderIdx])
-                    .frame(width: g.size.width - 220, height: g.size.height, alignment: .top).offset(x: 0, y: 10)
+                    .frame(width: g.size.width - 220, height: g.size.height, alignment: .top)
             }
+        }.onAppear {
+            print("On Appear")
+            self.selectedProviderIdx = self.photoVendor.activeProviderIndex ?? 0
         }
     }
 }
@@ -87,7 +90,7 @@ struct ProviderRow: View {
     }
 
     private var isActive: Bool {
-        return providerIndex == photoVendor.photoProviders.firstIndex { $0 === photoVendor.activeProvider }
+        return providerIndex == photoVendor.activeProviderIndex
     }
 
     @State private var photoCount = 0

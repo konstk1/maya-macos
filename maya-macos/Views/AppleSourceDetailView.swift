@@ -17,24 +17,24 @@ struct AppleSourceDetailView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Show photos from this album")
-            Picker("", selection: $model.albumSelection) {
-                ForEach(0..<model.albumTitles.count, id: \.self) {
-                    Text(self.model.albumTitles[$0]).truncationMode(.middle)
-                }
-            }.labelsHidden()
+        VStack {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Show photos from this album")
+                Picker("", selection: $model.albumSelection) {
+                    ForEach(0..<model.albumTitles.count, id: \.self) {
+                        Text(self.model.albumTitles[$0]).truncationMode(.middle)
+                    }
+                }.labelsHidden()
+            }.padding()
 
             Spacer()
 
-            Button(action: model.activateClicked) {
-                Text(model.isActive ? "Active" : "Activate")
-            }.disabled(model.isActive)
+            ActivateButton(isActive: model.isActive, action: model.activateClicked)
 
-            Button(action: model.authorizeClicked) {
-                Text(model.isAuthorized ? "Authorize" : "Authorized")
-            }.disabled(model.isAuthorized)
-        }.padding()
+            //                Button(action: model.authorizeClicked) {
+            //                    Text(model.isAuthorized ? "Authorize" : "Authorized")
+            //                }.disabled(model.isAuthorized)
+        }.padding(.bottom, 30)
     }
 }
 

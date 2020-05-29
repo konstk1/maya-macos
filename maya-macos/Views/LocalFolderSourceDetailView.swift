@@ -17,24 +17,23 @@ struct LocalFolderSourceDetailView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Show photos from this location")
-            Picker("", selection: $model.folderSelection) {
-                ForEach(0..<model.recentFolders.count, id: \.self) {
-                    Text(self.model.recentFolders[$0]).truncationMode(.middle)
-                }
-                Divider()
-                Text("Choose a new folder...").onTapGesture {
-                    print("New folder")
-                }.tag(5)
-            }.labelsHidden()
+        VStack {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Show photos from this location")
+                Picker("", selection: $model.folderSelection) {
+                    ForEach(0..<model.recentFolders.count, id: \.self) {
+                        Text(self.model.recentFolders[$0]).truncationMode(.middle)
+                    }
+                    Divider()
+                    Text("Choose a new folder...").onTapGesture {
+                        print("New folder")
+                    }.tag(5)
+                }.labelsHidden()
+            }.padding()
 
             Spacer()
-
-            Button(action: model.activateClicked) {
-                Text(model.isActive ? "Active" : "Activate")
-            }.disabled(model.isActive)
-        }.padding()
+            ActivateButton(isActive: model.isActive, action: model.activateClicked)
+        }.padding(.bottom, 30)
     }
 }
 

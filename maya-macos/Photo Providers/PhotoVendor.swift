@@ -47,6 +47,11 @@ final class PhotoVendor: ObservableObject {
     private(set) var activeProvider: PhotoProvider?
     var photoProviders: [PhotoProvider] = []
 
+    var activeProviderIndex: Int? {
+        guard let activeProvider = activeProvider else { return nil }
+        return photoProviders.firstIndex(of: activeProvider)
+    }
+
     private var unshownPhotos: [PhotoAssetDescriptor] = []
     private var shownPhotos: [PhotoAssetDescriptor] = []
 
@@ -59,15 +64,13 @@ final class PhotoVendor: ObservableObject {
 
     /// Set new provider of photos.
     func setActiveProvider(_ provider: PhotoProvider) {
-        activeProvider = provider        // update to new provider
+        activeProvider = provider                                       // update to new provider
 
-        // since changing providers, vend new image after refreshing assets
-        refreshAssets(shouldVend: true)
+        refreshAssets(shouldVend: true)     // since changing providers, vend new image after refreshing assets
 
         // TODO: how to handle errors
 
-        // save to settings
-        Settings.app.activeProvider = provider.type
+        Settings.app.activeProvider = provider.type                     // save to settings
     }
 
     func loadActiveProviderFromSettings() {
