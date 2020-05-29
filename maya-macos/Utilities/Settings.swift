@@ -3,7 +3,7 @@
 //  maya-macos
 //
 //  Created by Konstantin Klitenik on 7/29/19.
-//  Copyright © 2019 KK. All rights reserved.
+//  Copyright © 2020 KK. All rights reserved.
 //
 
 import Foundation
@@ -18,20 +18,20 @@ enum Settings {
     static let localFolderProvider = LocalFolderProviderSettings.shared
     static let googlePhotos = GooglePhotosProviderSettings.shared
     static let applePhotos = ApplePhotosProviderSettings.shared
-    
+
     class ObservableSettings: ObservableObject {
         var notificationSubscription: AnyCancellable?
-        
+
         fileprivate init() {
             notificationSubscription = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification).sink { _ in
                 self.objectWillChange.send()
             }
         }
     }
-    
+
     class AppSettings: ObservableSettings {
         fileprivate static let shared = AppSettings()
-        
+
         @PublishedUserDefault("AppSettings.openAtLogin", defaultValue: false)
         var openAtLogin: Bool {
             didSet {
@@ -39,47 +39,47 @@ enum Settings {
                 SMLoginItemSetEnabled(launcherAppId as CFString, openAtLogin)
             }
         }
-        
+
         @PublishedUserDefault("AppSettings.activeProvider", defaultValue: .none)
         var activeProvider: PhotoProviderType
     }
-    
+
     class FrameSettings: ObservableSettings {
         fileprivate static let shared = FrameSettings()
-                
+
         @PublishedUserDefault("FrameSettings.newPhotoAction", defaultValue: .popupFrame)
         var newPhotoAction: NewPhotoAction
-        
+
         @PublishedUserDefault("FrameSettings..autoCloseFrame", defaultValue: false)
         var autoCloseFrame: Bool
-        
+
         @PublishedUserDefault("FrameSettings.autoCloseFrameAfter", defaultValue: .seconds(10))
         var autoCloseFrameAfter: TimePeriod
     }
-    
+
     class PhotosSettings: ObservableSettings {
         fileprivate static let shared = PhotosSettings()
-        
+
         @PublishedUserDefault("PhotosSettings.autoSwitchPhoto", defaultValue: true)
         var autoSwitchPhoto: Bool
-        
+
         @PublishedUserDefault("PhotosSettings.autoSwitchPhotoPeriod", defaultValue: .minutes(10))
         var autoSwitchPhotoPeriod: TimePeriod
     }
-    
+
     class LocalFolderProviderSettings: ObservableSettings {
         fileprivate static let shared = LocalFolderProviderSettings()
-        
+
         @PublishedUserDefault("LocalFolderProviderSettings.recentFolders", defaultValue: [])
         var recentFolders: [URL]
-        
+
         @PublishedUserDefault("LocalFolderProviderSettings.bookmarks", defaultValue: [:])
         var bookmarks: [URL: Data]
     }
-    
+
     class GooglePhotosProviderSettings: ObservableSettings {
         fileprivate static let shared = GooglePhotosProviderSettings()
-        
+
         @PublishedUserDefault("GooglePhotosProviderSettings.activeAlbumId", defaultValue: nil)
         var activeAlbumId: String?
     }
@@ -95,16 +95,16 @@ enum Settings {
 @propertyWrapper struct PublishedUserDefault<Value: Codable>: Publisher {
     typealias Output = Value
     typealias Failure = Never
-    
+
     let key: String
     let defaultValue: Value
     private var publisher: CurrentValueSubject<Value, Never>?
-    
+
     init(_ key: String, defaultValue: Value) {
         self.key = key
         self.defaultValue = defaultValue
     }
-        
+
     public var wrappedValue: Value {
         get {
             let object = UserDefaults.standard.object(forKey: key)
@@ -120,15 +120,15 @@ enum Settings {
             // first see if value is a property list convertible struct
             // if that fails, value is most likely a basic type that can be stored directly into user defaults
             let propList = try? PropertyListEncoder().encode(newValue)
-            UserDefaults.standard.set(propList ?? newValue, forKey:  key)
+            UserDefaults.standard.set(propList ?? newValue, forKey: key)
         }
     }
-    
+
 //    public var wrappedValue: Value {
 //        get { fatalError() }
-//        set { fatalError() } // swiftlint:disable:this unused_setter_value
+//        set { fatalError() }
 //    }
-    
+
 //    public static subscript<EnclosingSelf: ObservableObject>(
 //        _enclosingInstance instance: EnclosingSelf,
 //        wrapped wrappedKeyPath: ReferenceWritableKeyPath<EnclosingSelf, Value>,
@@ -152,7 +152,7 @@ enum Settings {
 //            UserDefaults.standard.set(propList ?? newValue, forKey: prop.key)
 //        }
 //    }
-    
+
     // Allows for $ syntax to get publisher
     public var projectedValue: CurrentValueSubject<Value, Never> {
         mutating get {
@@ -164,15 +164,14 @@ enum Settings {
             return publisher
         }
     }
-    
-    func receive<S>(subscriber: S) where S : Subscriber, Failure == S.Failure, Output == S.Input {
+
+    func receive<S>(subscriber: S) where S: Subscriber, Failure == S.Failure, Output == S.Input {
         publisher?.receive(subscriber: subscriber)
     }
 }
 
 enum NewPhotoAction: String, CaseIterable, PListCodable {
-    case updateIcon = "updateIcon"
-    case showNotification = "showNotification"
-    case popupFrame = "popupFrame"
+    case updateIcon
+    case showNotification
+    case popupFrame
 }
-

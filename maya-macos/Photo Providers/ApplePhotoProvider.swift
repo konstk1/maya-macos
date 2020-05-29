@@ -3,7 +3,7 @@
 //  maya-macos
 //
 //  Created by Konstantin Klitenik on 6/20/19.
-//  Copyright © 2019 KK. All rights reserved.
+//  Copyright © 2020 KK. All rights reserved.
 //
 
 import Cocoa
@@ -109,7 +109,7 @@ final class ApplePhotoProvider: PhotoProvider {
             options.isNetworkAccessAllowed = true
             options.resizeMode = .fast
             options.deliveryMode = .highQualityFormat
-            PHImageManager.default().requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFit, options: options) { image, info in
+            PHImageManager.default().requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFit, options: options) { image, _ in
                 guard let image = image else {
                     promise(.failure(.unknown))
                     return
@@ -143,7 +143,7 @@ final class ApplePhotoProvider: PhotoProvider {
 
 struct ApplePhotoAsset: PhotoAssetDescriptor {
     var asset: PHAsset
-    var description: String { "Apple asset type \(asset.mediaType.rawValue) (\(asset.pixelWidth)x\(asset.pixelHeight)), created \(asset.creationDate)," }
+    var description: String { "Apple asset type \(asset.localIdentifier) (\(asset.pixelWidth)x\(asset.pixelHeight))" }
 
     func fetchImage(using provider: PhotoProvider) -> Future<NSImage, PhotoProviderError> {
         guard let provider = provider as? ApplePhotoProvider else {

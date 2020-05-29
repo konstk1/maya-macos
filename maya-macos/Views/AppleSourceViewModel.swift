@@ -21,7 +21,7 @@ class AppleSourceViewModel: ObservableObject {
             }
         }
     }
-    
+
     @Published private(set) var albumTitles: [String] = []
 
     @Published var isActive: Bool
@@ -29,9 +29,9 @@ class AppleSourceViewModel: ObservableObject {
     @Published private(set) var isAuthorized: Bool = false
 
     private var apple: ApplePhotoProvider
-    
+
     private var subs: Set<AnyCancellable> = []
-    
+
     init(apple: ApplePhotoProvider) {
         self.apple = apple
 

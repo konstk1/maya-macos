@@ -3,7 +3,7 @@
 //  maya-macos
 //
 //  Created by Konstantin Klitenik on 6/19/19.
-//  Copyright © 2019 KK. All rights reserved.
+//  Copyright © 2020 KK. All rights reserved.
 //
 
 import Cocoa
@@ -19,16 +19,16 @@ let log: SwiftyBeaver.Type = {
     console.levelColor.info    = "🔷 "
     console.levelColor.warning = "🔶 "
     console.levelColor.error   = "🛑 "
-    
+
     log.addDestination(console)
-    
+
     let logDirectoryURL = try? FileManager.default.url(for: .applicationSupportDirectory,
                                     in: .userDomainMask, appropriateFor: nil, create: true)
-    
+
     let file = FileDestination()
     file.logFileURL = logDirectoryURL?.appendingPathComponent("maya.log")
     log.addDestination(file)
-    
+
     log.verbose("Log file: \(file.logFileURL?.path ?? "none")")
     log.verbose("SwiftyBeaver ready")
     return log
@@ -50,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         let runningApps = NSWorkspace.shared.runningApplications
         let isRunning = runningApps.contains { $0.bundleIdentifier == launcherAppId }
-        
+
         #if DEBUG
         // Don't start rest of the app if running unit tests
         if isUnitTesting {
@@ -58,18 +58,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
         #endif
-        
+
         SMLoginItemSetEnabled(launcherAppId as CFString, Settings.app.openAtLogin)
-        
+
         // if launcher is running, send notification to terminate it
         if isRunning {
-            DistributedNotificationCenter.default().post(name: .killLauncher, object: Bundle.main.bundleIdentifier!)
+            DistributedNotificationCenter.default().post(name: .killLauncher, object: Bundle.main.bundleIdentifier!)    // swiftlint:disable:this force_unwrapping
         }
-        
+
         // register to handle URL scheme
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleGetURL(event:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
     }
-    
+
     /// URL event handler to pass callbacks to OAuth
     @objc func handleGetURL(event: NSAppleEventDescriptor!, withReplyEvent: NSAppleEventDescriptor!) {
 //        log.debug("Handle URL: \(event)")
@@ -83,9 +83,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     }
 
-    
     // MARK: - Core Data stack
-    
+
     lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
@@ -94,11 +93,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
          error conditions that could cause the creation of the store to fail.
          */
         let container = NSPersistentContainer(name: "maya_macos")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { _, error in
             if let error = error {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                
+
                 /*
                  Typical reasons for an error here include:
                  * The parent directory does not exist, cannot be created, or disallows writing.
@@ -112,7 +111,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         })
         return container
     }()
-    
+
 //    // MARK: - Core Data stack w/ CloudKit
 //
 //    lazy var persistentContainer: NSPersistentCloudKitContainer = {
@@ -187,12 +186,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             // Customize this code block to include application-specific recovery steps.
             let result = sender.presentError(nserror)
-            if (result) {
+            if result {
                 return .terminateCancel
             }
 
             let question = NSLocalizedString("Could not save changes while quitting. Quit anyway?", comment: "Quit without saves error question message")
-            let info = NSLocalizedString("Quitting now will lose any changes you have made since the last successful save", comment: "Quit without saves error question info");
+            let info = NSLocalizedString("Quitting now will lose any changes you have made since the last successful save", comment: "Quit without saves error question info")
             let quitButton = NSLocalizedString("Quit anyway", comment: "Quit anyway button title")
             let cancelButton = NSLocalizedString("Cancel", comment: "Cancel button title")
             let alert = NSAlert()
@@ -210,4 +209,3 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return .terminateNow
     }
 }
-

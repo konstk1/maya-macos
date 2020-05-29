@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B531AAF2247F346500F3C355 /* AppleSourceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531AAF1247F346500F3C355 /* AppleSourceDetailView.swift */; };
 		B531AAF4247F347A00F3C355 /* AppleSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531AAF3247F347A00F3C355 /* AppleSourceViewModel.swift */; };
+		B531AAF624809B0400F3C355 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B531AAF524809B0400F3C355 /* .swiftlint.yml */; };
 		B5421E5A247DE5C700F02345 /* ApplePhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5421E59247DE5C700F02345 /* ApplePhotoProviderTests.swift */; };
 		B5A5A8C4245210CF003B282D /* OAuthSwiftAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B5A5A8C3245210CF003B282D /* OAuthSwiftAlamofire */; };
 		FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */; };
@@ -93,6 +94,7 @@
 /* Begin PBXFileReference section */
 		B531AAF1247F346500F3C355 /* AppleSourceDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleSourceDetailView.swift; sourceTree = "<group>"; };
 		B531AAF3247F347A00F3C355 /* AppleSourceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleSourceViewModel.swift; sourceTree = "<group>"; };
+		B531AAF524809B0400F3C355 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		B5421E59247DE5C700F02345 /* ApplePhotoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePhotoProviderTests.swift; sourceTree = "<group>"; };
 		FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameController.swift; sourceTree = "<group>"; };
 		FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoFrameController.xib; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 		FF9072C522BB04CD0052428E = {
 			isa = PBXGroup;
 			children = (
+				B531AAF524809B0400F3C355 /* .swiftlint.yml */,
 				FF9072D022BB04CD0052428E /* maya-macos */,
 				FF9072E422BB04CE0052428E /* maya-macosTests */,
 				FFC22B5722F2378300121828 /* maya-macos-launcher */,
@@ -366,6 +369,7 @@
 			buildConfigurationList = FF9072EA22BB04CF0052428E /* Build configuration list for PBXNativeTarget "maya-macos" */;
 			buildPhases = (
 				FF9072CA22BB04CD0052428E /* Sources */,
+				B531AAF724809B3D00F3C355 /* ShellScript */,
 				FF9072CB22BB04CD0052428E /* Frameworks */,
 				FF9072CC22BB04CD0052428E /* Resources */,
 				FFC22B6422F2382100121828 /* CopyFiles */,
@@ -478,6 +482,7 @@
 				FF9072D722BB04CE0052428E /* Assets.xcassets in Resources */,
 				FFEEFCB82300F0750023F581 /* SourcesViewController.xib in Resources */,
 				FF14AD8D22BDB8B800C7518C /* PhotoFrameController.xib in Resources */,
+				B531AAF624809B0400F3C355 /* .swiftlint.yml in Resources */,
 				FF9072DA22BB04CE0052428E /* MainMenu.xib in Resources */,
 				FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */,
 				FF9072F122BBD9230052428E /* Todo.txt in Resources */,
@@ -501,6 +506,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B531AAF724809B3D00F3C355 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FF9072CA22BB04CD0052428E /* Sources */ = {

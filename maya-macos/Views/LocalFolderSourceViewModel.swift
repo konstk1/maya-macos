@@ -29,16 +29,17 @@ class LocalFolderViewModel: ObservableObject {
             folderSelection = 0
         }
     }
+
     @Published var recentFolders: [String] = []
     @Published var photoCount = 0
     @Published var isActive: Bool
-    
+
     private var settings = Settings.localFolderProvider
-    
+
     private var localPhotoProvider: LocalFolderPhotoProvider
-    
+
     private var subs: Set<AnyCancellable> = []
-    
+
     init(provider: LocalFolderPhotoProvider) {
         log.warning("Init LocalFolderSourceViewModel")
         localPhotoProvider = provider
@@ -48,7 +49,7 @@ class LocalFolderViewModel: ObservableObject {
             print("Updating recent folders")
             self?.recentFolders = recents.map { $0.path }
         }.store(in: &subs)
-        
+
         NotificationCenter.default.publisher(for: .updatePhotoCount, object: localPhotoProvider).receive(on: RunLoop.main).sink { [weak self] in
             guard let self = self else { return }
             self.photoCount = $0.userInfo?["photoCount"] as? Int ?? 0
@@ -65,10 +66,10 @@ class LocalFolderViewModel: ObservableObject {
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
         panel.allowsMultipleSelection = false
-        
+
         panel.begin { [weak self] (response) in
             guard let self = self else { log.error("self doesn't exist anymore"); return }
-            
+
             if response == .OK {
                 if let selectedUrl = panel.url {
                     self.updateFolderSelection(url: selectedUrl)
@@ -79,7 +80,7 @@ class LocalFolderViewModel: ObservableObject {
             }
         }
     }
-    
+
     private func updateFolderSelection(url: URL) {
         do {
             try localPhotoProvider.setActiveFolder(url: url)

@@ -18,20 +18,20 @@ struct SourcesView: View {
     init() {
         log.info("Sources view init")
     }
-    
+
     func makeRow(at index: Int) -> some View {
         ZStack(alignment: .leading) {
             ProviderRow(providerIndex: index).frame(height: 40)
                 .contentShape(Rectangle())
                 .onTapGesture { self.selectedProviderIdx = index }
-            
+
             if index == self.selectedProviderIdx {
                 // disallow hit testing to send taps to provider row below
                 Rectangle().foregroundColor(Color.secondary.opacity(0.1)).frame(height: 40).allowsHitTesting(false)
             }
         }
     }
-    
+
     var body: some View {
         GeometryReader { g in
             HStack(alignment: .top, spacing: 0) {
@@ -58,6 +58,7 @@ struct DetailView: View {
 
     var body: some View {
         Group {
+            // swiftlint:disable force_cast
             if provider.type == .localFolder {
                 LocalFolderSourceDetailView(provider: provider as! LocalFolderPhotoProvider)
             } else if provider.type == .googlePhotos {
@@ -65,6 +66,7 @@ struct DetailView: View {
             } else if provider.type == .applePhotos {
                 AppleSourceDetailView(apple: provider as! ApplePhotoProvider)
             }
+            // swiftlint:enable force_cast
         }
     }
 }
@@ -93,14 +95,14 @@ struct ProviderRow: View {
     var providerInfo: (name: String, image: NSImage) {
         switch photoVendor.photoProviders[providerIndex].type {
         case .localFolder:
-            return (name: "Local Folder", image: NSImage(named: NSImage.folderName)!)
+            return (name: "Local Folder", image: NSImage(named: NSImage.folderName)!)  // swiftlint:disable:this force_unwrapping
         case .googlePhotos:
-            return (name: "Google Photos", image: NSImage(named: "GooglePhotos")!)
+            return (name: "Google Photos", image: #imageLiteral(resourceName: "GooglePhotos"))
         case .applePhotos:
-            return (name: "Apple Photos", image: NSImage(named: "ApplePhotos")!)
+            return (name: "Apple Photos", image: #imageLiteral(resourceName: "ApplePhotos"))
         default:
             log.warning("No view implemented for this provider")
-            return (name: "Unknown", image: NSImage(named: NSImage.everyoneName)!)
+            return (name: "Unknown", image: NSImage(named: NSImage.everyoneName)!)    // swiftlint:disable:this force_unwrapping
         }
     }
 
@@ -111,7 +113,7 @@ struct ProviderRow: View {
                 ZStack {
                     Rectangle().frame(width: 12, height: 20).foregroundColor(.clear).border(Color.clear, width: 0)
                     if self.isActive {
-                        Image(nsImage: NSImage(named: NSImage.menuOnStateTemplateName)!)
+                        Image(nsImage: NSImage(named: NSImage.menuOnStateTemplateName)!)    // swiftlint:disable:this force_unwrapping
                     }
                 }.padding(.leading, 10)
 

@@ -11,6 +11,8 @@ import Combine
 import Photos
 @testable import Maya
 
+// swiftlint:disable force_unwrapping
+
 class ApplePhotoProviderTests: XCTestCase {
     let apple = ApplePhotoProvider()
 
@@ -30,9 +32,9 @@ class ApplePhotoProviderTests: XCTestCase {
             callCount += 1
             print("Sinking publisher results \(callCount) - \(albums.count)")
             if callCount == 1 {
-                XCTAssert(albums.count == 0, "Non zero albums on init")
+                XCTAssert(albums.isEmpty, "Non zero albums on init")
             } else if callCount == 2 {
-                XCTAssertEqual(albums.count, 3, "Not all albums listed")
+                XCTAssertEqual(albums.count, 5, "Not all albums listed")
                 expectation.fulfill()
             }
         }
@@ -40,6 +42,7 @@ class ApplePhotoProviderTests: XCTestCase {
         apple.listAlbums()
 
         wait(for: [expectation], timeout: 10.0)
+        sub.cancel()
     }
 
     func testAlbumContents() {
@@ -47,7 +50,7 @@ class ApplePhotoProviderTests: XCTestCase {
         let photos = apple.listPhotos(for: album)
 
         print(photos.first!)
-        XCTAssert(photos.count > 0, "No photos present in response")
+        XCTAssertGreaterThan(photos.count, 0, "No photos present in response")
     }
 
     func testGetPhoto() {
@@ -56,13 +59,16 @@ class ApplePhotoProviderTests: XCTestCase {
         let album = apple.listAlbums().first!
         let photo = apple.listPhotos(for: album).first!
 
-        let sub = photo.fetchImage(using: apple).sink(receiveCompletion: { _ in }) { image in
+        let asset = ApplePhotoAsset(asset: photo)
+
+        let sub = asset.fetchImage(using: apple).sink(receiveCompletion: { _ in }, receiveValue: { image in
             print("Image size \(image.size)")
             XCTAssertGreaterThan(image.size.height, 100, "Incorrect height")
             XCTAssertGreaterThan(image.size.width, 100, "Incorrect width")
             expectation.fulfill()
-        }
+        })
 
         waitForExpectations(timeout: 3.0, handler: nil)
+        sub.cancel()
     }
 }

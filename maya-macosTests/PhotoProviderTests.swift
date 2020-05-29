@@ -3,7 +3,7 @@
 //  maya-macosTests
 //
 //  Created by Konstantin Klitenik on 6/20/19.
-//  Copyright © 2019 KK. All rights reserved.
+//  Copyright © 2020 KK. All rights reserved.
 //
 
 import XCTest
@@ -18,7 +18,7 @@ class PhotoProviderTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-    
+
     func testBookmark() {
         let url = URL(fileURLWithPath: "/home/kon/")
         let data = try? url.bookmarkData(options: [.withSecurityScope, .securityScopeAllowOnlyReadAccess])

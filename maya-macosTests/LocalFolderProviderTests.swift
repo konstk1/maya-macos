@@ -24,23 +24,23 @@ class LocalFolderProviderTests: XCTestCase {
     func testFolderList() throws {
         let expectation = self.expectation(description: "List folder")
 
-        let _ = provider.refreshAssets().sink(receiveCompletion: { _ in }) { assets in
+        _ = provider.refreshAssets().sink(receiveCompletion: { _ in }, receiveValue: { assets in
             print("Listed \(assets.count)")
             XCTAssertGreaterThan(assets.count, 0, "Expected photos in folder")
             expectation.fulfill()
-        }
-        
+        })
+
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-    
+
     func testPhotoPublisher() throws {
         let expectation = self.expectation(description: "List folder")
 
         var sinkCount = 0
-        
-        let sub = provider.$photoDescriptors.sink(receiveCompletion: { _ in }) { assets in
+
+        let sub = provider.$photoDescriptors.sink(receiveCompletion: { _ in }, receiveValue: { assets in
             sinkCount += 1
-            
+
             print("Listed \(assets.count)")
             switch sinkCount {
             case 1:
@@ -48,16 +48,16 @@ class LocalFolderProviderTests: XCTestCase {
             default:
                 XCTAssertGreaterThan(assets.count, 0, "Expected photos on subsquent calls")
             }
-            
+
             if sinkCount == 2 {
                 expectation.fulfill()
             }
-        }
-        
+        })
+
         XCTAssertNotNil(sub)
-        
+
         provider.refreshAssets()
-        
+
         waitForExpectations(timeout: 3.0, handler: nil)
     }
 

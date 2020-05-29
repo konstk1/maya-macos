@@ -3,7 +3,7 @@
 //  maya-macos
 //
 //  Created by Konstantin Klitenik on 7/29/19.
-//  Copyright © 2019 KK. All rights reserved.
+//  Copyright © 2020 KK. All rights reserved.
 //
 
 import Foundation
@@ -17,7 +17,7 @@ struct TimePeriod: Codable, Equatable, CustomStringConvertible {
     var value: Int
     var unit: TimeUnit
     // end Note
-    
+
     var timeInterval: TimeInterval {
         switch unit {
         case .seconds: return TimeInterval(value)
@@ -26,26 +26,26 @@ struct TimePeriod: Codable, Equatable, CustomStringConvertible {
         case .days: return TimeInterval(value * 60 * 60 * 24)
         }
     }
-    
+
     var description: String { "\(value) \(unit)" }
-    
+
     init(value: Int, unit: TimeUnit) {
         self.value = value
         self.unit = unit
     }
-    
+
     static func seconds(_ val: Int) -> TimePeriod {
         return TimePeriod(value: val, unit: .seconds)
     }
-    
+
     static func minutes(_ val: Int) -> TimePeriod {
         return TimePeriod(value: val, unit: .minutes)
     }
-    
+
     static func hours(_ val: Int) -> TimePeriod {
         return TimePeriod(value: val, unit: .hours)
     }
-    
+
     static func days(_ val: Int) -> TimePeriod {
         return TimePeriod(value: val, unit: .days)
     }

@@ -3,7 +3,7 @@
 //  maya-macos
 //
 //  Created by Konstantin Klitenik on 8/28/19.
-//  Copyright © 2019 KK. All rights reserved.
+//  Copyright © 2020 KK. All rights reserved.
 //
 
 import Cocoa
@@ -15,13 +15,13 @@ import KeychainAccess
 
 final class GooglePhotoProvider: PhotoProvider {
     private lazy var alamo = Session(interceptor: oauthswift.requestInterceptor)
-    
+
     private let authURL = "https://accounts.google.com/o/oauth2/v2/auth"
     private let tokenURL = "https://www.googleapis.com/oauth2/v4/token"
     private let scope = "https://www.googleapis.com/auth/photoslibrary.readonly"
     private let callbackURL = URL(string: "com.kk.maya-macos:/oauth-callback/google")!
 
-    private let baseURL = URL(string: "https://photoslibrary.googleapis.com/v1/")!
+    private let baseURL = URL(string: "https://photoslibrary.googleapis.com/v1/")!  // swiftlint:disable:this force_unwrapping
 
     /// temporary storage while album list is being paged in
     private var tempAlbums: [GooglePhotos.Album] = []
@@ -32,9 +32,9 @@ final class GooglePhotoProvider: PhotoProvider {
         }
     }
     var albumsPublisher = CurrentValueSubject<[GooglePhotos.Album], Never>([])
-    
+
     private var activeAlbum: GooglePhotos.Album?
-    
+
     /// Photos in active album
     private var photos: [GooglePhotos.MediaItem] = []       // don't update photoDescriptors here on didSet because of pagination
 
@@ -45,17 +45,17 @@ final class GooglePhotoProvider: PhotoProvider {
         accessTokenUrl: tokenURL,
         responseType: "code"
     )
-    
+
     @KeychainSecureString(key: "google-oauth-token") private var oauthToken: String?
     @KeychainSecureString(key: "google-oauth-refresh-token") private var oauthRefreshToken: String?
     private var oauthTokenExpiresAt: Date?
-    
+
     /// Indicates whether current OAuth token is valid
     var isAuthorized: Bool {
         guard oauthToken != nil, let oauthTokenExpiresAt = oauthTokenExpiresAt else { return false }
         return oauthTokenExpiresAt > Date()
     }
-    
+
     override init() {
         super.init()
         log.verbose("Google Photo Provider init")
@@ -63,32 +63,33 @@ final class GooglePhotoProvider: PhotoProvider {
             oauthswift.client.credential.oauthToken = token
             oauthswift.client.credential.oauthRefreshToken = refreshToken
         }
-        
+
         if let activeAlbumId = Settings.googlePhotos.activeAlbumId {
             activeAlbum = GooglePhotos.Album(id: activeAlbumId, title: "Loading...", productUrl: "", mediaItemsCount: nil, coverPhotoBaseUrl: "", coverPhotoMediaItemId: nil)
             refreshAssets()
         }
     }
-    
-    func setActiveAlbum(album: GooglePhotos.Album) -> Future<[PhotoAssetDescriptor], PhotoProviderError>  {
+
+    @discardableResult
+    func setActiveAlbum(album: GooglePhotos.Album) -> Future<[PhotoAssetDescriptor], PhotoProviderError> {
         activeAlbum = album
         // persist active album selection
         Settings.googlePhotos.activeAlbumId = album.id
-        
+
         return listPhotos(for: album)
     }
-    
+
     func updateActiveAlbumDetails() {
         guard let activeAlbum = activeAlbum else { return }
         guard let album = albums.first(where: { $0.id == activeAlbum.id }) else {
             log.error("Active album id doesn't exist in album list")
             return
         }
-        
+
         // update active album with detailed version
         self.activeAlbum = album
     }
-    
+
     func authorize() -> Future<Void, PhotoProviderError> {
         return Future { [weak self] promise in
             guard let self = self else { return }
@@ -126,8 +127,7 @@ final class GooglePhotoProvider: PhotoProvider {
                 log.verbose("Current token is valid")
                 self.handleError(error: nil)
                 promise(.success(()))
-            }
-            else if let refreshToken = self.oauthRefreshToken {
+            } else if let refreshToken = self.oauthRefreshToken {
                 log.verbose("Refreshing...")
                 self.oauthswift.renewAccessToken(withRefreshToken: refreshToken, completionHandler: authCompletionHandler)
             } else {
@@ -155,19 +155,19 @@ final class GooglePhotoProvider: PhotoProvider {
             }
         }
     }
-    
+
     private func listAlbums(pageToken: String?, completion: @escaping (Result<[GooglePhotos.Album], Error>) -> Void) {
         let endpoint = baseURL.appendingPathComponent("albums")
         let params = GooglePhotos.Albums.ListRequest(pageToken: pageToken)
-        
+
         // if not continuing pagination, reset album list
         if pageToken == nil {
             tempAlbums.removeAll()
         }
-        
+
         log.debug("Requesting \(endpoint.absoluteString)")
         alamo.request(endpoint, parameters: params).validate().responseDecodable { [weak self] (response: AFDataResponse<GooglePhotos.Albums.ListResponse>) in
-            log.debug("Fetching \(response.request!.url!.absoluteString)")
+//            log.debug("Fetching \(response.request!.url!.absoluteString)")
             guard let self = self else { return }
             switch response.result {
             case .success(let albumList):
@@ -209,17 +209,17 @@ final class GooglePhotoProvider: PhotoProvider {
             })
         }
     }
-    
+
     private func listPhotos(for album: GooglePhotos.Album, pageToken: String? = nil, completion: @escaping (Result<[GooglePhotos.MediaItem], Error>) -> Void) {
         let endpoint = baseURL.appendingPathComponent("mediaItems:search")
         let params = GooglePhotos.Albums.ContentsRequest(albumId: album.id, pageToken: pageToken)
-        
+
         if pageToken == nil {
             photos.removeAll()
         }
-        
+
         alamo.request(endpoint, method: .post, parameters: params).validate().responseDecodable { [weak self] (response: AFDataResponse<GooglePhotos.Albums.ContentsResponse>) in
-            log.debug("Fetching \(response.request!.url!.absoluteString)")
+//            log.debug("Fetching \(response.request!.url!.absoluteString)")
             guard let self = self else { return }
             switch response.result {
             case .success(let contents):
@@ -239,7 +239,7 @@ final class GooglePhotoProvider: PhotoProvider {
             }
         }
     }
-    
+
     private func getMediaItem(id: String, completion: @escaping (Result<GooglePhotos.MediaItem, AFError>) -> Void) {
         let endpoint = baseURL.appendingPathComponent("mediaItems/\(id)")
         log.debug("Fetching \(endpoint.absoluteString)")
@@ -248,7 +248,7 @@ final class GooglePhotoProvider: PhotoProvider {
             completion(response.result)
         }
     }
-    
+
     func getPhoto(id: String) -> Future<NSImage, PhotoProviderError> {
         return Future { [weak self] promise in
             guard let self = self else { return }
@@ -256,7 +256,7 @@ final class GooglePhotoProvider: PhotoProvider {
                 let newResult = result
                     .mapError { $0 as Error } // cast from AFError to Error
                     .flatMap { mediaItem -> Result<NSImage, Error> in
-                        if let image = NSImage(contentsOf: URL(string: mediaItem.baseUrl)!) {
+                        if let image = NSImage(contentsOf: URL(string: mediaItem.baseUrl)!) {   // swiftlint:disable:this force_unwrapping
                             self.handleError(error: nil)    // clear error
                             return .success(image)
                         } else {
@@ -279,7 +279,6 @@ final class GooglePhotoProvider: PhotoProvider {
 
         return listPhotos(for: activeAlbum)
     }
-
 
     /// Handles error by mapping to corresponding PhotoProviderError and updating the error publisher.
     /// - Parameter error: Arbitrary error.
@@ -305,7 +304,6 @@ final class GooglePhotoProvider: PhotoProvider {
                 default:
                     nextError = .failedAuth
                     log.error("Unexpected OAuth error: \(error.localizedDescription)")
-                    break
                 }
             }
         }

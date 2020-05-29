@@ -13,9 +13,9 @@ struct AboutView: View {
     var appVersion: String {
         (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "0.0.0"
     }
-    
+
     @State private var logButtonTitle = "Copy Log Path"
-    
+
     var body: some View {
         VStack {
             HStack {
@@ -33,17 +33,17 @@ struct AboutView: View {
         }.padding().fixedSize().onAppear {
             self.logButtonTitle = "Copy Log Path"
             print("On appear")
-        }.onDisappear() {
+        }.onDisappear {
             print("On disappear")
         }
     }
-    
+
     func copyLogPathClicked() {
         let pasteBoard = NSPasteboard.general
         pasteBoard.declareTypes([.string], owner: nil)
-        
+
         let fileDestinations = log.destinations.compactMap { $0 as? FileDestination }
-        
+
         var status = "Copied!"
 
         if let logFilePath = fileDestinations.first?.logFileURL?.path {
@@ -53,7 +53,7 @@ struct AboutView: View {
         } else {
             status = "No log file!"
         }
-        
+
         logButtonTitle = status
     }
 }

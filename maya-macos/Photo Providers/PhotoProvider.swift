@@ -3,7 +3,7 @@
 //  maya-macos
 //
 //  Created by Konstantin Klitenik on 8/1/19.
-//  Copyright © 2019 KK. All rights reserved.
+//  Copyright © 2020 KK. All rights reserved.
 //
 
 import Cocoa
@@ -11,7 +11,7 @@ import Combine
 
 class PhotoProvider: ObservableObject, Equatable {
     let id = UUID()
-    
+
     @Published var photoDescriptors: [PhotoAssetDescriptor] = []
     @Published var albumList: [String] = []
 
@@ -48,10 +48,10 @@ protocol PhotoAssetDescriptor: CustomStringConvertible {
 }
 
 enum PhotoProviderType: String, PListCodable {
-    case none = "none"
-    case localFolder = "localFolder"
-    case googlePhotos = "googlePhotos"
-    case applePhotos = "applePhotos"
+    case none
+    case localFolder
+    case googlePhotos
+    case applePhotos
 }
 
 enum PhotoProviderError: Error {

@@ -15,7 +15,7 @@ struct AppleSourceDetailView: View {
         log.info("Init AppleSourceDetailView")
         model = AppleSourceViewModel(apple: apple)
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Show photos from this album")
@@ -24,7 +24,7 @@ struct AppleSourceDetailView: View {
                     Text(self.model.albumTitles[$0]).truncationMode(.middle)
                 }
             }.labelsHidden()
-            
+
             Spacer()
 
             Button(action: model.activateClicked) {

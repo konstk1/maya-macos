@@ -15,7 +15,7 @@ struct GoogleSourceDetailView: View {
         log.info("Init GoogleSourceDetailView")
         model = GoogleSourceViewModel(google: google)
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Show photos from this album")

@@ -18,11 +18,12 @@ struct PreferencesView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             GeneralPrefsView().tabItem {
+                // swiftlint-disable-next force_unwrapping
                 Image(nsImage: NSImage(named: NSImage.preferencesGeneralName)!).frame(width: 40, height: 40)
                 Text("General")
             }.tag(0)
             SourcesView().tabItem {
-                Image(nsImage: NSImage(named: "SourcesIcon")!).frame(width: 40, height: 40)
+                Image(nsImage: #imageLiteral(resourceName: "SourcesIcon")).frame(width: 40, height: 40)
                 Text("Sources")
             }.tag(1)
         }.frame(width: 500, height: 320)

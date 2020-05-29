@@ -20,32 +20,33 @@ class GoogleSourceViewModel: ObservableObject {
             }, receiveValue: { _ in }).store(in: &subs)
         }
     }
-    
+
     @Published private(set) var albumTitles: [String] = []
-    
+
     var google: GooglePhotoProvider
-    
+
     private var subs: Set<AnyCancellable> = []
-    
+
     init(google: GooglePhotoProvider) {
         self.google = google
         self.google.albumsPublisher.sink(receiveCompletion: { completion in
             if case .failure(let error) = completion {
                 log.error("Error list google albums \(error.localizedDescription)")
             }
-        }) { [weak self] albumList in
-            if self!.albumTitles.isEmpty {
-                self?.albumTitles = albumList.map { $0.title }
+        }, receiveValue: { [weak self] albumList in
+            guard let self = self else { return }
+            if self.albumTitles.isEmpty {
+                self.albumTitles = albumList.map { $0.title }
             }
 //            if let selectedIndex = google.albums.firstIndex(where: { $0.id == Settings.googlePhotos.activeAlbumId }) {
 //                self?.albumSelection = selectedIndex
 //            }
-            print("Album sel after list \(self!.albumSelection)")
-        }.store(in: &subs)
-        
+            print("Album sel after list \(self.albumSelection)")
+        }).store(in: &subs)
+
         _ = self.google.listAlbums()
     }
-    
+
     func authorizeClicked() {
         print("Google Auth")
         google.authorize().sink(receiveCompletion: { [weak self] completion in
@@ -55,6 +56,6 @@ class GoogleSourceViewModel: ObservableObject {
             case .failure(let error):
                 log.error("Failed Google Auth: \(error)")
             }
-        }) { _ in /* nothing to do here */ }.store(in: &subs)
+        }, receiveValue: { _ in /* nothing to do here */ }).store(in: &subs)
     }
 }

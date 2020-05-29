@@ -10,7 +10,7 @@ import Cocoa
 import SwiftUI
 
 class PrefsWindowController: NSWindowController {
-    
+
     init() {
         let prefsView = PreferencesView().environmentObject(PhotoVendor.shared)
         let hostingController = NSHostingController(rootView: prefsView)
@@ -21,7 +21,7 @@ class PrefsWindowController: NSWindowController {
         window.setFrameAutosaveName("Prefs window")
         super.init(window: window)
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }

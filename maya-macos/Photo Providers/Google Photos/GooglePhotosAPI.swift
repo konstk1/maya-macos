@@ -3,10 +3,12 @@
 //  maya-macos
 //
 //  Created by Konstantin Klitenik on 8/29/19.
-//  Copyright © 2019 KK. All rights reserved.
+//  Copyright © 2020 KK. All rights reserved.
 //
 
 import Foundation
+
+// swiftlint:disable nesting
 
 enum GooglePhotos {
     enum Albums {
@@ -20,13 +22,13 @@ enum GooglePhotos {
             /// This field is ignored if the photoslibrary.readonly.appcreateddata scope is used.
             let excludeNonAppCreatedData: Bool? = false
         }
-        
+
         struct ListResponse: Decodable {
             let albums: [Album]
             /// Token to use to get the next set of albums. Populated if there are more albums to retrieve for this request.
             let nextPageToken: String?
         }
-        
+
         struct ContentsRequest: Encodable {
             /// Identifier of an album. If populated, lists all media items in specified album. Can't set in conjunction with any filters.
             let albumId: String
@@ -34,14 +36,14 @@ enum GooglePhotos {
             let pageSize: Int = 100
             let pageToken: String?
         }
-        
+
         struct ContentsResponse: Decodable {
             let mediaItems: [MediaItem]
             /// Use this token to get the next set of media items. Its presence is the only reliable indicator of more media items being available in the next request.
             let nextPageToken: String?
         }
     }
-    
+
     struct Album: Decodable {
         let id: String
         let title: String
@@ -50,7 +52,7 @@ enum GooglePhotos {
         let coverPhotoBaseUrl: String
         let coverPhotoMediaItemId: String?
     }
-    
+
     struct MediaItem: Decodable {
         let id: String
         let description: String?
@@ -59,12 +61,12 @@ enum GooglePhotos {
         let mediaMetadata: MediaMetaData
 //        let contributorInfo
         let filename: String
-        
+
         var isPhoto: Bool {
             mediaMetadata.photo != nil
         }
     }
-    
+
     struct MediaMetaData: Decodable {
         let creationTime: String
         let width: String
@@ -72,14 +74,14 @@ enum GooglePhotos {
         let photo: PhotoMetadata?
         let video: VideoMetadata?
     }
-    
+
     struct PhotoMetadata: Decodable {
         // don't care about contents of this for now
     }
-    
+
     struct VideoMetadata: Decodable {
         // don't care about contents of this for now
     }
-    
+
     // BASE_URL=wMAX_WIDTH-hMAX_HEIGHT
 }

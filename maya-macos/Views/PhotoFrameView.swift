@@ -9,11 +9,12 @@
 import SwiftUI
 
 struct PhotoFrameView: View {
-    private var image = NSImage(named: NSImage.everyoneName)!
-    
+    // TODO: replace this with another placeholder image
+    private var image = NSImage(named: NSImage.everyoneName)!       // swiftlint:disable:this force_unwrapping
+
     @State private var scale: CGFloat = 1.0
     @State private var zoomLocation: UnitPoint = .center
-    
+
     var body: some View {
         ScrollView([.horizontal, .vertical], showsIndicators: true) {
             Image(nsImage: image).resizable().scaledToFit()
