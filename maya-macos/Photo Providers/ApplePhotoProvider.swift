@@ -91,8 +91,10 @@ final class ApplePhotoProvider: PhotoProvider {
     }
 
     func listPhotos(for album: PHAssetCollection) -> [PHAsset] {
-        // TODO: list only image assets
-        let fetchResult = PHAsset.fetchAssets(in: album, options: nil)
+        let options = PHFetchOptions()
+        options.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
+
+        let fetchResult = PHAsset.fetchAssets(in: album, options: options)
 
         var assets: [PHAsset] = []
 
