@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftUI
 
 func + (lhs: NSPoint, rhs: NSPoint) -> NSPoint {
     return NSPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
@@ -31,4 +32,18 @@ extension NSImageView {
 
         return NSSize(width: image.size.width * scale, height: image.size.height * scale)
     }
+}
+
+extension Color {
+    static let mayaRed = Color("MayaRed")
+    static let mayaGreen = Color("MayaGreen")
+    static let mayaBlue = Color("MayaBlue")
+}
+
+extension NSImage {
+    // swiftlint:disable force_unwrapping
+    static let checkbox = NSImage(named: NSImage.menuOnStateTemplateName)!
+    static let everyone = NSImage(named: NSImage.everyoneName)!
+    static let play = NSImage(named: NSImage.slideshowTemplateName)!
+    // swiftlint:enable force_unwrapping
 }

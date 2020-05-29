@@ -11,9 +11,7 @@ import Cocoa
 class SourcesViewController: NSViewController {
     private let photoVendor = PhotoVendor.shared
 
-    private var indexOfActiveProvider: Int {
-        photoVendor.photoProviders.firstIndex { $0 === photoVendor.activeProvider } ?? 0
-    }
+    private var indexOfActiveProvider: Int { photoVendor.activeProviderIndex ?? 0 }
 
     @IBOutlet var localFolderVC: LocalFolderProviderViewController!
     @IBOutlet var googlePhotosVC: GooglePhotosViewController!

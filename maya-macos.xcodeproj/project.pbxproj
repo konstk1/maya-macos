@@ -10,6 +10,7 @@
 		B531AAF2247F346500F3C355 /* AppleSourceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531AAF1247F346500F3C355 /* AppleSourceDetailView.swift */; };
 		B531AAF4247F347A00F3C355 /* AppleSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531AAF3247F347A00F3C355 /* AppleSourceViewModel.swift */; };
 		B531AAF624809B0400F3C355 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B531AAF524809B0400F3C355 /* .swiftlint.yml */; };
+		B531AAF92481BBEF00F3C355 /* ActivateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531AAF82481BBEF00F3C355 /* ActivateButton.swift */; };
 		B5421E5A247DE5C700F02345 /* ApplePhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5421E59247DE5C700F02345 /* ApplePhotoProviderTests.swift */; };
 		B5A5A8C4245210CF003B282D /* OAuthSwiftAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B5A5A8C3245210CF003B282D /* OAuthSwiftAlamofire */; };
 		FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */; };
@@ -95,6 +96,7 @@
 		B531AAF1247F346500F3C355 /* AppleSourceDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleSourceDetailView.swift; sourceTree = "<group>"; };
 		B531AAF3247F347A00F3C355 /* AppleSourceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleSourceViewModel.swift; sourceTree = "<group>"; };
 		B531AAF524809B0400F3C355 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		B531AAF82481BBEF00F3C355 /* ActivateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivateButton.swift; sourceTree = "<group>"; };
 		B5421E59247DE5C700F02345 /* ApplePhotoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePhotoProviderTests.swift; sourceTree = "<group>"; };
 		FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameController.swift; sourceTree = "<group>"; };
 		FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoFrameController.xib; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				FF3E18FC23CA6D3200E5002B /* AboutView.swift */,
+				B531AAF82481BBEF00F3C355 /* ActivateButton.swift */,
 				FFDED62523CF9F1100C678EB /* ApiSourceDetailView.swift */,
 				FFD4C35C23CC11B2007D1A27 /* GeneralPrefsView.swift */,
 				FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */,
@@ -549,6 +552,7 @@
 				FF9B7D0F2318BE700073E77E /* GooglePhotoAsset.swift in Sources */,
 				FF90732222BC12E10052428E /* ApplePhotoProvider.swift in Sources */,
 				FFAAE72824211E6900DD3B3C /* GoogleSourceDetailView.swift in Sources */,
+				B531AAF92481BBEF00F3C355 /* ActivateButton.swift in Sources */,
 				FF9B7D0223181AF00073E77E /* Keychain.swift in Sources */,
 				FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */,
 				FFB1234423D246700068A9A6 /* LocalFolderSourceViewModel.swift in Sources */,
