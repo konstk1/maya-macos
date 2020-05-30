@@ -20,10 +20,8 @@
 		FF34717F22D63A780009CB40 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = FF34717E22D63A780009CB40 /* SwiftyBeaver */; };
 		FF34718422DF82F70009CB40 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF34718322DF82F70009CB40 /* Utilities.swift */; };
 		FF39C02D2316F66E00203D7F /* GooglePhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39C02C2316F66E00203D7F /* GooglePhotoProvider.swift */; };
-		FF39C02F2316F74900203D7F /* GooglePhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39C02E2316F74900203D7F /* GooglePhotosViewController.swift */; };
 		FF39C03223171CF100203D7F /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = FF39C03123171CF100203D7F /* KeychainAccess */; };
 		FF3E18FD23CA6D3200E5002B /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E18FC23CA6D3200E5002B /* AboutView.swift */; };
-		FF53981E2315C6DC0067F3E9 /* SourceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF53981D2315C6DC0067F3E9 /* SourceCell.swift */; };
 		FF9072D222BB04CD0052428E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9072D122BB04CD0052428E /* AppDelegate.swift */; };
 		FF9072D522BB04CD0052428E /* maya_macos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */; };
 		FF9072D722BB04CE0052428E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF9072D622BB04CE0052428E /* Assets.xcassets */; };
@@ -50,7 +48,6 @@
 		FFC22B6522F2387600121828 /* Maya Launcher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = FFC22B5622F2378300121828 /* Maya Launcher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FFC22B6822F2389200121828 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFC22B6722F2389200121828 /* ServiceManagement.framework */; };
 		FFC22B6B22F2427A00121828 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFC22B6922F2427A00121828 /* MainMenu.xib */; };
-		FFD1D566230C840000D8F503 /* LocalFolderProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1D565230C840000D8F503 /* LocalFolderProviderViewController.swift */; };
 		FFD3698322F385AA00EC7A85 /* PhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */; };
 		FFD4C35B23CC0E8A007D1A27 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C35A23CC0E8A007D1A27 /* PreferencesView.swift */; };
 		FFD4C35D23CC11B2007D1A27 /* GeneralPrefsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD4C35C23CC11B2007D1A27 /* GeneralPrefsView.swift */; };
@@ -61,11 +58,9 @@
 		FFDED62223CF9C1D00C678EB /* SourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDED62123CF9C1D00C678EB /* SourcesView.swift */; };
 		FFDED62423CF9E4E00C678EB /* LocalFolderSourceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDED62323CF9E4E00C678EB /* LocalFolderSourceDetailView.swift */; };
 		FFDED62623CF9F1100C678EB /* ApiSourceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDED62523CF9F1100C678EB /* ApiSourceDetailView.swift */; };
-		FFE9162322E0F5C400687322 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */; };
 		FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE9162222E0F5C400687322 /* SettingsController.xib */; };
 		FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE7F22EF5CC7009411B8 /* Settings.swift */; };
 		FFEBBE8422EF834F009411B8 /* TimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE8322EF834F009411B8 /* TimePeriod.swift */; };
-		FFEEFCB72300F0750023F581 /* SourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEEFCB52300F0750023F581 /* SourcesViewController.swift */; };
 		FFEEFCB82300F0750023F581 /* SourcesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFEEFCB62300F0750023F581 /* SourcesViewController.xib */; };
 /* End PBXBuildFile section */
 
@@ -103,9 +98,7 @@
 		FF279CEF244CD77F004E47C3 /* LocalFolderProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderProviderTests.swift; sourceTree = "<group>"; };
 		FF34718322DF82F70009CB40 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		FF39C02C2316F66E00203D7F /* GooglePhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePhotoProvider.swift; sourceTree = "<group>"; };
-		FF39C02E2316F74900203D7F /* GooglePhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePhotosViewController.swift; sourceTree = "<group>"; };
 		FF3E18FC23CA6D3200E5002B /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
-		FF53981D2315C6DC0067F3E9 /* SourceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SourceCell.swift; path = "maya-macos/Controllers/SourceCell.swift"; sourceTree = SOURCE_ROOT; };
 		FF9072CE22BB04CD0052428E /* Maya.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maya.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF9072D122BB04CD0052428E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF9072D422BB04CD0052428E /* maya_macos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = maya_macos.xcdatamodel; sourceTree = "<group>"; };
@@ -140,7 +133,6 @@
 		FFC22B6022F2378400121828 /* maya_macos_launcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = maya_macos_launcher.entitlements; sourceTree = "<group>"; };
 		FFC22B6722F2389200121828 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		FFC22B6A22F2427A00121828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		FFD1D565230C840000D8F503 /* LocalFolderProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocalFolderProviderViewController.swift; path = "maya-macos/Controllers/LocalFolderProviderViewController.swift"; sourceTree = SOURCE_ROOT; };
 		FFD3698222F385AA00EC7A85 /* PhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProvider.swift; sourceTree = "<group>"; };
 		FFD4C35A23CC0E8A007D1A27 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		FFD4C35C23CC11B2007D1A27 /* GeneralPrefsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsView.swift; sourceTree = "<group>"; };
@@ -151,11 +143,9 @@
 		FFDED62123CF9C1D00C678EB /* SourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesView.swift; sourceTree = "<group>"; };
 		FFDED62323CF9E4E00C678EB /* LocalFolderSourceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderSourceDetailView.swift; sourceTree = "<group>"; };
 		FFDED62523CF9F1100C678EB /* ApiSourceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiSourceDetailView.swift; sourceTree = "<group>"; };
-		FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		FFE9162222E0F5C400687322 /* SettingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsController.xib; sourceTree = "<group>"; };
 		FFEBBE7F22EF5CC7009411B8 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		FFEBBE8322EF834F009411B8 /* TimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePeriod.swift; sourceTree = "<group>"; };
-		FFEEFCB52300F0750023F581 /* SourcesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesViewController.swift; sourceTree = "<group>"; };
 		FFEEFCB62300F0750023F581 /* SourcesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SourcesViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -193,11 +183,10 @@
 		FF206B0122F35C4A000C0FB3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FF39C02E2316F74900203D7F /* GooglePhotosViewController.swift */,
-				FFD1D565230C840000D8F503 /* LocalFolderProviderViewController.swift */,
+				FFDD944923057E2300891545 /* AboutWindowController.swift */,
+				FFD4C35E23CCF203007D1A27 /* PrefsWindowController.swift */,
+				FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */,
 				FFD63773238B0513003A4071 /* PhotoScrollView.swift */,
-				FF53981D2315C6DC0067F3E9 /* SourceCell.swift */,
-				FFEEFCB52300F0750023F581 /* SourcesViewController.swift */,
 				FF90731D22BBFF4D0052428E /* StatusMenuController.swift */,
 			);
 			path = Controllers;
@@ -271,17 +260,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		FF3E190223CBF49800E5002B /* Windows */ = {
-			isa = PBXGroup;
-			children = (
-				FFDD944923057E2300891545 /* AboutWindowController.swift */,
-				FFD4C35E23CCF203007D1A27 /* PrefsWindowController.swift */,
-				FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */,
-				FFE9162122E0F5C400687322 /* PreferencesWindowController.swift */,
-			);
-			path = Windows;
-			sourceTree = "<group>";
-		};
 		FF9072C522BB04CD0052428E = {
 			isa = PBXGroup;
 			children = (
@@ -309,7 +287,6 @@
 			children = (
 				FF9072D122BB04CD0052428E /* AppDelegate.swift */,
 				FF3E18FE23CA6D3F00E5002B /* Views */,
-				FF3E190223CBF49800E5002B /* Windows */,
 				FF206B0122F35C4A000C0FB3 /* Controllers */,
 				FF206B0322F35C64000C0FB3 /* Photo Providers */,
 				FF206B0222F35C5A000C0FB3 /* Utilities */,
@@ -535,9 +512,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFD1D566230C840000D8F503 /* LocalFolderProviderViewController.swift in Sources */,
-				FFE9162322E0F5C400687322 /* PreferencesWindowController.swift in Sources */,
-				FF39C02F2316F74900203D7F /* GooglePhotosViewController.swift in Sources */,
 				FFAF7AF423CF667400763CC1 /* EnumCodable.swift in Sources */,
 				FFDED62423CF9E4E00C678EB /* LocalFolderSourceDetailView.swift in Sources */,
 				FFEBBE8422EF834F009411B8 /* TimePeriod.swift in Sources */,
@@ -562,7 +536,6 @@
 				FF3E18FD23CA6D3200E5002B /* AboutView.swift in Sources */,
 				B531AAF4247F347A00F3C355 /* AppleSourceViewModel.swift in Sources */,
 				FF34718422DF82F70009CB40 /* Utilities.swift in Sources */,
-				FF53981E2315C6DC0067F3E9 /* SourceCell.swift in Sources */,
 				FFDED62023CF784B00C678EB /* GeneralPrefsViewModel.swift in Sources */,
 				FFD63774238B0513003A4071 /* PhotoScrollView.swift in Sources */,
 				FFB1234623D3A6CD0068A9A6 /* PhotoFrameView.swift in Sources */,
@@ -570,7 +543,6 @@
 				FF90732022BC12670052428E /* PhotoVendor.swift in Sources */,
 				FF9B7CFE231760AA0073E77E /* AppSecrets.swift in Sources */,
 				FFAAE72A24211E8100DD3B3C /* GoogleSourceViewModel.swift in Sources */,
-				FFEEFCB72300F0750023F581 /* SourcesViewController.swift in Sources */,
 				FFDD944B23057E2300891545 /* AboutWindowController.swift in Sources */,
 				FFD4C35F23CCF203007D1A27 /* PrefsWindowController.swift in Sources */,
 				B531AAF2247F346500F3C355 /* AppleSourceDetailView.swift in Sources */,
