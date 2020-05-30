@@ -87,8 +87,8 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         }
 
         photoVendor.add(provider: LocalFolderPhotoProvider())
-        photoVendor.add(provider: GooglePhotoProvider())
         photoVendor.add(provider: ApplePhotoProvider())
+        photoVendor.add(provider: GooglePhotoProvider())
 
         photoVendor.loadActiveProviderFromSettings()
 

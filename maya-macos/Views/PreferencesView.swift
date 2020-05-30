@@ -11,7 +11,12 @@ import SwiftUI
 // swiftlint:disable multiple_closures_with_trailing_closure
 
 struct PreferencesView: View {
-    @State private var selectedTab = 0
+    @State private var selectedTab = Tabs.general
+
+    enum Tabs {
+        case general
+        case sources
+    }
 
     let iconSize: CGFloat = 30
 
@@ -24,38 +29,40 @@ struct PreferencesView: View {
             // Tabs
             HStack(spacing: 0) {
                 Button(action: {
-                    self.selectedTab = 0
+                       self.selectedTab = .general
                 }) {
                     VStack(spacing: 0) {
                         Image(nsImage: NSImage(named: NSImage.preferencesGeneralName)!).frame(width: self.iconSize, height: self.iconSize).padding(5)
                         Text("General").font(.caption).padding([.horizontal, .bottom], 4)
-                    }
+                    }.contentShape(Rectangle())
                     }.buttonStyle(PlainButtonStyle())
-                    .background(RoundedRectangle(cornerRadius: 5).fill(self.selectedTab == 0 ? Color(red: 0.76, green: 0.76, blue: 0.76) : Color.clear))
+                    .background(RoundedRectangle(cornerRadius: 5).fill(self.selectedTab == .general ? Color.tabBarSelected : Color.clear))
 
                 Button(action: {
-                    self.selectedTab = 1
+                    self.selectedTab = .sources
                 }) {
                     VStack(spacing: 0) {
                         Image(nsImage: #imageLiteral(resourceName: "SourcesIcon")).resizable().scaledToFit().frame(width: self.iconSize, height: self.iconSize).padding(5)
                         Text("Sources").font(.caption).padding([.horizontal, .bottom], 4)
-                    }
+                    }.contentShape(Rectangle())
                 }.buttonStyle(PlainButtonStyle())
-                    .background(RoundedRectangle(cornerRadius: 5).fill(self.selectedTab == 1 ? Color(red: 0.76, green: 0.76, blue: 0.76) : Color.clear))
-                Spacer()
-            }.padding([.leading, .top], 5)
-                .background(Color(red: 0.85, green: 0.85, blue: 0.85))
+                    .background(RoundedRectangle(cornerRadius: 5).fill(self.selectedTab == .sources ? Color.tabBarSelected : Color.clear))
 
-            Divider()
+                Spacer()    // fill the rest of horizontal space
+            }
+            .padding([.leading, .top], 5)
+            .background(Color.tabBarBackground)
+            .frame(width: selectedTab == .general ? 460 : 580)
+//            Divider()
 
             Group {
-                if selectedTab == 0 {
+                if selectedTab == .general {
                     GeneralPrefsView()
-                } else {
+                } else if selectedTab == .sources {
                     SourcesView()
                 }
             }
-        }
+        }.background(Color.prefsBackground)
     }
 }
 

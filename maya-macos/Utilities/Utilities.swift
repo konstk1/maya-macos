@@ -38,11 +38,15 @@ extension Color {
     static let mayaRed = Color("MayaRed")
     static let mayaGreen = Color("MayaGreen")
     static let mayaBlue = Color("MayaBlue")
+    static let prefsBackground = Color("PrefsBackground")
+    static let tabBarBackground = Color("TabBarBackground")
+    static let tabBarSelected = Color("TabBarSelected")
+
 }
 
 extension NSImage {
     // swiftlint:disable force_unwrapping
-    static let checkbox = NSImage(named: NSImage.menuOnStateTemplateName)!
+    static let checkbox = #imageLiteral(resourceName: "Checkmark")
     static let everyone = NSImage(named: NSImage.everyoneName)!
     static let play = NSImage(named: NSImage.slideshowTemplateName)!
     // swiftlint:enable force_unwrapping

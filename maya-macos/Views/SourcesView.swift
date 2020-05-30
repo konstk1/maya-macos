@@ -33,18 +33,20 @@ struct SourcesView: View {
     }
 
     var body: some View {
-        GeometryReader { g in
-            HStack(alignment: .top, spacing: 0) {
-                VStack(alignment: .leading, spacing: 0) {
-                    ForEach(0..<self.photoVendor.photoProviders.count) { i in
-                        self.makeRow(at: i)
-                    }
-                    Spacer()
-                }.frame(width: 220, height: g.size.height, alignment: .leading).background(Color.white)
-                Divider()
-                DetailView(provider: self.photoVendor.photoProviders[self.selectedProviderIdx])
-                    .frame(width: g.size.width - 220, height: g.size.height, alignment: .top)
+        HStack(alignment: .top, spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
+                ForEach(0..<self.photoVendor.photoProviders.count) { i in
+                    self.makeRow(at: i)
+                }
+                Spacer()
             }
+            .frame(width: 220)
+            .background(Color.white)
+
+            Divider()
+
+            DetailView(provider: self.photoVendor.photoProviders[self.selectedProviderIdx])
+//                .frame(width: 360)
         }.onAppear {
             print("On Appear")
             self.selectedProviderIdx = self.photoVendor.activeProviderIndex ?? 0
@@ -110,33 +112,30 @@ struct ProviderRow: View {
     }
 
     var body: some View {
-        // use GeometryReader to make sure row takes up entire allocated space (for hit test)
-        GeometryReader { g in
-            HStack {
-                ZStack {
-                    Rectangle().frame(width: 12, height: 20).foregroundColor(.clear).border(Color.clear, width: 0)
-                    if self.isActive {
-                        Image(nsImage: NSImage(named: NSImage.menuOnStateTemplateName)!)    // swiftlint:disable:this force_unwrapping
-                    }
-                }.padding(.leading, 10)
+        HStack {
+            ZStack {
+                Rectangle().frame(width: 20, height: 20).foregroundColor(.clear).border(Color.clear, width: 0)
 
-                Image(nsImage: self.providerInfo.image).resizable().frame(width: 30, height: 30)
-                Text(self.providerInfo.name).lineLimit(1)
+                if self.isActive {
+                    Image(nsImage: NSImage.checkbox).resizable().scaledToFit().frame(width: 15).foregroundColor(.black)
+                }
+            }.padding(.leading, 5).padding(.trailing, -5)
 
-                Spacer()
+            Image(nsImage: self.providerInfo.image).resizable().frame(width: 30, height: 30)
+            Text(self.providerInfo.name).lineLimit(1)
 
-                Text("\(self.photoCount)")
-                    .padding(.horizontal, 5).frame(minWidth: 35, minHeight: 20)
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundColor(.white)
-                    .background(Color.gray)
-                    .clipShape(Capsule())
-                    .padding(.trailing, 10)
-                    .onReceive(self.photoCountPublisher) { photoCount in
-                        self.photoCount = photoCount
-                    }
+            Spacer()
+
+            Text("\(self.photoCount)")
+                .padding(.horizontal, 5).frame(minWidth: 35, minHeight: 20)
+                .font(.system(size: 11, weight: .bold))
+                .foregroundColor(.white)
+                .background(Color.gray)
+                .clipShape(Capsule())
+                .padding(.trailing, 10)
+                .onReceive(self.photoCountPublisher) { photoCount in
+                    self.photoCount = photoCount
             }
-            .frame(width: g.size.width, height: g.size.height, alignment: .leading)
         }
     }
 }
