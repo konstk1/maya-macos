@@ -8,25 +8,54 @@
 
 import SwiftUI
 
+// swiftlint:disable multiple_closures_with_trailing_closure
+
 struct PreferencesView: View {
-    @State private var selectedTab = 1
+    @State private var selectedTab = 0
+
+    let iconSize: CGFloat = 30
 
     init() {
         log.info("Init prefs view")
     }
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            GeneralPrefsView().tabItem {
-                // swiftlint-disable-next force_unwrapping
-                Image(nsImage: NSImage(named: NSImage.preferencesGeneralName)!).frame(width: 40, height: 40)
-                Text("General")
-            }.tag(0)
-            SourcesView().tabItem {
-                Image(nsImage: #imageLiteral(resourceName: "SourcesIcon")).frame(width: 40, height: 40)
-                Text("Sources")
-            }.tag(1)
-        }.frame(width: 500, height: 320)
+        VStack(alignment: .leading, spacing: 0) {
+            // Tabs
+            HStack(spacing: 0) {
+                Button(action: {
+                    self.selectedTab = 0
+                }) {
+                    VStack(spacing: 0) {
+                        Image(nsImage: NSImage(named: NSImage.preferencesGeneralName)!).frame(width: self.iconSize, height: self.iconSize).padding(5)
+                        Text("General").font(.caption).padding([.horizontal, .bottom], 4)
+                    }
+                    }.buttonStyle(PlainButtonStyle())
+                    .background(RoundedRectangle(cornerRadius: 5).fill(self.selectedTab == 0 ? Color(red: 0.76, green: 0.76, blue: 0.76) : Color.clear))
+
+                Button(action: {
+                    self.selectedTab = 1
+                }) {
+                    VStack(spacing: 0) {
+                        Image(nsImage: #imageLiteral(resourceName: "SourcesIcon")).resizable().scaledToFit().frame(width: self.iconSize, height: self.iconSize).padding(5)
+                        Text("Sources").font(.caption).padding([.horizontal, .bottom], 4)
+                    }
+                }.buttonStyle(PlainButtonStyle())
+                    .background(RoundedRectangle(cornerRadius: 5).fill(self.selectedTab == 1 ? Color(red: 0.76, green: 0.76, blue: 0.76) : Color.clear))
+                Spacer()
+            }.padding([.leading, .top], 5)
+                .background(Color(red: 0.85, green: 0.85, blue: 0.85))
+
+            Divider()
+
+            Group {
+                if selectedTab == 0 {
+                    GeneralPrefsView()
+                } else {
+                    SourcesView()
+                }
+            }
+        }
     }
 }
 
