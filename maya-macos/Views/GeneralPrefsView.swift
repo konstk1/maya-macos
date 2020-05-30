@@ -30,7 +30,10 @@ struct GeneralPrefsView: View {
                 }
             }
 
-            Divider().frame(width: dividerWidth).padding(.horizontal, dividerPaddingHorizontal).padding(.vertical, dividerPaddingVertical)
+            Divider()
+                .frame(width: dividerWidth)
+                .padding(.horizontal, dividerPaddingHorizontal)
+                .padding(.vertical, dividerPaddingVertical)
 
             HStack(alignment: .top, spacing: 20) {
                 Text("Frame:").frame(width: titleWidth, alignment: .trailing)
@@ -61,7 +64,12 @@ struct GeneralPrefsView: View {
                     Text("Photo frame will automatically close after this specified period.").modifier(HintText())
                 }
             }
-            Divider().frame(width: dividerWidth).padding(.horizontal, dividerPaddingHorizontal).padding(.vertical, dividerPaddingVertical)
+
+            Divider()
+                .frame(width: dividerWidth)
+                .padding(.horizontal, dividerPaddingHorizontal)
+                .padding(.vertical, dividerPaddingVertical)
+
             HStack(alignment: .top, spacing: 20) {
                 Text("Photos:").frame(width: titleWidth, alignment: .trailing)
                 VStack(alignment: .leading) {
@@ -88,6 +96,7 @@ struct GeneralPrefsView: View {
                 }
             }
         }.padding(.horizontal, 40).padding(.vertical, 20)
+            .frame(width: 460)
     }
 
     struct HintText: ViewModifier {
