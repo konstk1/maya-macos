@@ -13,7 +13,6 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
     var photoFrame = PhotoFrameWindowController()
-    lazy var prefController = PreferencesWindowController(windowNibName: "SettingsController")
     lazy var prefWinController = PrefsWindowController()
     lazy var aboutController = AboutWindowController()
 
@@ -117,13 +116,6 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     }
 
     @IBAction func preferencesClicked(_ sender: NSMenuItem) {
-        // by default, status menu apps are in background (inactive)
-        // activate the app so that pref window appears on top
-        NSApp.activate(ignoringOtherApps: true)
-        prefController.showWindow(sender)
-    }
-
-    @IBAction func swiftUIClicked(_ sender: NSMenuItem) {
         NSApp.activate(ignoringOtherApps: true)
         prefWinController.showWindow(sender)
     }

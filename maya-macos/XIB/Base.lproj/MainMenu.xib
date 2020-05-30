@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -27,16 +27,10 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="SeU-xH-tSx"/>
-                <menuItem title="Preferences" id="9YY-4D-Imp">
+                <menuItem title="Preferences" id="2Gx-ON-7PB">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="preferencesClicked:" target="Z2C-Po-7RN" id="Eg6-nT-dfw"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="SwiftUI" id="2Gx-ON-7PB">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="swiftUIClicked:" target="Z2C-Po-7RN" id="S3l-Fw-CMi"/>
+                        <action selector="preferencesClicked:" target="Z2C-Po-7RN" id="vkb-9M-n8D"/>
                     </connections>
                 </menuItem>
                 <menuItem title="About" id="IsF-x1-ZKh">
