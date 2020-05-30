@@ -44,7 +44,7 @@ final class PhotoVendor: ObservableObject {
     var vendImageSub: AnyCancellable?
     var refreshAssetsSub: AnyCancellable?
 
-    private(set) var activeProvider: PhotoProvider?
+    @Published private(set) var activeProvider: PhotoProvider?
     var photoProviders: [PhotoProvider] = []
 
     var activeProviderIndex: Int? {
@@ -117,6 +117,7 @@ final class PhotoVendor: ObservableObject {
             // at this point, list shouldn't be empty, if it is, just return
             guard !self.unshownPhotos.isEmpty else {
                 log.warning("Photo vendor doesn't have any photos")
+                self.error = PhotoVendorError.noPhotos
                 promise(.failure(PhotoVendorError.noPhotos))
                 return
             }
@@ -128,6 +129,7 @@ final class PhotoVendor: ObservableObject {
             self.vendImageSub = nextPhoto.fetchImage(using: activeProvider).receive(on: RunLoop.main).sink(receiveCompletion: { completion in
                 if case .failure(let error) = completion {
                     log.error("Error converting descriptor to image (error: \(error.localizedDescription))")
+                    self.error = error
                     promise(.failure(error))
                 }
             }, receiveValue: { image in

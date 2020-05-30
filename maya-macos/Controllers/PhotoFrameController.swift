@@ -97,6 +97,12 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
             self?.didVendNewImage(image: image)
         }.store(in: &subs)
 
+        photoVendor.$error.receive(on: RunLoop.main).sink { [weak self] error in
+            if let error = error {
+                self?.didFailToVend(error: error)
+            }
+        }
+
         Settings.photos.$autoSwitchPhoto.sink { [weak self] in
             self?.updatePhotoTiming(autoSwitchPhoto: $0, autoSwitchPeriod: Settings.photos.autoSwitchPhotoPeriod)
 
