@@ -11,7 +11,7 @@ import Combine
 import Photos
 
 class AppleSourceViewModel: ObservableObject {
-    @Published var albumSelection: Int = 0 {
+    @Published var albumSelection: Int {
         didSet {
             print("Album sel \(albumSelection)")
             apple.setActiveAlbum(album: apple.albums[albumSelection])
@@ -38,12 +38,18 @@ class AppleSourceViewModel: ObservableObject {
         isActive = (PhotoVendor.shared.activeProvider == apple)
         isAuthorized = (apple.authStatus == .authorized)
 
+        if let selectedIndex = apple.albums.firstIndex(where: { $0.localIdentifier == Settings.applePhotos.activeAlbumId }) {
+            albumSelection = selectedIndex
+        } else {
+            albumSelection = 0
+        }
+
         self.apple.albumsPublisher.sink { [weak self] albums in
             guard let self = self else { return }
             self.albumTitles = albums.map { $0.localizedTitle ?? "Untitled" }
         }.store(in: &subs)
 
-        self.apple.$authStatus.receive(on: RunLoop.main).sink { [weak self] status in
+        self.apple.$authStatus.removeDuplicates().receive(on: RunLoop.main).sink { [weak self] status in
             guard let self = self else { return }
             log.info("Apple auth status \(status.rawValue)")
             if status == .authorized {
@@ -54,9 +60,7 @@ class AppleSourceViewModel: ObservableObject {
             }
         }.store(in: &subs)
 
-        if let selectedIndex = apple.albums.firstIndex(where: { $0.localIdentifier == Settings.applePhotos.activeAlbumId }) {
-            albumSelection = selectedIndex
-        }
+        self.apple.authorize()
     }
 
     deinit {

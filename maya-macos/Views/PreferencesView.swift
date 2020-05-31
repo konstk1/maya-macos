@@ -20,10 +20,6 @@ struct PreferencesView: View {
 
     let iconSize: CGFloat = 30
 
-    init() {
-        log.info("Init prefs view")
-    }
-
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             // Tabs
@@ -52,8 +48,8 @@ struct PreferencesView: View {
             }
             .padding([.leading, .top], 5)
             .background(Color.tabBarBackground)
-            .frame(width: selectedTab == .general ? 460 : 580)
-//            Divider()
+            .frame(width: selectedTab == .general ? 460 : 581)
+//            Divider().frame(width: selectedTab == .general ? 460 : 581)
 
             Group {
                 if selectedTab == .general {

@@ -19,7 +19,7 @@ struct AppleSourceDetailView: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 10) {
-                Text("Show photos from this album")
+                Text("Show photos from this album:")
                 Picker("", selection: $model.albumSelection) {
                     ForEach(0..<model.albumTitles.count, id: \.self) {
                         Text(self.model.albumTitles[$0]).truncationMode(.middle)

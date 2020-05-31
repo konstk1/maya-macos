@@ -23,7 +23,11 @@ struct SourcesView: View {
         ZStack(alignment: .leading) {
             ProviderRow(providerIndex: index).frame(height: 40)
                 .contentShape(Rectangle())
-                .onTapGesture { self.selectedProviderIdx = index }
+                .onTapGesture {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        self.selectedProviderIdx = index
+                    }
+                }
 
             if index == self.selectedProviderIdx {
                 // disallow hit testing to send taps to provider row below
@@ -46,11 +50,13 @@ struct SourcesView: View {
             Divider()
 
             DetailView(provider: self.photoVendor.photoProviders[self.selectedProviderIdx])
-//                .frame(width: 360)
+                .frame(width: 360)
+                .transition(.opacity)
+//                .transition(.asymmetric(insertion: .move(edge: .top), removal: .move(edge: .bottom)))
         }.onAppear {
             print("On Appear")
             self.selectedProviderIdx = self.photoVendor.activeProviderIndex ?? 0
-        }
+        }.frame(height: 250)
     }
 }
 
@@ -119,7 +125,7 @@ struct ProviderRow: View {
                 if self.isActive {
                     Image(nsImage: NSImage.checkbox).resizable().scaledToFit().frame(width: 15).foregroundColor(.black)
                 }
-            }.padding(.leading, 5).padding(.trailing, -5)
+            }.padding(.leading, 5).padding(.trailing, 0)
 
             Image(nsImage: self.providerInfo.image).resizable().frame(width: 30, height: 30)
             Text(self.providerInfo.name).lineLimit(1)

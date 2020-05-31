@@ -60,6 +60,7 @@ final class PhotoVendor: ObservableObject {
 
     func add(provider: PhotoProvider) {
         photoProviders.append(provider)
+        provider.refreshAssets()
     }
 
     /// Set new provider of photos.
