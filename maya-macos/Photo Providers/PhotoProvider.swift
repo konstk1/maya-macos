@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-class PhotoProvider: ObservableObject, Equatable {
+class PhotoProvider: NSObject, ObservableObject {
     let id = UUID()
 
     @Published var photoDescriptors: [PhotoAssetDescriptor] = []
@@ -37,9 +37,9 @@ class PhotoProvider: ObservableObject, Equatable {
         fatalError("refreshAssets not implemented for this class")
     }
 
-    static func == (lhs: PhotoProvider, rhs: PhotoProvider) -> Bool {
-        return lhs.id == rhs.id
-    }
+//    static func == (lhs: PhotoProvider, rhs: PhotoProvider) -> Bool {
+//        return lhs.id == rhs.id
+//    }
 }
 
 protocol PhotoAssetDescriptor: CustomStringConvertible {

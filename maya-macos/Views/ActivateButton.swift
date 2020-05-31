@@ -22,10 +22,9 @@ struct ActivateButton: View {
                 Text(isActive ? "Active" : "Activate")
                     .font(.subheadline)
                     .foregroundColor(.white)
-                }
+            }
             .frame(width: 140, height: 40, alignment: .center)
             .background(RoundedRectangle(cornerRadius: 10).fill(isActive ? Color.mayaGreen : Color.mayaBlue))
-
         }.buttonStyle(PlainButtonStyle())
     }
 }
@@ -33,8 +32,8 @@ struct ActivateButton: View {
 struct ActivateButton_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ActivateButton(isActive: false) {}
-            ActivateButton(isActive: true) {}
+            ActivateButton(isActive: false) {}.padding()
+            ActivateButton(isActive: true) {}.padding()
         }
     }
 }

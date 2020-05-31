@@ -19,7 +19,7 @@ struct LocalFolderSourceDetailView: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 10) {
-                Text("Show photos from this location")
+                Text("Show photos from this folder:")
                 Picker("", selection: $model.folderSelection) {
                     ForEach(0..<model.recentFolders.count, id: \.self) {
                         Text(self.model.recentFolders[$0]).truncationMode(.middle)
@@ -32,6 +32,7 @@ struct LocalFolderSourceDetailView: View {
             }.padding()
 
             Spacer()
+
             ActivateButton(isActive: model.isActive, action: model.activateClicked)
         }.padding(.bottom, 30)
     }

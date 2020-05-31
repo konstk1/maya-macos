@@ -29,20 +29,24 @@ final class ApplePhotoProvider: PhotoProvider {
         }
     }
 
-    @Published private(set) var authStatus: PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+    @Published private(set) var authStatus: PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus() {
+        didSet {
+            print("Setting auth")
+        }
+    }
 
     override init() {
         super.init()
 
         log.info("Apple Photos provider init")
-//        PHPhotoLibrary.shared().register(self)
     }
 
     deinit {
-//        PHPhotoLibrary.shared().unregisterChangeObserver(self)
+        PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
 
     func authorize() {
+        PHPhotoLibrary.shared().register(self)
         PHPhotoLibrary.requestAuthorization { [weak self] status in
             log.verbose("Auth status: \(status.rawValue)")
             self?.authStatus = status
@@ -125,7 +129,15 @@ final class ApplePhotoProvider: PhotoProvider {
     @discardableResult
     override func refreshAssets() -> Future<[PhotoAssetDescriptor], PhotoProviderError> {
         return Future { [weak self] promise in
-            guard let self = self else { return }
+            guard let self = self else {
+                promise(.failure(.unknown))
+                return
+
+            }
+            guard self.authStatus == .authorized else {
+                promise(.failure(.unauthorized))
+                return
+            }
             guard let activeAlbum = self.getActiveAlbum() else {
                 promise(.failure(.noActiveAlbum))
                 return
@@ -137,11 +149,14 @@ final class ApplePhotoProvider: PhotoProvider {
     }
 }
 
-//extension ApplePhotoProvider: PHPhotoLibraryChangeObserver {
-//    func photoLibraryDidChange(_ changeInstance: PHChange) {
-//
-//    }
-//}
+extension ApplePhotoProvider: PHPhotoLibraryChangeObserver {
+    func photoLibraryDidChange(_ changeInstance: PHChange) {
+        print("Lib did change")
+        if let activeAlbum = getActiveAlbum() {
+            photos = listPhotos(for: activeAlbum)
+        }
+    }
+}
 
 struct ApplePhotoAsset: PhotoAssetDescriptor {
     var asset: PHAsset
