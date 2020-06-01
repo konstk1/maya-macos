@@ -9,27 +9,71 @@
 import SwiftUI
 import SwiftyBeaver
 
+// swiftlint:disable multiple_closures_with_trailing_closure
+
 struct AboutView: View {
     var appVersion: String {
         (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "0.0.0"
     }
 
+    private let website: String = "https://konst.dev/maya"
+
     @State private var logButtonTitle = "Copy Log Path"
 
     var body: some View {
         VStack {
-            HStack {
-                Image(nsImage: NSImage(named: NSImage.everyoneName)!).resizable().aspectRatio(contentMode: ContentMode.fit).frame(width: 100, height: 100)
-                Spacer().frame(width: 30)
-                VStack(alignment: .leading) {
-                    Text("Maya").font(.system(size: 25))
-                    Text("Version \(appVersion)")
+            VStack(spacing: 20) {
+                Image(nsImage: NSImage.mayaLogo)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100)
+
+                VStack(alignment: .center, spacing: 10) {
+                    Text("Maya's Frame")
+                        .bold()
+                    Text("Version \(appVersion)").font(.system(size: 10))
                 }
             }
-            Text("Copyright © 2019 Konstantin Klitenik")
+
+            #if !DEBUG
             Button(logButtonTitle) {
                 self.copyLogPathClicked()
             }
+            #endif
+
+            VStack {
+                Button(action: {
+                    print("TODO: show help")
+                }) {
+                    Text("Show help").frame(width: 100)
+                }
+                Button(action: {
+                    print("TODO: send feedback")
+                }) {
+                    Text("Send feedback").frame(width: 100)
+                }
+            }.padding(10)
+
+            HStack {
+                Text("Website:").bold().foregroundColor(.gray)
+                Button(action: {
+                    let url = URL(string: self.website)!  // swiftlint:disable:this force_unwrapping
+                    NSWorkspace.shared.open(url)
+                }) {
+                    Text(self.website).underline().foregroundColor(.blue)
+                        .onHover { isHovering in
+                            if isHovering {
+                                NSCursor.pointingHand.push()
+                            } else {
+                                NSCursor.pop()
+                            }
+                        }
+                }.buttonStyle(PlainButtonStyle())
+            }
+
+            Text("Copyright © 2020 Konstantin Klitenik. All rights reserved.")
+                .font(.custom("San Francisco", size: 10))
+                .padding(.top, 10)
         }.padding().fixedSize().onAppear {
             self.logButtonTitle = "Copy Log Path"
             print("On appear")
