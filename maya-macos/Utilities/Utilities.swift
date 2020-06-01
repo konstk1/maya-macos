@@ -49,5 +49,6 @@ extension NSImage {
     static let checkbox = #imageLiteral(resourceName: "Checkmark")
     static let everyone = NSImage(named: NSImage.everyoneName)!
     static let play = NSImage(named: NSImage.slideshowTemplateName)!
+    static let mayaLogo = #imageLiteral(resourceName: "Maya Logo")
     // swiftlint:enable force_unwrapping
 }
