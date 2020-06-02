@@ -33,6 +33,13 @@
                         <action selector="preferencesClicked:" target="Z2C-Po-7RN" id="vkb-9M-n8D"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Help" id="ZO7-IP-hPv">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="helpClicked:" target="Z2C-Po-7RN" id="hg2-Oa-4KP"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="9tK-pV-ixT"/>
                 <menuItem title="About" id="IsF-x1-ZKh">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
