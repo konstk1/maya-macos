@@ -13,6 +13,8 @@
 		B531AAF92481BBEF00F3C355 /* ActivateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531AAF82481BBEF00F3C355 /* ActivateButton.swift */; };
 		B5421E5A247DE5C700F02345 /* ApplePhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5421E59247DE5C700F02345 /* ApplePhotoProviderTests.swift */; };
 		B5A5A8C4245210CF003B282D /* OAuthSwiftAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B5A5A8C3245210CF003B282D /* OAuthSwiftAlamofire */; };
+		B5F269D02485D42D000A5C53 /* HelpWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F269CF2485D42D000A5C53 /* HelpWindowController.swift */; };
+		B5F269D22485D454000A5C53 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F269D12485D454000A5C53 /* HelpView.swift */; };
 		FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */; };
 		FF14AD8D22BDB8B800C7518C /* PhotoFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */; };
 		FF279CF0244CD77F004E47C3 /* LocalFolderProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF279CEF244CD77F004E47C3 /* LocalFolderProviderTests.swift */; };
@@ -57,7 +59,6 @@
 		FFDED62023CF784B00C678EB /* GeneralPrefsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */; };
 		FFDED62223CF9C1D00C678EB /* SourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDED62123CF9C1D00C678EB /* SourcesView.swift */; };
 		FFDED62423CF9E4E00C678EB /* LocalFolderSourceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDED62323CF9E4E00C678EB /* LocalFolderSourceDetailView.swift */; };
-		FFDED62623CF9F1100C678EB /* ApiSourceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDED62523CF9F1100C678EB /* ApiSourceDetailView.swift */; };
 		FFE9162422E0F5C400687322 /* SettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE9162222E0F5C400687322 /* SettingsController.xib */; };
 		FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE7F22EF5CC7009411B8 /* Settings.swift */; };
 		FFEBBE8422EF834F009411B8 /* TimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE8322EF834F009411B8 /* TimePeriod.swift */; };
@@ -93,6 +94,8 @@
 		B531AAF524809B0400F3C355 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		B531AAF82481BBEF00F3C355 /* ActivateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivateButton.swift; sourceTree = "<group>"; };
 		B5421E59247DE5C700F02345 /* ApplePhotoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePhotoProviderTests.swift; sourceTree = "<group>"; };
+		B5F269CF2485D42D000A5C53 /* HelpWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpWindowController.swift; sourceTree = "<group>"; };
+		B5F269D12485D454000A5C53 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameController.swift; sourceTree = "<group>"; };
 		FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoFrameController.xib; sourceTree = "<group>"; };
 		FF279CEF244CD77F004E47C3 /* LocalFolderProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderProviderTests.swift; sourceTree = "<group>"; };
@@ -142,7 +145,6 @@
 		FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsViewModel.swift; sourceTree = "<group>"; };
 		FFDED62123CF9C1D00C678EB /* SourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesView.swift; sourceTree = "<group>"; };
 		FFDED62323CF9E4E00C678EB /* LocalFolderSourceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFolderSourceDetailView.swift; sourceTree = "<group>"; };
-		FFDED62523CF9F1100C678EB /* ApiSourceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiSourceDetailView.swift; sourceTree = "<group>"; };
 		FFE9162222E0F5C400687322 /* SettingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsController.xib; sourceTree = "<group>"; };
 		FFEBBE7F22EF5CC7009411B8 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		FFEBBE8322EF834F009411B8 /* TimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePeriod.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				FFDD944923057E2300891545 /* AboutWindowController.swift */,
+				B5F269CF2485D42D000A5C53 /* HelpWindowController.swift */,
 				FFD4C35E23CCF203007D1A27 /* PrefsWindowController.swift */,
 				FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */,
 				FFD63773238B0513003A4071 /* PhotoScrollView.swift */,
@@ -244,7 +247,7 @@
 			children = (
 				FF3E18FC23CA6D3200E5002B /* AboutView.swift */,
 				B531AAF82481BBEF00F3C355 /* ActivateButton.swift */,
-				FFDED62523CF9F1100C678EB /* ApiSourceDetailView.swift */,
+				B5F269D12485D454000A5C53 /* HelpView.swift */,
 				FFD4C35C23CC11B2007D1A27 /* GeneralPrefsView.swift */,
 				FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */,
 				B531AAF1247F346500F3C355 /* AppleSourceDetailView.swift */,
@@ -520,10 +523,11 @@
 				FF90731E22BBFF4D0052428E /* StatusMenuController.swift in Sources */,
 				FF39C02D2316F66E00203D7F /* GooglePhotoProvider.swift in Sources */,
 				FFDED62223CF9C1D00C678EB /* SourcesView.swift in Sources */,
+				B5F269D02485D42D000A5C53 /* HelpWindowController.swift in Sources */,
 				FFD4C35D23CC11B2007D1A27 /* GeneralPrefsView.swift in Sources */,
 				FF9B7D09231859F90073E77E /* GooglePhotosAPI.swift in Sources */,
-				FFDED62623CF9F1100C678EB /* ApiSourceDetailView.swift in Sources */,
 				FF9B7D0F2318BE700073E77E /* GooglePhotoAsset.swift in Sources */,
+				B5F269D22485D454000A5C53 /* HelpView.swift in Sources */,
 				FF90732222BC12E10052428E /* ApplePhotoProvider.swift in Sources */,
 				FFAAE72824211E6900DD3B3C /* GoogleSourceDetailView.swift in Sources */,
 				B531AAF92481BBEF00F3C355 /* ActivateButton.swift in Sources */,
