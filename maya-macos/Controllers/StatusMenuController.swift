@@ -7,19 +7,20 @@
 //
 
 import Cocoa
+import Combine
 
 class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
 
-    let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
-    var photoFrame = PhotoFrameWindowController()
-    lazy var prefWinController = PrefsWindowController()
-    lazy var aboutController = AboutWindowController()
-    lazy var helpController = HelpWindowController()
+    private var photoFrame = PhotoFrameWindowController()
+    private lazy var prefWinController = PrefsWindowController()
+    private lazy var aboutController = AboutWindowController()
+    private lazy var helpController = HelpWindowController()
 
-    let mouseEventMask: NSEvent.EventTypeMask = [.leftMouseDown, .rightMouseDown]
+    private let mouseEventMask: NSEvent.EventTypeMask = [.leftMouseDown, .rightMouseDown]
 
-    var localEventMonitor: Any?
+    private var subs: Set<AnyCancellable> = []
 
     @IBOutlet weak var statusMenu: NSMenu!
 
@@ -29,10 +30,14 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
 
         NSEvent.addLocalMonitorForEvents(matching: mouseEventMask, handler: localEventHandler)
 
-        _ = NotificationCenter.default.addObserver(forName: .photoFrameStatus, object: nil, queue: OperationQueue.main) { [weak self] _ in
+        NotificationCenter.default.publisher(for: .photoFrameStatus).receive(on: RunLoop.main).sink { [weak self] _ in
             guard let self = self else { return }
             self.setIcon()
-        }
+        }.store(in: &subs)
+
+        NotificationCenter.default.publisher(for: .prefsWindowRequested).sink { [weak self] _ in
+            self?.preferencesClicked(NSMenuItem())
+        }.store(in: &subs)
 
         NSUserNotificationCenter.default.delegate = self
     }

@@ -35,6 +35,7 @@ extension NSImageView {
 }
 
 extension Color {
+    static let helpText = Color("HelpTextPrimary")
     static let mayaRed = Color("MayaRed")
     static let mayaGreen = Color("MayaGreen")
     static let mayaBlue = Color("MayaBlue")

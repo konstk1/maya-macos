@@ -11,6 +11,7 @@ import Combine
 
 extension NSNotification.Name {
     static let photoFrameStatus = NSNotification.Name("photoFrameStatus")
+    static let prefsWindowRequested = NSNotification.Name("prefsWindowRequested")
 }
 
 enum PhotoFrameStatus {

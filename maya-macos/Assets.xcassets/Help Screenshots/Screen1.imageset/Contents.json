@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "Screen Shot 2020-06-05 at 9.56.44 PM.png",
+      "idiom" : "mac"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "template-rendering-intent" : "original"
+  }
+}
