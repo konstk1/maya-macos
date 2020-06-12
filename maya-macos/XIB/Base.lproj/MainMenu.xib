@@ -27,7 +27,7 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="SeU-xH-tSx"/>
-                <menuItem title="Preferences" id="2Gx-ON-7PB">
+                <menuItem title="Preferences..." id="2Gx-ON-7PB">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="preferencesClicked:" target="Z2C-Po-7RN" id="vkb-9M-n8D"/>
@@ -35,9 +35,22 @@
                 </menuItem>
                 <menuItem title="Help" id="ZO7-IP-hPv">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="helpClicked:" target="Z2C-Po-7RN" id="hg2-Oa-4KP"/>
-                    </connections>
+                    <menu key="submenu" id="6Ds-zv-kCJ">
+                        <items>
+                            <menuItem title="Tutorial" id="kMM-Y1-4JF">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="tutorialClicked:" target="Z2C-Po-7RN" id="AZv-xe-XSr"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Send feedback..." id="rru-xC-iTI">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="sendFeedbackClicked:" target="Z2C-Po-7RN" id="7B9-5m-C8m"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="9tK-pV-ixT"/>
                 <menuItem title="About" id="IsF-x1-ZKh">
@@ -53,7 +66,7 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-701" y="229"/>
+            <point key="canvasLocation" x="-633" y="206"/>
         </menu>
     </objects>
 </document>

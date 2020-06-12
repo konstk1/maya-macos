@@ -8,6 +8,7 @@
 
 import Cocoa
 import SwiftUI
+import SwiftyBeaver
 
 func + (lhs: NSPoint, rhs: NSPoint) -> NSPoint {
     return NSPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
@@ -52,4 +53,17 @@ extension NSImage {
     static let play = NSImage(named: NSImage.slideshowTemplateName)!
     static let mayaLogo = #imageLiteral(resourceName: "Maya Logo")
     // swiftlint:enable force_unwrapping
+}
+
+func sendFeedback() {
+    let service = NSSharingService(named: .composeEmail)
+    service?.recipients = ["feedback@konst.dev"]
+    service?.subject = "May Frame Feedback"
+
+    if let logFileDest = log.destinations.first(where: { $0 is FileDestination }) as? FileDestination,
+        let logFileUrl = logFileDest.logFileURL {
+        service?.perform(withItems: [logFileUrl])
+    } else {
+        service?.perform(withItems: [])
+    }
 }
