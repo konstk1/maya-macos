@@ -17,6 +17,7 @@ class AboutWindowController: NSWindowController, NSWindowDelegate {
         let hostingController = NSHostingController(rootView: aboutView)
         let window = NSWindow(contentViewController: hostingController)
         window.title = "About"
+        window.titlebarAppearsTransparent = true
         window.styleMask = [.titled, .closable, .fullSizeContentView]
         window.center()
         window.setFrameAutosaveName("About window")

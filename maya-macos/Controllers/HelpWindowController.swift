@@ -16,7 +16,8 @@ class HelpWindowController: NSWindowController, NSWindowDelegate {
         let helpView = HelpView()
         let hostingController = NSHostingController(rootView: helpView)
         let window = NSWindow(contentViewController: hostingController)
-        window.title = "Help"
+        window.title = "Tutorial"
+        window.titlebarAppearsTransparent = true
         window.styleMask = [.titled, .closable, .fullSizeContentView]
         window.center()
         window.setFrameAutosaveName("Help window")

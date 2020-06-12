@@ -125,9 +125,13 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
         prefWinController.showWindow(sender)
     }
 
-    @IBAction func helpClicked(_ sender: NSMenuItem) {
+    @IBAction func tutorialClicked(_ sender: NSMenuItem) {
         NSApp.activate(ignoringOtherApps: true)
         helpController.showWindow(sender)
+    }
+
+    @IBAction func sendFeedbackClicked(_ sender: NSMenuItem) {
+        sendFeedback()
     }
 
     @IBAction func quitClicked(_ sender: NSMenuItem) {

@@ -29,8 +29,7 @@ struct AboutView: View {
                     .frame(width: 100)
 
                 VStack(alignment: .center, spacing: 10) {
-                    Text("Maya's Frame")
-                        .bold()
+                    Text("Maya Frame").font(.custom("San Francisco", size: 20))
                     Text("Version \(appVersion)").font(.system(size: 10))
                 }
             }
@@ -43,16 +42,13 @@ struct AboutView: View {
 
             VStack {
                 Button(action: {
-                    print("TODO: show help")
+                    sendFeedback()
                 }) {
-                    Text("Show help").frame(width: 100)
+                    Text("Send feedback").frame(width: 120, height: 30)
+                        .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.helpText))
+                        .contentShape(Rectangle())
                 }
-                Button(action: {
-                    print("TODO: send feedback")
-                }) {
-                    Text("Send feedback").frame(width: 100)
-                }
-            }.padding(10)
+            }.buttonStyle(PlainButtonStyle()).padding(20)
 
             HStack {
                 Text("Website:").bold().foregroundColor(.gray)
@@ -74,12 +70,12 @@ struct AboutView: View {
             Text("Copyright © 2020 Konstantin Klitenik. All rights reserved.")
                 .font(.custom("San Francisco", size: 10))
                 .padding(.top, 10)
-        }.padding().fixedSize().onAppear {
+        }.padding(25).fixedSize().onAppear {
             self.logButtonTitle = "Copy Log Path"
             print("On appear")
         }.onDisappear {
             print("On disappear")
-        }
+        }.background(Color.white).foregroundColor(Color.helpText)
     }
 
     func copyLogPathClicked() {
