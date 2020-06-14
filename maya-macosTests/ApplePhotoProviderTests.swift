@@ -34,7 +34,7 @@ class ApplePhotoProviderTests: XCTestCase {
             if callCount == 1 {
                 XCTAssert(albums.isEmpty, "Non zero albums on init")
             } else if callCount == 2 {
-                XCTAssertEqual(albums.count, 5, "Not all albums listed")
+                XCTAssertGreaterThan(albums.count, 5, "Not all albums listed")
                 expectation.fulfill()
             }
         }
@@ -42,6 +42,10 @@ class ApplePhotoProviderTests: XCTestCase {
         apple.listAlbums()
 
         wait(for: [expectation], timeout: 10.0)
+
+        XCTAssertEqual(apple.albums.first!.localizedTitle, "All", "First album should be \"All\"")
+        XCTAssertEqual(apple.albums.first!.localIdentifier, "apple.photos.transient.all/L0/040", "Invalid first album id")
+
         sub.cancel()
     }
 

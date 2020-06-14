@@ -19,9 +19,9 @@ final class GooglePhotoProvider: PhotoProvider {
     private let authURL = "https://accounts.google.com/o/oauth2/v2/auth"
     private let tokenURL = "https://www.googleapis.com/oauth2/v4/token"
     private let scope = "https://www.googleapis.com/auth/photoslibrary.readonly"
-    private let callbackURL = URL(string: "com.kk.maya-macos:/oauth-callback/google")!
+    private let callbackURL = URL(string: "com.kk.maya-macos:/oauth-callback/google")!  // swiftlint:disable:this force_unwrapping
 
-    private let baseURL = URL(string: "https://photoslibrary.googleapis.com/v1/")!  // swiftlint:disable:this force_unwrapping
+    private let baseURL = URL(string: "https://photoslibrary.googleapis.com/v1/")!      // swiftlint:disable:this force_unwrapping
 
     /// temporary storage while album list is being paged in
     private var tempAlbums: [GooglePhotos.Album] = []

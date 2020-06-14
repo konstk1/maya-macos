@@ -57,7 +57,7 @@ final class ApplePhotoProvider: PhotoProvider {
         // persist active album selection
         activeAlbum = album
         Settings.applePhotos.activeAlbumId = album.localIdentifier
-        log.info("Setting active album to \(album.localizedTitle ?? "")")
+        log.info("Setting active album to \(album.localizedTitle ?? "") id \(album.localIdentifier)")
         photos = listPhotos(for: album)     // fetch photos in active album
     }
 
@@ -78,11 +78,20 @@ final class ApplePhotoProvider: PhotoProvider {
         return activeAlbum
     }
 
+    private func makeCollectionOfAll() -> PHAssetCollection {
+        let result = PHAsset.fetchAssets(with: .image, options: nil)
+        let collection = PHAssetCollection.transientAssetCollection(withAssetFetchResult: result, title: "All")
+        // transient collections have random identifier, which makes it impossible to save
+        // set localIdentifer (uuid) here so localIdentifier is constant for this collection
+        collection.setValue("apple.photos.transient.all", forKey: "uuid")
+        return collection
+    }
+
     @discardableResult
     func listAlbums() -> [PHAssetCollection] {
         let fetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: nil)
 
-        var collections: [PHAssetCollection] = []
+        var collections: [PHAssetCollection] = [makeCollectionOfAll()]      // first collection is of ALL photos
 
         for i in 0..<fetchResult.count {
             let collection = fetchResult.object(at: i)
