@@ -28,12 +28,11 @@ struct GeneralPrefsView: View {
 
                     Text("Start Maya automatically at login.").modifier(HintText())
                 }
-            }
+            }.padding(.top, 10)
 
             Divider()
                 .frame(width: dividerWidth)
-                .padding(.horizontal, dividerPaddingHorizontal)
-                .padding(.vertical, dividerPaddingVertical)
+                .padding(EdgeInsets(top: dividerPaddingVertical, leading: dividerPaddingHorizontal, bottom: dividerPaddingVertical+10, trailing: dividerPaddingHorizontal))
 
             HStack(alignment: .top, spacing: 20) {
                 Text("Frame:").frame(width: titleWidth, alignment: .trailing)
@@ -47,7 +46,6 @@ struct GeneralPrefsView: View {
                         }.frame(width: 310)
 
                     Text("Action to take when new photo is ready.").modifier(HintText())
-
                     HStack {
 
                         Toggle(isOn: $prefs.frameSettings.autoCloseFrame) {
@@ -67,8 +65,7 @@ struct GeneralPrefsView: View {
 
             Divider()
                 .frame(width: dividerWidth)
-                .padding(.horizontal, dividerPaddingHorizontal)
-                .padding(.vertical, dividerPaddingVertical)
+            .padding(EdgeInsets(top: dividerPaddingVertical, leading: dividerPaddingHorizontal, bottom: dividerPaddingVertical+10, trailing: dividerPaddingHorizontal))
 
             HStack(alignment: .top, spacing: 20) {
                 Text("Photos:").frame(width: titleWidth, alignment: .trailing)
@@ -104,6 +101,7 @@ struct GeneralPrefsView: View {
             content
                 .font(.system(size: 10))
                 .foregroundColor(.gray)
+                .padding(.bottom, 10)
         }
     }
 }

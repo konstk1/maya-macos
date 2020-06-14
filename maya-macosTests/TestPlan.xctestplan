@@ -22,9 +22,7 @@
         "ApplePhotoProviderTests\/testPerformanceExample()",
         "GoogePhotoProviderTests",
         "GoogePhotoProviderTests\/testAlbumListPublisher()",
-        "GoogePhotoProviderTests\/testPerformanceExample()",
-        "LocalFolderProviderTests",
-        "PhotoProviderTests"
+        "GoogePhotoProviderTests\/testPerformanceExample()"
       ],
       "target" : {
         "containerPath" : "container:maya-macos.xcodeproj",
