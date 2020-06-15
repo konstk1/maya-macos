@@ -47,14 +47,17 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
 
     private var photoView: PhotoView!
     private var shouldPopupOnVend = false
+    private var shouldAutoClose = true
 
     private let photoHorizontalPadding: CGFloat = 5.0
     private let photoVerticalPadding: CGFloat = 5.0
 
+    let borderSize: CGFloat = 10.0
+
     // Window properties
     // TODO: move this to Settings
-    @PublishedUserDefault("PhotoFrame.windowSize", defaultValue: NSSize(width: 400, height: 400))
-    private var windowSize
+    @PublishedUserDefault("PhotoFrame.frameSize", defaultValue: NSSize(width: 400, height: 400))
+    private var frameSize
 
     /// Offset of the top left corner from the reference window specified in show(relativeTo:)
     @PublishedUserDefault("PhotoFrame.windowOffset", defaultValue: NSPoint(x: 0, y: -1))
@@ -118,6 +121,8 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         super.windowDidLoad()
 
         guard let window = window else { return }
+        window.backgroundColor = .clear
+
         photoView = PhotoView()
         photoView.imageScaling = .scaleProportionallyUpOrDown
 
@@ -143,7 +148,7 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
             log.info("Auto next photo in \(autoSwitchPeriod)")
             vendTimer = Timer.scheduledTimer(withTimeInterval: autoSwitchPeriod.timeInterval, repeats: false, block: { [weak self] (_) in
                 self?.shouldPopupOnVend = (Settings.frame.newPhotoAction == .popupFrame)
-                self?.photoVendor.vendImage(shouldRefresh: false)
+                self?.photoVendor.vendImage(shouldRefresh: true)
             })
         } else {
             log.info("Auto photo switch off")
@@ -156,7 +161,9 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     }
 
     func forceNext() {
+        // when user forces next photo, pop it up and prevent auto close
         shouldPopupOnVend = true
+        shouldAutoClose = false
         photoVendor.vendImage(shouldRefresh: false)
     }
 
@@ -180,7 +187,7 @@ extension PhotoFrameWindowController {
             show(relativeTo: referenceWindow)
 
             // if auto-close is enabled, set timer to trigger frame close
-            if Settings.frame.autoCloseFrame {
+            if Settings.frame.autoCloseFrame && shouldAutoClose {
                 autoCloseWorkItem?.cancel()  // cancel any pending auto close items
                 // create new auto close work item
                 autoCloseWorkItem = DispatchWorkItem { [weak self] in
@@ -191,6 +198,8 @@ extension PhotoFrameWindowController {
                 // swiftlint:disable:next force_unwrapping
                 DispatchQueue.main.asyncAfter(deadline: .now() + Settings.frame.autoCloseFrameAfter.timeInterval, execute: autoCloseWorkItem!)
             }
+
+            shouldAutoClose = true  // reset auto close override, it's set in forceNext()
         } else if Settings.frame.newPhotoAction == .showNotification {
             showUserNotification(with: image)
         }
@@ -233,23 +242,22 @@ extension PhotoFrameWindowController: NSWindowDelegate {
 
         photoView.image = currentPhoto
 
-        // TODO: account for insets for acspect ratio
-        // maybe even refactor this
+        var newPhotoSize = frameSize - borderSize
+        let newPhotoAspectRatio = currentPhoto.size.width / currentPhoto.size.height
 
-        window.aspectRatio = currentPhoto.size
-
-        var frameSize = windowSize
-
-        // determine photo view size based on max window dimmension
+        // determine photo view size based on max frame dimmension
         if currentPhoto.size.width > currentPhoto.size.height {
             // landscape (clamp width, calculate height)
-            frameSize.height = currentPhoto.size.height / currentPhoto.size.width * windowSize.width
+            newPhotoSize.height = newPhotoSize.width / newPhotoAspectRatio
         } else {
             // portrait (clamp height, calculate width)
-            frameSize.width = currentPhoto.size.width / currentPhoto.size.height * windowSize.height
+            newPhotoSize.width = newPhotoAspectRatio * newPhotoSize.height
         }
 
-        photoView.frame = NSRect(x: 0, y: 0, width: frameSize.width-12, height: frameSize.height-12)
+        photoView.frame = NSRect(origin: .zero, size: newPhotoSize)
+
+        // new window size is photo size plus border
+        frameSize = newPhotoSize + borderSize
 
         // set window position based on offset from reference window (which is usually status menu item)
         var windowOrigin = window.frame.origin
@@ -259,6 +267,8 @@ extension PhotoFrameWindowController: NSWindowDelegate {
         }
 
         window.setFrame(NSRect(origin: windowOrigin, size: frameSize), display: true)
+        // set aspect ratio to only allow diagonal resizing
+        window.aspectRatio = frameSize + borderSize
 
         // show window on top of everything
         window.makeKeyAndOrderFront(nil)
@@ -285,15 +295,21 @@ extension PhotoFrameWindowController: NSWindowDelegate {
     }
 
     func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
-        // resize photoView to track window size with specified padding
-        photoView.setFrameSize(NSSize(width: frameSize.width-12, height: frameSize.height-12))
-        return frameSize
+        // size photoView to track window size with specified padding and maintain aspect ratio
+        let aspectRatio = currentPhoto.size.width / currentPhoto.size.height
+        var newPhotoSize = frameSize - borderSize
+        // keep width as dragged, adjust height to match aspect ratio
+        newPhotoSize.height = newPhotoSize.width / aspectRatio
+        photoView.setFrameSize(newPhotoSize)
+
+        // new window size is new photo size with border padding
+        return newPhotoSize + borderSize
     }
 
     func windowDidEndLiveResize(_ notification: Notification) {
         guard let window = window else { return }
         // save window size so the frame always opens with same size
-        windowSize = window.frame.size
+        frameSize = window.frame.size
     }
 
     func windowDidMove(_ notification: Notification) {

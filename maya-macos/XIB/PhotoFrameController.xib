@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,29 +19,33 @@
             <rect key="contentRect" x="831" y="607" width="400" height="300"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <value key="minSize" type="size" width="200" height="200"/>
-            <view key="contentView" autoresizesSubviews="NO" id="se5-gp-TjO">
+            <view key="contentView" autoresizesSubviews="NO" id="se5-gp-TjO" userLabel="View">
                 <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" allowsMagnification="YES" maxMagnification="3" minMagnification="1" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="8Xk-5q-n8s" customClass="PhotoScrollView" customModule="Maya" customModuleProvider="target">
+                    <visualEffectView blendingMode="behindWindow" material="ultraDark" state="followsWindowActiveState" id="0cy-Fj-Mg8">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </visualEffectView>
+                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" allowsMagnification="YES" maxMagnification="3" minMagnification="1" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="8Xk-5q-n8s" customClass="PhotoScrollView" customModule="Maya" customModuleProvider="target">
                         <rect key="frame" x="5" y="5" width="390" height="290"/>
                         <clipView key="contentView" copiesOnScroll="NO" id="M21-Q9-BZt">
-                            <rect key="frame" x="1" y="1" width="388" height="288"/>
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="290"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view id="AtZ-PX-uXz">
-                                    <rect key="frame" x="0.0" y="0.0" width="388" height="288"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="290"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Pdl-LM-3yz">
-                            <rect key="frame" x="2" y="273" width="387" height="16"/>
+                            <rect key="frame" x="-100" y="-100" width="387" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="okE-SW-x9B">
-                            <rect key="frame" x="373" y="2" width="16" height="287"/>
+                            <rect key="frame" x="-100" y="-100" width="16" height="287"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>

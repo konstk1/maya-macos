@@ -24,7 +24,7 @@ class GeneralPrefsViewModel: ObservableObject {
     @Published var newPhotoActionsSelection = NewPhotoAction.allCases.firstIndex(of: Settings.frame.newPhotoAction) ?? 0 {
         didSet {
             frameSettings.newPhotoAction = NewPhotoAction.allCases[newPhotoActionsSelection]
-            print("Updated photo action \(newPhotoActionsSelection) - \(frameSettings.newPhotoAction)")
+            log.info("Updated photo action \(newPhotoActionsSelection) - \(frameSettings.newPhotoAction)")
         }
     }
 
@@ -33,7 +33,7 @@ class GeneralPrefsViewModel: ObservableObject {
     @Published var autoCloseTimeSelection = autoCloseTimeOptions.firstIndex(of: Settings.frame.autoCloseFrameAfter) ?? 0 {
         didSet {
             frameSettings.autoCloseFrameAfter = Self.autoCloseTimeOptions[autoCloseTimeSelection]
-            print("Updated auto close time (\(autoCloseTimeSelection)): \(frameSettings.autoCloseFrameAfter)")
+            log.info("Updated auto close time (\(autoCloseTimeSelection)): \(frameSettings.autoCloseFrameAfter)")
         }
     }
 
@@ -42,7 +42,7 @@ class GeneralPrefsViewModel: ObservableObject {
     @Published var autoSwitchUnitSelection = autoSwitchUnitsOptions.firstIndex(of: Settings.photos.autoSwitchPhotoPeriod.unit.rawValue) ?? 0 {
         didSet {
             photoSettings.autoSwitchPhotoPeriod.unit = TimeUnit.allCases[autoSwitchUnitSelection]
-            print("Updated auto switch period \(autoSwitchUnitSelection): \(photoSettings.autoSwitchPhotoPeriod)")
+            log.info("Updated auto switch period \(autoSwitchUnitSelection): \(photoSettings.autoSwitchPhotoPeriod)")
         }
     }
 
