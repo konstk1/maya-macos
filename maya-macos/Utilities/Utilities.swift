@@ -18,6 +18,15 @@ func - (lhs: NSPoint, rhs: NSPoint) -> NSPoint {
     return NSPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
 }
 
+func + (lhs: NSSize, rhs: CGFloat) -> NSSize {
+    return NSSize(width: lhs.width + rhs, height: lhs.height + rhs)
+}
+
+func - (lhs: NSSize, rhs: CGFloat) -> NSSize {
+    return NSSize(width: lhs.width - rhs, height: lhs.height - rhs)
+}
+
+
 extension NSImageView {
     var contentImageSize: NSSize {
         guard let image = image else { return bounds.size }

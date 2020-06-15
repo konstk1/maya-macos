@@ -86,11 +86,15 @@ class PhotoScrollView: NSScrollView {
             newCursor = .openHand
         }
 
+//        hasHorizontalScroller = newMagnification > 1
+//        hasVerticalScroller = newMagnification > 1
+
         NSAnimationContext.runAnimationGroup({ context in
             context.duration = 0.3
             animator().setMagnification(newMagnification, centeredAt: center)
         }, completionHandler: { [weak self] in
             self?.documentCursor = newCursor
+
         })
     }
 }
