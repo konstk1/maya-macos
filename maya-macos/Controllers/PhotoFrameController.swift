@@ -56,8 +56,8 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
 
     // Window properties
     // TODO: move this to Settings
-    @PublishedUserDefault("PhotoFrame.frameSize", defaultValue: NSSize(width: 400, height: 400))
-    private var frameSize
+    @PublishedUserDefault("PhotoFrame.windowSize", defaultValue: NSSize(width: 400, height: 400))
+    private var windowSize
 
     /// Offset of the top left corner from the reference window specified in show(relativeTo:)
     @PublishedUserDefault("PhotoFrame.windowOffset", defaultValue: NSPoint(x: 0, y: -1))
@@ -115,6 +115,8 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         Settings.photos.$autoSwitchPhotoPeriod.sink { [weak self] in
             self?.updatePhotoTiming(autoSwitchPhoto: Settings.photos.autoSwitchPhoto, autoSwitchPeriod: $0)
         }.store(in: &subs)
+
+        window?.acceptsMouseMovedEvents = true
     }
 
     override func windowDidLoad() {
@@ -129,13 +131,18 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         scrollView.documentView = photoView
         scrollView.postsBoundsChangedNotifications = true
 
-        window.isMovableByWindowBackground = true
+//        window.isMovableByWindowBackground = true
         window.delegate = self
     }
 
     override func mouseDown(with event: NSEvent) {
         print("Frame clicked, cancelling auto close...")
         autoCloseWorkItem?.cancel()
+
+        // if image is fully zoomed out, move the window, otherwise let the scroll view handle scrolling
+        if scrollView.magnification <= 1.0 {
+            window?.performDrag(with: event)
+        }
     }
 
     /// Determines next photo timing.  If auto-switch enabled, [re]sets the timer to vend new image.
@@ -242,7 +249,7 @@ extension PhotoFrameWindowController: NSWindowDelegate {
 
         photoView.image = currentPhoto
 
-        var newPhotoSize = frameSize - borderSize
+        var newPhotoSize = windowSize - borderSize
         let newPhotoAspectRatio = currentPhoto.size.width / currentPhoto.size.height
 
         // determine photo view size based on max frame dimmension
@@ -257,18 +264,27 @@ extension PhotoFrameWindowController: NSWindowDelegate {
         photoView.frame = NSRect(origin: .zero, size: newPhotoSize)
 
         // new window size is photo size plus border
-        frameSize = newPhotoSize + borderSize
+        windowSize = newPhotoSize + borderSize
 
         // set window position based on offset from reference window (which is usually status menu item)
         var windowOrigin = window.frame.origin
         if let referenceWindow = referenceWindow {
             windowOrigin = referenceWindow.frame.origin + windowOffset
-            windowOrigin.y -= frameSize.height
+            windowOrigin.y -= windowSize.height
         }
 
-        window.setFrame(NSRect(origin: windowOrigin, size: frameSize), display: true)
-        // set aspect ratio to only allow diagonal resizing
-        window.aspectRatio = frameSize + borderSize
+        // ensure that image is not off screen
+        if let screenFrame = window.screen?.frame {
+            windowOrigin.x = max(screenFrame.origin.x, windowOrigin.x)
+            windowOrigin.y = max(screenFrame.origin.y, windowOrigin.y)
+            windowOrigin.x = min(screenFrame.origin.x + screenFrame.size.width - windowSize.width, windowOrigin.x)
+            windowOrigin.y = min(screenFrame.origin.y + screenFrame.size.height - windowSize.height, windowOrigin.y)
+        }
+
+        window.setFrame(NSRect(origin: windowOrigin, size: windowSize), display: true)
+        window.aspectRatio = windowSize + borderSize        // set aspect ratio to only allow diagonal resizing
+
+        saveWindowPosition()
 
         // show window on top of everything
         window.makeKeyAndOrderFront(nil)
@@ -309,14 +325,17 @@ extension PhotoFrameWindowController: NSWindowDelegate {
     func windowDidEndLiveResize(_ notification: Notification) {
         guard let window = window else { return }
         // save window size so the frame always opens with same size
-        frameSize = window.frame.size
+        windowSize = window.frame.size
     }
 
     func windowDidMove(_ notification: Notification) {
         // track offset of top left corner from origin so the frame always opens in the same location
+        saveWindowPosition()
+    }
+
+    func saveWindowPosition() {
         guard let window = window, let referenceWindow = referenceWindow else { return }
         windowOffset = window.frame.origin - referenceWindow.frame.origin
         windowOffset.y += window.frame.height
-//        print("Moved \(window.frame.origin), new offset \(windowOffset)")
     }
 }
