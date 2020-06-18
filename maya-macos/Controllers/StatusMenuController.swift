@@ -70,9 +70,13 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
         /// indicates if intercepted event should be propagaged
         var blockEvent = false
 
+        // if user is holding cmd key, then they're trying to move the status bar item
+        // don't do anything and just propagate the event
+        let isMoveEvent = event.modifierFlags.contains(NSEvent.ModifierFlags.command)
+
         // close popover if clicked on status item or outside the photo frame
         // don't close and forward event if clicked inside photo frame window
-        if event.type == .leftMouseDown {
+        if event.type == .leftMouseDown && !isMoveEvent {
 //            print("Event screen \(event.window?.screen?.frame)")
 //            print("Button screen \(statusItem.button?.window?.frame)")
             if event.window == statusItem.button?.window {
