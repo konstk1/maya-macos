@@ -49,9 +49,6 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     private var shouldPopupOnVend = false
     private var shouldAutoClose = true
 
-    private let photoHorizontalPadding: CGFloat = 5.0
-    private let photoVerticalPadding: CGFloat = 5.0
-
     let borderSize: CGFloat = 10.0
 
     // Window properties
@@ -68,6 +65,15 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
 
     var isVisible: Bool {
         return window?.isVisible ?? false
+    }
+
+    private var isAnimating = false
+    private var animationStartFrame: NSRect {
+        if let frame = referenceWindow?.frame {
+            return NSRect(x: frame.midX, y: frame.midY, width: borderSize, height: borderSize)
+        } else {
+            return NSRect(x: 0, y: 0, width: borderSize, height: borderSize)
+        }
     }
 
     private var observers: [NSKeyValueObservation] = []
@@ -274,21 +280,33 @@ extension PhotoFrameWindowController: NSWindowDelegate {
         }
 
         // ensure that image is not off screen
-        if let screenFrame = window.screen?.frame {
+        if let screenFrame = referenceWindow?.screen?.frame {
             windowOrigin.x = max(screenFrame.origin.x, windowOrigin.x)
             windowOrigin.y = max(screenFrame.origin.y, windowOrigin.y)
             windowOrigin.x = min(screenFrame.origin.x + screenFrame.size.width - windowSize.width, windowOrigin.x)
             windowOrigin.y = min(screenFrame.origin.y + screenFrame.size.height - windowSize.height, windowOrigin.y)
         }
 
-        window.setFrame(NSRect(origin: windowOrigin, size: windowSize), display: true)
         window.aspectRatio = windowSize + borderSize        // set aspect ratio to only allow diagonal resizing
 
-        saveWindowPosition()
+        isAnimating = true
 
         // show window on top of everything
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
+
+        // start with frame at status icon and animate to desired location and size
+        window.setFrame(animationStartFrame, display: true)
+        window.alphaValue = 0
+
+        NSAnimationContext.runAnimationGroup({ context in
+            context.duration = 0.2
+            self.window?.animator().setFrame(NSRect(origin: windowOrigin, size: windowSize), display: true)
+            self.window?.animator().alphaValue = 1
+        }, completionHandler: {
+            self.saveWindowPosition()
+            self.isAnimating = false
+        })
 
         // only install global event monitor if not already installed
         // any clicks outside the window will trigger frame to close
@@ -298,7 +316,15 @@ extension PhotoFrameWindowController: NSWindowDelegate {
     }
 
     override func close() {
-        super.close()
+        isAnimating = true
+        NSAnimationContext.runAnimationGroup({ context in
+            context.duration = 0.2
+            self.window?.animator().setFrame(animationStartFrame, display: true)
+            self.window?.animator().alphaValue = 0.0
+        }, completionHandler: {
+            super.close()
+            self.isAnimating = false
+        })
 
         status = (vendTimer?.isValid == true) ? .scheduled : .idle
 
@@ -323,19 +349,25 @@ extension PhotoFrameWindowController: NSWindowDelegate {
     }
 
     func windowDidEndLiveResize(_ notification: Notification) {
-        guard let window = window else { return }
+        // only save window size if change is not result of animation
+        guard let window = window, !isAnimating else { return }
         // save window size so the frame always opens with same size
         windowSize = window.frame.size
+        print("Did end resize")
     }
 
     func windowDidMove(_ notification: Notification) {
-        // track offset of top left corner from origin so the frame always opens in the same location
-        saveWindowPosition()
+        // only save position if window move is not result of animation
+        if !isAnimating {
+            saveWindowPosition()
+        }
     }
 
     func saveWindowPosition() {
+        // track offset of top left corner from origin so the frame always opens in the same location
         guard let window = window, let referenceWindow = referenceWindow else { return }
         windowOffset = window.frame.origin - referenceWindow.frame.origin
         windowOffset.y += window.frame.height
+        print("Saving offset")
     }
 }
