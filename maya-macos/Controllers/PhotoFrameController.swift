@@ -53,8 +53,8 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
 
     // Window properties
     // TODO: move this to Settings
-    @PublishedUserDefault("PhotoFrame.windowSize", defaultValue: NSSize(width: 400, height: 400))
-    private var windowSize
+    @PublishedUserDefault("PhotoFrame.photoDiagMax", defaultValue: 565.0 as CGFloat)  // roughly 400 x 400
+    private var photoDiagMax
 
     /// Offset of the top left corner from the reference window specified in show(relativeTo:)
     @PublishedUserDefault("PhotoFrame.windowOffset", defaultValue: NSPoint(x: 0, y: -1))
@@ -67,7 +67,7 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         return window?.isVisible ?? false
     }
 
-    private var isAnimating = false
+    private var pendingAnimationCount = 0
     private var animationStartFrame: NSRect {
         if let frame = referenceWindow?.frame {
             return NSRect(x: frame.midX, y: frame.midY, width: borderSize, height: borderSize)
@@ -255,22 +255,18 @@ extension PhotoFrameWindowController: NSWindowDelegate {
 
         photoView.image = currentPhoto
 
-        var newPhotoSize = windowSize - borderSize
+        // a = width / height
+        // h^2 + w^2 = d^2
+        // height = sqrt(d^2 / (1 + a^2))
         let newPhotoAspectRatio = currentPhoto.size.width / currentPhoto.size.height
-
-        // determine photo view size based on max frame dimmension
-        if currentPhoto.size.width > currentPhoto.size.height {
-            // landscape (clamp width, calculate height)
-            newPhotoSize.height = newPhotoSize.width / newPhotoAspectRatio
-        } else {
-            // portrait (clamp height, calculate width)
-            newPhotoSize.width = newPhotoAspectRatio * newPhotoSize.height
-        }
+        let height = sqrt(pow(photoDiagMax, 2) / (1 + pow(newPhotoAspectRatio, 2)))
+        let width = height * newPhotoAspectRatio
+        let newPhotoSize = NSSize(width: width, height: height)
 
         photoView.frame = NSRect(origin: .zero, size: newPhotoSize)
 
         // new window size is photo size plus border
-        windowSize = newPhotoSize + borderSize
+        let windowSize = newPhotoSize + borderSize
 
         // set window position based on offset from reference window (which is usually status menu item)
         var windowOrigin = window.frame.origin
@@ -287,9 +283,12 @@ extension PhotoFrameWindowController: NSWindowDelegate {
             windowOrigin.y = min(screenFrame.origin.y + screenFrame.size.height - windowSize.height, windowOrigin.y)
         }
 
-        window.aspectRatio = windowSize + borderSize        // set aspect ratio to only allow diagonal resizing
+//        window.aspectRatio = windowSize + borderSize        // set aspect ratio to only allow diagonal resizing
 
-        isAnimating = true
+        // makeKeyAndOrderFront() will trigger window move/resize events, where we save window position
+        // since at this point the frame will be animating, we want to ignore those events and only
+        // take action when there are no pending animations
+        pendingAnimationCount += 1
 
         // show window on top of everything
         window.makeKeyAndOrderFront(nil)
@@ -305,7 +304,7 @@ extension PhotoFrameWindowController: NSWindowDelegate {
             self.window?.animator().alphaValue = 1
         }, completionHandler: {
             self.saveWindowPosition()
-            self.isAnimating = false
+            self.pendingAnimationCount = max(self.pendingAnimationCount - 1, 0) // don't let go below zero
         })
 
         // only install global event monitor if not already installed
@@ -316,14 +315,17 @@ extension PhotoFrameWindowController: NSWindowDelegate {
     }
 
     override func close() {
-        isAnimating = true
+        // super.close() will trigger window move/resize events, where we save window position
+        // since at this point the frame will be animating, we want to ignore those events and only
+        // take action when there are no pending animations
+        pendingAnimationCount += 1
         NSAnimationContext.runAnimationGroup({ context in
             context.duration = 0.2
             self.window?.animator().setFrame(animationStartFrame, display: true)
             self.window?.animator().alphaValue = 0.0
         }, completionHandler: {
             super.close()
-            self.isAnimating = false
+            self.pendingAnimationCount = max(self.pendingAnimationCount - 1, 0) // don't let go below zero
         })
 
         status = (vendTimer?.isValid == true) ? .scheduled : .idle
@@ -350,15 +352,17 @@ extension PhotoFrameWindowController: NSWindowDelegate {
 
     func windowDidEndLiveResize(_ notification: Notification) {
         // only save window size if change is not result of animation
-        guard let window = window, !isAnimating else { return }
-        // save window size so the frame always opens with same size
-        windowSize = window.frame.size
-        print("Did end resize")
+        if pendingAnimationCount == 0 {
+            // save image daigonal so the frame always opens with same size
+            photoDiagMax = sqrt(pow(photoView.frame.width, 2) + pow(photoView.frame.height, 2))
+            saveWindowPosition()
+//            print("Did end resize diag: \(photoDiagMax)")
+        }
     }
 
     func windowDidMove(_ notification: Notification) {
         // only save position if window move is not result of animation
-        if !isAnimating {
+        if pendingAnimationCount == 0 {
             saveWindowPosition()
         }
     }
@@ -368,6 +372,6 @@ extension PhotoFrameWindowController: NSWindowDelegate {
         guard let window = window, let referenceWindow = referenceWindow else { return }
         windowOffset = window.frame.origin - referenceWindow.frame.origin
         windowOffset.y += window.frame.height
-        print("Saving offset")
+//        print("Saving offset \(windowOffset)")
     }
 }

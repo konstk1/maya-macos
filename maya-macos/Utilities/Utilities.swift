@@ -26,7 +26,6 @@ func - (lhs: NSSize, rhs: CGFloat) -> NSSize {
     return NSSize(width: lhs.width - rhs, height: lhs.height - rhs)
 }
 
-
 extension NSImageView {
     var contentImageSize: NSSize {
         guard let image = image else { return bounds.size }
