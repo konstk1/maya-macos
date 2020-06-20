@@ -29,11 +29,19 @@ struct AppleSourceDetailView: View {
 
             Spacer()
 
-            ActivateButton(isActive: model.isActive, action: model.activateClicked)
+            if !model.isAuthorized {
+                VStack {
+                    Text("Allow Maya access to Photos in Security & Privacy")
+                    Button("Security & Privacy") {
+                        let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Photos")!
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+            }
 
-            //                Button(action: model.authorizeClicked) {
-            //                    Text(model.isAuthorized ? "Authorize" : "Authorized")
-            //                }.disabled(model.isAuthorized)
+            Spacer()
+
+            ActivateButton(isActive: model.isActive, action: model.activateClicked)
         }.padding(.bottom, 30)
     }
 }

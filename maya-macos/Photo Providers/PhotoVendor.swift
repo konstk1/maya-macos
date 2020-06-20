@@ -150,9 +150,10 @@ final class PhotoVendor: ObservableObject {
         guard let activeProvider = activeProvider else { return }
 
         // overwriting subscription, will destroy previous sub and hook up new one
-        refreshAssetsSub = activeProvider.refreshAssets().sink(receiveCompletion: { completion in
+        refreshAssetsSub = activeProvider.refreshAssets().sink(receiveCompletion: { [weak self] completion in
             if case .failure(let error) = completion {
                 log.error("Error refreshing assets: \(error.localizedDescription)")
+                self?.error = error
             }
         }, receiveValue: { [weak self] assets in
             guard let self = self else { return }

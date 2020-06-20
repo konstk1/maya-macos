@@ -75,8 +75,10 @@ class AppleSourceViewModel: ObservableObject {
 
     func activateClicked() {
         log.info("Activating Apple Photos")
-        PhotoVendor.shared.setActiveProvider(apple)
-        isActive = true
+        if isAuthorized {
+            PhotoVendor.shared.setActiveProvider(apple)
+            isActive = true
+        }
     }
 
     func authorizeClicked() {
