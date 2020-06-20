@@ -135,6 +135,7 @@ final class PhotoVendor: ObservableObject {
                 }
             }, receiveValue: { image in
                 self.currentImage = image
+                self.error = nil
                 promise(.success(image))
             })
 

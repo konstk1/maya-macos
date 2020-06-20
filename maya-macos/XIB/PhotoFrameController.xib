@@ -2,11 +2,16 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PhotoFrameController">
             <connections>
+                <outlet property="errorActionButton" destination="yyQ-RK-oOF" id="TlK-lU-gyT"/>
+                <outlet property="errorSuggestedActionLabel" destination="GHS-Sn-N9O" id="pB5-ta-YoN"/>
+                <outlet property="errorTitleLabel" destination="ZOW-bM-wh5" id="ycd-Su-kNG"/>
+                <outlet property="errorView" destination="WYv-cp-SF0" id="rJ0-TP-l0u"/>
                 <outlet property="scrollView" destination="8Xk-5q-n8s" id="ObG-aQ-vJm"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -29,7 +34,7 @@
                     </visualEffectView>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" allowsMagnification="YES" maxMagnification="3" minMagnification="1" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="8Xk-5q-n8s" customClass="PhotoScrollView" customModule="Maya" customModuleProvider="target">
                         <rect key="frame" x="5" y="5" width="390" height="290"/>
-                        <clipView key="contentView" copiesOnScroll="NO" id="M21-Q9-BZt">
+                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="M21-Q9-BZt">
                             <rect key="frame" x="0.0" y="0.0" width="390" height="290"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -38,7 +43,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Pdl-LM-3yz">
                             <rect key="frame" x="-100" y="-100" width="387" height="16"/>
@@ -49,11 +54,65 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
+                    <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WYv-cp-SF0" userLabel="Error View - Stack View">
+                        <rect key="frame" x="65" y="54" width="271" height="192"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="flP-Gt-OQA">
+                                <rect key="frame" x="85" y="131" width="100" height="61"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="68C-Rh-NCU"/>
+                                    <constraint firstAttribute="width" secondItem="flP-Gt-OQA" secondAttribute="height" multiplier="219:133" id="6xU-wL-WZA"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Maya Logo" id="aLV-P9-SMy"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZOW-bM-wh5">
+                                <rect key="frame" x="31" y="78" width="208" height="33"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="No images found" id="gmQ-sT-hkk">
+                                    <font key="font" metaFont="system" size="28"/>
+                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GHS-Sn-N9O">
+                                <rect key="frame" x="-2" y="42" width="275" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Configure your photo sources in Preferences" id="x3J-bT-uY1">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yyQ-RK-oOF">
+                                <rect key="frame" x="91.5" y="-1" width="87" height="23"/>
+                                <buttonCell key="cell" type="roundTextured" title="Preferences" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="L2W-yH-QG4">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <color key="contentTintColor" name="MayaBlue"/>
+                                <connections>
+                                    <action selector="preferencesClicked:" target="-2" id="sAE-Ul-mM9"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <visibilityPriorities>
+                            <integer value="1000"/>
+                            <integer value="1000"/>
+                            <integer value="1000"/>
+                            <integer value="1000"/>
+                        </visibilityPriorities>
+                        <customSpacing>
+                            <real value="3.4028234663852886e+38"/>
+                            <real value="3.4028234663852886e+38"/>
+                            <real value="3.4028234663852886e+38"/>
+                            <real value="3.4028234663852886e+38"/>
+                        </customSpacing>
+                    </stackView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="8Xk-5q-n8s" secondAttribute="trailing" constant="5" id="DfT-zk-HCM"/>
                     <constraint firstItem="8Xk-5q-n8s" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="5" id="Xya-bn-lpK"/>
                     <constraint firstItem="8Xk-5q-n8s" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="5" id="ddH-5b-eTw"/>
+                    <constraint firstItem="WYv-cp-SF0" firstAttribute="centerY" secondItem="se5-gp-TjO" secondAttribute="centerY" id="hhr-tK-rTv"/>
+                    <constraint firstItem="WYv-cp-SF0" firstAttribute="centerX" secondItem="se5-gp-TjO" secondAttribute="centerX" id="mqV-tf-gM2"/>
                     <constraint firstAttribute="bottom" secondItem="8Xk-5q-n8s" secondAttribute="bottom" constant="5" id="tqn-wd-1sZ"/>
                 </constraints>
             </view>
@@ -63,4 +122,10 @@
             <point key="canvasLocation" x="127" y="147"/>
         </window>
     </objects>
+    <resources>
+        <image name="Maya Logo" width="219" height="133"/>
+        <namedColor name="MayaBlue">
+            <color red="0.043137254901960784" green="0.76078431372549016" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

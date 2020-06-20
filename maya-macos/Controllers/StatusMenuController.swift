@@ -47,8 +47,10 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
         switch photoFrame.status {
         case .idle:
             icon = #imageLiteral(resourceName: "StatusIcon-None")
-        case .scheduled:
+        case .error:
             icon = #imageLiteral(resourceName: "StatusIcon-Red")
+        case .scheduled:
+            icon = #imageLiteral(resourceName: "StatusIcon-Green")
         case .newPhotoReady:
             icon = #imageLiteral(resourceName: "StatusIcon-All")
         }
