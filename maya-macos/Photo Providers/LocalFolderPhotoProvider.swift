@@ -32,6 +32,7 @@ final class LocalFolderPhotoProvider: PhotoProvider {
     private let fileManager = FileManager.default
 
     private var activeFolder: URL = URL(fileURLWithPath: "")
+    private var isAccessingSecuredResource = false
 
     override init() {
         super.init()
@@ -91,14 +92,17 @@ final class LocalFolderPhotoProvider: PhotoProvider {
     }
 
     func startFolderAccess() throws {
-        guard activeFolder.startAccessingSecurityScopedResource() else {
-            log.error("Failed to access security resource of \(activeFolder.path)")
-            throw LocalFolderProviderError.accessFailure
+        isAccessingSecuredResource = activeFolder.startAccessingSecurityScopedResource()
+        if isAccessingSecuredResource {
+            log.verbose("Start access to secured: \(activeFolder.path)")
         }
     }
 
     func stopFolderAccess() {
-        activeFolder.stopAccessingSecurityScopedResource()
+        if isAccessingSecuredResource {
+            activeFolder.stopAccessingSecurityScopedResource()
+            log.verbose("Stop access to secured: \(activeFolder.path)")
+        }
     }
 
     private func saveBookmark(for url: URL) {

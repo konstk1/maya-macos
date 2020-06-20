@@ -40,7 +40,7 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     // Photo vendor properties
     private let photoVendor = PhotoVendor.shared
     // TODO: replace this with another placeholder image
-    private var currentPhoto: NSImage = NSImage(named: NSImage.everyoneName)!   // swiftlint:disable:this force_unwrapping
+    private var currentPhoto: NSImage = #imageLiteral(resourceName: "Maya Logo")
     private var vendTimer: Timer?
 
     // Photo frame properties
@@ -51,7 +51,7 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     @IBOutlet weak var errorTitleLabel: NSTextField!
     @IBOutlet weak var errorSuggestedActionLabel: NSTextField!
     @IBOutlet weak var errorActionButton: NSButton!
-    
+
     private var photoView: PhotoView!
     private var shouldPopupOnVend = false
     private var shouldAutoClose = true
@@ -241,9 +241,8 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
             title = "No images found"
             action = "Configure photo soures in preferences"
         case .some:
-            title = "Unknown error"
-            action = ""
-            showError = false
+            title = "An error occurred"
+            action = "Please ensure your photo sources are configured in preferences"
         case .none:
             title = ""
             action = ""
