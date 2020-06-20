@@ -43,7 +43,7 @@ struct HelpView: View {
                     .font(.system(size: 14))
 //                    .border(Color.gray)
                 Spacer()
-            }.frame(width: 550, height: 570).id(currentPage)  // supply ID so whole page is transitioned
+            }.frame(width: 550, height: 585).id(currentPage)  // supply ID so whole page is transitioned
                 .padding()
                 .transition(.asymmetric(
                     insertion: .move(edge: self.navDirection == .forward ? .trailing : .leading),
@@ -127,8 +127,12 @@ struct HelpView: View {
                     Text("New photo is ready")
                 }
                 HStack {
-                    Image("StatusIcon-Red")
+                    Image("StatusIcon-Green")
                     Text("Auto-switch photo is on, next photo is scheduled")
+                }
+                HStack {
+                    Image("StatusIcon-Red")
+                    Text("Error occured")
                 }
                 HStack {
                     Image("StatusIcon-None")
@@ -149,9 +153,9 @@ struct HelpView: View {
     var pageThreeText: some View {
         VStack(alignment: .leading, spacing: 15) {
             Text("Double click").italic() + Text(" on or ") + Text("pinch").italic() + Text(" the photo to zoom in & out.")
-            Text("Drag").italic() + Text(" or ") + Text("two-finger pan").italic() + Text(" to move around zoomed image.")
+            Text("Drag").italic() + Text(" or ") + Text("two-finger pan").italic() + Text(" to move around ") + Text("zoomed in").italic() + Text(" image.")
             Text("Drag sides").italic() + Text(" of the frame to resize.")
-            Text("Drag sides").italic() + Text(" of frame to move.")
+            Text("Drag zoomed out image").italic() + Text(" to move the frame.")
         }
     }
 }

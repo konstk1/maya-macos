@@ -16,6 +16,7 @@ extension NSNotification.Name {
 
 enum PhotoFrameStatus {
     case idle
+    case error
     case scheduled
     case newPhotoReady
 }
@@ -44,7 +45,13 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
 
     // Photo frame properties
     @IBOutlet weak var scrollView: PhotoScrollView!
+    @IBOutlet weak var errorView: NSStackView!
 
+    // Error view outlets
+    @IBOutlet weak var errorTitleLabel: NSTextField!
+    @IBOutlet weak var errorSuggestedActionLabel: NSTextField!
+    @IBOutlet weak var errorActionButton: NSButton!
+    
     private var photoView: PhotoView!
     private var shouldPopupOnVend = false
     private var shouldAutoClose = true
@@ -103,15 +110,9 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         photoVendor.loadActiveProviderFromSettings()
 
         // subscribe to new images
-        photoVendor.$currentImage.compactMap { $0 }.receive(on: RunLoop.main).sink { [weak self] image in
-            self?.didVendNewImage(image: image)
-        }.store(in: &subs)
+        photoVendor.$currentImage.compactMap { $0 }.receive(on: RunLoop.main).sink(receiveValue: didVendNewImage).store(in: &subs)
 
-        photoVendor.$error.receive(on: RunLoop.main).sink { [weak self] error in
-            if let error = error {
-                self?.didFailToVend(error: error)
-            }
-        }.store(in: &subs)
+        photoVendor.$error.receive(on: RunLoop.main).sink(receiveValue: processError).store(in: &subs)
 
         Settings.photos.$autoSwitchPhoto.sink { [weak self] in
             self?.updatePhotoTiming(autoSwitchPhoto: $0, autoSwitchPeriod: Settings.photos.autoSwitchPhotoPeriod)
@@ -168,7 +169,9 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         }
 
         // update status but don't override .newPhotoReady status, it'll be cleared when frame is closed
-        if status != .newPhotoReady {
+        if photoVendor.error != nil {
+            status = .error
+        } else if status != .newPhotoReady {
             status = (vendTimer?.isValid == true) ? .scheduled : .idle
         }
     }
@@ -183,10 +186,13 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     func globalEventHandler(event: NSEvent) {
         close()
     }
-}
 
-// MARK: - PhotoVendorDelegate
-extension PhotoFrameWindowController {
+    @IBAction func preferencesClicked(_ sender: NSButton) {
+        NotificationCenter.default.post(name: .prefsWindowRequested, object: nil)
+        close()
+    }
+
+    // MARK: PhotoVendor handling
     func didVendNewImage(image: NSImage) {
         log.verbose("Vending new image")
         currentPhoto = image
@@ -221,9 +227,36 @@ extension PhotoFrameWindowController {
         updatePhotoTiming(autoSwitchPhoto: Settings.photos.autoSwitchPhoto, autoSwitchPeriod: Settings.photos.autoSwitchPhotoPeriod)
     }
 
-    func didFailToVend(error: Error?) {
-        // TODO: implement this
-        currentPhoto = NSImage(named: NSImage.everyoneName)!    // swiftlint:disable:this force_unwrapping
+    func processError(error: Error?) {
+        var showError = true
+
+        var title: String
+        var action: String
+
+        switch error {
+        case .some(PhotoVendorError.noActiveProvider):
+            title = "No active photo source."
+            action = "Configure photo sources in preferences."
+        case .some(PhotoVendorError.noPhotos):
+            title = "No images found"
+            action = "Configure photo soures in preferences"
+        case .some:
+            title = "Unknown error"
+            action = ""
+            showError = false
+        case .none:
+            title = ""
+            action = ""
+            showError = false
+        }
+
+        errorTitleLabel.stringValue = title
+        errorSuggestedActionLabel.stringValue = action
+
+        self.photoView.isHidden = showError
+        self.errorView.isHidden = !showError
+
+        status = showError ? .error : .newPhotoReady
     }
 
     func showUserNotification(with image: NSImage) {
@@ -328,7 +361,11 @@ extension PhotoFrameWindowController: NSWindowDelegate {
             self.pendingAnimationCount = max(self.pendingAnimationCount - 1, 0) // don't let go below zero
         })
 
-        status = (vendTimer?.isValid == true) ? .scheduled : .idle
+        if photoVendor.error != nil {
+            status = .error
+        } else {
+            status = (vendTimer?.isValid == true) ? .scheduled : .idle
+        }
 
         // remove the global event monitor when frame is closed
         if let globalEventMonitor = globalEventMonitor {
