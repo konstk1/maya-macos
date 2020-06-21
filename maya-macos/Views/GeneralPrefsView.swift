@@ -43,11 +43,11 @@ struct GeneralPrefsView: View {
                         ForEach(0..<prefs.newPhotoActions.count, id: \.self) { i in
                             Text(self.prefs.newPhotoActions[i]).tag(i).fixedSize()
                         }
-                        }.frame(width: 310)
+                    }.frame(width: 310)
 
                     Text("Action to take when new photo is ready.").modifier(HintText())
-                    HStack {
 
+                    HStack {
                         Toggle(isOn: $prefs.frameSettings.autoCloseFrame) {
                             Text("Automatically close after")
                         }
@@ -60,6 +60,11 @@ struct GeneralPrefsView: View {
                     }
 
                     Text("Photo frame will automatically close after this specified period.").modifier(HintText())
+
+                    Toggle(isOn: $prefs.frameSettings.closeByOutsideClick) {
+                        Text("Close by clicking outside the frame")
+                    }
+                    Text("If not enabled, close only by clicking on the status icon").modifier(HintText())
                 }
             }
 
