@@ -37,6 +37,8 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         }
     }
 
+    private(set) var nextPhotoAt: Date?
+
     // Photo vendor properties
     private let photoVendor = PhotoVendor.shared
     // TODO: replace this with another placeholder image
@@ -56,7 +58,7 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     private var shouldPopupOnVend = false
     private var shouldAutoClose = true
 
-    let borderSize: CGFloat = 10.0
+    private let borderSize: CGFloat = 10.0
 
     // Window properties
     // TODO: move this to Settings
@@ -156,10 +158,12 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     func updatePhotoTiming(autoSwitchPhoto: Bool, autoSwitchPeriod: TimePeriod) {
         // invalidate current timer, if running
         vendTimer?.invalidate()
+        nextPhotoAt = nil
 
         // set new timer based on settings
         if autoSwitchPhoto {
             log.info("Auto next photo in \(autoSwitchPeriod)")
+            nextPhotoAt = Date(timeIntervalSinceNow: autoSwitchPeriod.timeInterval)
             vendTimer = Timer.scheduledTimer(withTimeInterval: autoSwitchPeriod.timeInterval, repeats: false, block: { [weak self] (_) in
                 self?.shouldPopupOnVend = (Settings.frame.newPhotoAction == .popupFrame)
                 self?.photoVendor.vendImage(shouldRefresh: true)

@@ -23,6 +23,7 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     private var subs: Set<AnyCancellable> = []
 
     @IBOutlet weak var statusMenu: NSMenu!
+    @IBOutlet weak var timeLeftLabel: NSMenuItem!
 
     override func awakeFromNib() {
         setIcon()
@@ -40,6 +41,16 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
         }.store(in: &subs)
 
         NSUserNotificationCenter.default.delegate = self
+
+        let oneSecTimer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            if let timeUntil = self.photoFrame.nextPhotoAt?.timeIntervalSinceNow {
+                self.timeLeftLabel.title = "Next photo " + (timeUntil > 0 ? "in " + timeUntil.labelString : "ready")
+            } else {
+                self.timeLeftLabel.title = "Auto switch off"
+            }
+        }
+        RunLoop.main.add(oneSecTimer, forMode: .common)
     }
 
     func setIcon() {
