@@ -55,6 +55,9 @@ enum Settings {
 
         @PublishedUserDefault("FrameSettings.autoCloseFrameAfter", defaultValue: .seconds(10))
         var autoCloseFrameAfter: TimePeriod
+
+        @PublishedUserDefault("FrameSettings.closeByOutsideClick", defaultValue: true)
+        var closeByOutsideClick: Bool
     }
 
     class PhotosSettings: ObservableSettings {

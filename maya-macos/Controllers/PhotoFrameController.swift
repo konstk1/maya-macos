@@ -188,7 +188,10 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     }
 
     func globalEventHandler(event: NSEvent) {
-        close()
+        // only close if corresponding setting is enabled
+        if Settings.frame.closeByOutsideClick {
+            close()
+        }
     }
 
     @IBAction func preferencesClicked(_ sender: NSButton) {
@@ -329,6 +332,7 @@ extension PhotoFrameWindowController: NSWindowDelegate {
         // show window on top of everything
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
+        window.level = .statusBar       // always keep on top
 
         // start with frame at status icon and animate to desired location and size
         window.setFrame(animationStartFrame, display: true)
