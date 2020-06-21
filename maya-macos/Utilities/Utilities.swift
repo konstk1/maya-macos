@@ -43,6 +43,25 @@ extension NSImageView {
     }
 }
 
+extension TimeInterval {
+    var labelString: String {
+        var secs = Int(self)
+        let h = secs / 3600
+        secs -= h * 3600
+        let m = secs / 60
+        secs -= m * 60
+        let s = secs
+
+        if h > 0 {
+            return "\(h)h \(m)m"
+        } else if m > 0 {
+            return "\(m)m \(s)s"
+        } else {
+            return "\(s) sec"
+        }
+    }
+}
+
 extension Color {
     static let helpText = Color("HelpTextPrimary")
     static let mayaRed = Color("MayaRed")

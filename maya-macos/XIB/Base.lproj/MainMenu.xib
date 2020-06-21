@@ -16,10 +16,14 @@
         <customObject id="Z2C-Po-7RN" customClass="StatusMenuController" customModule="Maya" customModuleProvider="target">
             <connections>
                 <outlet property="statusMenu" destination="oLX-DL-IQq" id="IKZ-xW-Ubt"/>
+                <outlet property="timeLeftLabel" destination="pHx-4v-Ziq" id="6lb-J6-WoA"/>
             </connections>
         </customObject>
         <menu id="oLX-DL-IQq">
             <items>
+                <menuItem title="01m:05s until new photo" enabled="NO" id="pHx-4v-Ziq">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
                 <menuItem title="Can't wait!" id="BbW-Wz-WbC">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
