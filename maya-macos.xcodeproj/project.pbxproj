@@ -11,6 +11,7 @@
 		B531AAF4247F347A00F3C355 /* AppleSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531AAF3247F347A00F3C355 /* AppleSourceViewModel.swift */; };
 		B531AAF624809B0400F3C355 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B531AAF524809B0400F3C355 /* .swiftlint.yml */; };
 		B531AAF92481BBEF00F3C355 /* ActivateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531AAF82481BBEF00F3C355 /* ActivateButton.swift */; };
+		B533EC3224A03B53001A103D /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = B533EC3124A03B53001A103D /* Sentry */; };
 		B5421E5A247DE5C700F02345 /* ApplePhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5421E59247DE5C700F02345 /* ApplePhotoProviderTests.swift */; };
 		B5A5A8C4245210CF003B282D /* OAuthSwiftAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B5A5A8C3245210CF003B282D /* OAuthSwiftAlamofire */; };
 		B5F269D02485D42D000A5C53 /* HelpWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F269CF2485D42D000A5C53 /* HelpWindowController.swift */; };
@@ -161,6 +162,7 @@
 				FF39C03223171CF100203D7F /* KeychainAccess in Frameworks */,
 				FF34717F22D63A780009CB40 /* SwiftyBeaver in Frameworks */,
 				FFC22B6822F2389200121828 /* ServiceManagement.framework in Frameworks */,
+				B533EC3224A03B53001A103D /* Sentry in Frameworks */,
 				B5A5A8C4245210CF003B282D /* OAuthSwiftAlamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +370,7 @@
 				FF9B7CF923175F0B0073E77E /* OAuthSwift */,
 				FF32154023200EC60054DF2A /* Alamofire */,
 				B5A5A8C3245210CF003B282D /* OAuthSwiftAlamofire */,
+				B533EC3124A03B53001A103D /* Sentry */,
 			);
 			productName = "maya-macos";
 			productReference = FF9072CE22BB04CD0052428E /* Maya.app */;
@@ -445,6 +448,7 @@
 				FF9B7CF823175F0B0073E77E /* XCRemoteSwiftPackageReference "OAuthSwift" */,
 				FF32153F23200EC60054DF2A /* XCRemoteSwiftPackageReference "Alamofire" */,
 				B5A5A8C2245210CE003B282D /* XCRemoteSwiftPackageReference "OAuthSwiftAlamofire" */,
+				B533EC3024A03B53001A103D /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = FF9072CF22BB04CD0052428E /* Products */;
 			projectDirPath = "";
@@ -899,6 +903,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B533EC3024A03B53001A103D /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.4;
+			};
+		};
 		B5A5A8C2245210CE003B282D /* XCRemoteSwiftPackageReference "OAuthSwiftAlamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/OAuthSwift/OAuthSwiftAlamofire";
@@ -942,6 +954,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B533EC3124A03B53001A103D /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B533EC3024A03B53001A103D /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
 		B5A5A8C3245210CF003B282D /* OAuthSwiftAlamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B5A5A8C2245210CE003B282D /* XCRemoteSwiftPackageReference "OAuthSwiftAlamofire" */;

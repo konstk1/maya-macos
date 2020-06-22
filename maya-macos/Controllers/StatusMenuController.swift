@@ -8,6 +8,7 @@
 
 import Cocoa
 import Combine
+import Sentry
 
 class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
 
@@ -148,6 +149,7 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     }
 
     @IBAction func sendFeedbackClicked(_ sender: NSMenuItem) {
+        SentrySDK.crash()
         sendFeedback()
     }
 

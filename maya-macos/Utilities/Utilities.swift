@@ -45,6 +45,7 @@ extension NSImageView {
 
 extension TimeInterval {
     var labelString: String {
+        // swiftlint:disable identifier_name
         var secs = Int(self)
         let h = secs / 3600
         secs -= h * 3600
@@ -59,6 +60,7 @@ extension TimeInterval {
         } else {
             return "\(s) sec"
         }
+        // swiftlint:enable identifier_name
     }
 }
 

@@ -10,6 +10,7 @@ import Cocoa
 import ServiceManagement
 import OAuthSwift
 import SwiftyBeaver
+import Sentry
 
 let log: SwiftyBeaver.Type = {
     let log = SwiftyBeaver.self
@@ -50,6 +51,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         let runningApps = NSWorkspace.shared.runningApplications
         let isRunning = runningApps.contains { $0.bundleIdentifier == launcherAppId }
+
+        SentrySDK.start(options: [
+            "dsn": Secrets.Sentry.dsn,
+            "debug": false
+        ])
+//        SentrySDK.capture(message: "Starting sentry.io agent.")
 
         #if DEBUG
         // Don't start rest of the app if running unit tests
