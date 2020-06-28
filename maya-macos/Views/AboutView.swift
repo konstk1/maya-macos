@@ -51,7 +51,7 @@ struct AboutView: View {
             }.buttonStyle(PlainButtonStyle()).padding(20)
 
             HStack {
-                Text("Website:").bold().foregroundColor(.gray)
+                Text("Website:").bold()
                 Button(action: {
                     let url = URL(string: self.website)!  // swiftlint:disable:this force_unwrapping
                     NSWorkspace.shared.open(url)
@@ -75,7 +75,7 @@ struct AboutView: View {
             print("On appear")
         }.onDisappear {
             print("On disappear")
-        }.background(Color.white).foregroundColor(Color.helpText)
+        }.background(Color.aboutBackground).foregroundColor(Color.helpText)
     }
 
     func copyLogPathClicked() {
@@ -100,6 +100,9 @@ struct AboutView: View {
 
 struct AboutView_Previews: PreviewProvider {
     static var previews: some View {
-        AboutView()
+        Group {
+            AboutView().environment(\.colorScheme, .light)
+            AboutView().environment(\.colorScheme, .dark)
+        }
     }
 }

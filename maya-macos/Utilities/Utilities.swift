@@ -65,6 +65,8 @@ extension TimeInterval {
 }
 
 extension Color {
+    static let aboutBackground = Color("AboutBackground")
+    static let checkmark = Color("Checkmark")
     static let helpText = Color("HelpTextPrimary")
     static let mayaRed = Color("MayaRed")
     static let mayaGreen = Color("MayaGreen")

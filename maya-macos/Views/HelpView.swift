@@ -101,7 +101,7 @@ struct HelpView: View {
                 CaruselDots(numDots: numPages, activeIndex: $currentPage).padding()
                 Spacer()
             }.background(Color(red: 0.9, green: 0.9, blue: 0.9)).padding(.top, -10)
-        }.background(Color.white)
+        }.background(Color.aboutBackground)
     }
 
     func helpBody(for page: Int) -> some View {

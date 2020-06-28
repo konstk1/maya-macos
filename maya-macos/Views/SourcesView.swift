@@ -45,7 +45,7 @@ struct SourcesView: View {
                 Spacer()
             }
             .frame(width: 220)
-            .background(Color.white)
+            .background(Color.aboutBackground)
 
             Divider()
 
@@ -123,7 +123,7 @@ struct ProviderRow: View {
                 Rectangle().frame(width: 20, height: 20).foregroundColor(.clear).border(Color.clear, width: 0)
 
                 if self.isActive {
-                    Image(nsImage: NSImage.checkbox).resizable().scaledToFit().frame(width: 15).foregroundColor(.black)
+                    Image(nsImage: NSImage.checkbox).resizable().scaledToFit().frame(width: 15).foregroundColor(.checkmark)
                 }
             }.padding(.leading, 5).padding(.trailing, 0)
 
