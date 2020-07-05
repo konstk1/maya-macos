@@ -13,6 +13,9 @@
 		B531AAF92481BBEF00F3C355 /* ActivateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531AAF82481BBEF00F3C355 /* ActivateButton.swift */; };
 		B533EC3224A03B53001A103D /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = B533EC3124A03B53001A103D /* Sentry */; };
 		B5421E5A247DE5C700F02345 /* ApplePhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5421E59247DE5C700F02345 /* ApplePhotoProviderTests.swift */; };
+		B5641E4A24B1101D00AC95E3 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5641E4924B1101D00AC95E3 /* VideoPlayerView.swift */; };
+		B5641E4D24B110D300AC95E3 /* help3c.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B5641E4B24B110D300AC95E3 /* help3c.mp4 */; };
+		B5641E4E24B110D300AC95E3 /* help1c.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B5641E4C24B110D300AC95E3 /* help1c.mp4 */; };
 		B5A5A8C4245210CF003B282D /* OAuthSwiftAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B5A5A8C3245210CF003B282D /* OAuthSwiftAlamofire */; };
 		B5F269D02485D42D000A5C53 /* HelpWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F269CF2485D42D000A5C53 /* HelpWindowController.swift */; };
 		B5F269D22485D454000A5C53 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F269D12485D454000A5C53 /* HelpView.swift */; };
@@ -95,6 +98,9 @@
 		B531AAF524809B0400F3C355 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		B531AAF82481BBEF00F3C355 /* ActivateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivateButton.swift; sourceTree = "<group>"; };
 		B5421E59247DE5C700F02345 /* ApplePhotoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePhotoProviderTests.swift; sourceTree = "<group>"; };
+		B5641E4924B1101D00AC95E3 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		B5641E4B24B110D300AC95E3 /* help3c.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = help3c.mp4; sourceTree = "<group>"; };
+		B5641E4C24B110D300AC95E3 /* help1c.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = help1c.mp4; sourceTree = "<group>"; };
 		B5F269CF2485D42D000A5C53 /* HelpWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpWindowController.swift; sourceTree = "<group>"; };
 		B5F269D12485D454000A5C53 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameController.swift; sourceTree = "<group>"; };
@@ -235,6 +241,8 @@
 		FF206B0522F35D05000C0FB3 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				B5641E4C24B110D300AC95E3 /* help1c.mp4 */,
+				B5641E4B24B110D300AC95E3 /* help3c.mp4 */,
 				FF9B7CFB2317603A0073E77E /* AppSecrets.example.swift */,
 				FF9B7CFD231760AA0073E77E /* AppSecrets.swift */,
 				FF9072DB22BB04CE0052428E /* Info.plist */,
@@ -261,6 +269,7 @@
 				FFB1234323D246700068A9A6 /* LocalFolderSourceViewModel.swift */,
 				FFDED62123CF9C1D00C678EB /* SourcesView.swift */,
 				FFB1234523D3A6CD0068A9A6 /* PhotoFrameView.swift */,
+				B5641E4924B1101D00AC95E3 /* VideoPlayerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -466,6 +475,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5641E4E24B110D300AC95E3 /* help1c.mp4 in Resources */,
+				B5641E4D24B110D300AC95E3 /* help3c.mp4 in Resources */,
 				FF9072D722BB04CE0052428E /* Assets.xcassets in Resources */,
 				FFEEFCB82300F0750023F581 /* SourcesViewController.xib in Resources */,
 				FF14AD8D22BDB8B800C7518C /* PhotoFrameController.xib in Resources */,
@@ -527,6 +538,7 @@
 				FF90731E22BBFF4D0052428E /* StatusMenuController.swift in Sources */,
 				FF39C02D2316F66E00203D7F /* GooglePhotoProvider.swift in Sources */,
 				FFDED62223CF9C1D00C678EB /* SourcesView.swift in Sources */,
+				B5641E4A24B1101D00AC95E3 /* VideoPlayerView.swift in Sources */,
 				B5F269D02485D42D000A5C53 /* HelpWindowController.swift in Sources */,
 				FFD4C35D23CC11B2007D1A27 /* GeneralPrefsView.swift in Sources */,
 				FF9B7D09231859F90073E77E /* GooglePhotosAPI.swift in Sources */,

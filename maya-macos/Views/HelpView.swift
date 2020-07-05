@@ -20,7 +20,7 @@ struct HelpView: View {
     }
 
     private let pageTitles = [ "Welcome to Maya Frame", "Photo Sources", "Navigating the Photo Frame"]
-    private let imageTitles = ["Screen1", "Screen2", "Screen2"]
+    private let mediaTitles = ["help1c", "Screen2", "help3c"]
 
     var body: some View {
         VStack {
@@ -35,8 +35,19 @@ struct HelpView: View {
                         .foregroundColor(.helpText)
                     Spacer()
                 }.padding(.top, 20)
-                Image(imageTitles[currentPage]).resizable().scaledToFit().frame(height: 250).shadow(radius: 15, x: 2, y: 7)
-                helpBody(for: currentPage).padding(EdgeInsets(top: 5, leading: 30, bottom: 0, trailing: 0))
+
+                // Media
+                Group {
+                    if currentPage != 1 {
+                        VideoPlayerView(named: mediaTitles[currentPage], withExtension: "mp4")
+                    } else {
+                        Image(mediaTitles[currentPage]).resizable().scaledToFit()
+                    }
+                }.frame(height: 250).shadow(radius: 15, x: 2, y: 7)
+
+//                Spacer()
+                // Text
+                helpBody(for: currentPage).padding(EdgeInsets(top: currentPage == 0 ? 5 : 35, leading: 30, bottom: 0, trailing: 0))
                     .foregroundColor(.helpText)
                     //            .font(.custom("San Francisco", size: 16))
                     //            .font(.system(size: 16, weight: .regular, design: .default))
