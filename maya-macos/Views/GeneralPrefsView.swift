@@ -11,13 +11,19 @@ import SwiftUI
 struct GeneralPrefsView: View {
     @ObservedObject private var prefs = GeneralPrefsViewModel()
 
+    @State var input: String = ""
+
+    func textFieldChanged(str: String) {
+        print(str)
+    }
+
     let titleWidth: CGFloat = 50
     let dividerWidth: CGFloat = 400
     let dividerPaddingVertical: CGFloat = 10
     let dividerPaddingHorizontal: CGFloat = -20
 
     var body: some View {
-        VStack(alignment: .leading) {
+        return VStack(alignment: .leading) {
             HStack(alignment: .top, spacing: 20) {
                 Text("Startup:").frame(width: titleWidth, alignment: .trailing)
 
@@ -82,7 +88,7 @@ struct GeneralPrefsView: View {
                         }
 
                         Stepper(value: $prefs.photoSettings.autoSwitchPhotoPeriod.value, in: 1...1000) {
-                            TextField("", value: $prefs.photoSettings.autoSwitchPhotoPeriod.value, formatter: NumberFormatter())
+                            TextField("", text: $prefs.autoSwitchPeriodString)
                                 .multilineTextAlignment(.trailing)
                                 .padding(.trailing, -5)
                         }.frame(width: 50)
