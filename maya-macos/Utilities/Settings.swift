@@ -32,6 +32,9 @@ enum Settings {
     class AppSettings: ObservableSettings {
         fileprivate static let shared = AppSettings()
 
+        @PublishedUserDefault("AppSettings.firstLaunch", defaultValue: true)
+        var firstLaunch: Bool
+
         @PublishedUserDefault("AppSettings.openAtLogin", defaultValue: false)
         var openAtLogin: Bool {
             didSet {

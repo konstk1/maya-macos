@@ -7,11 +7,44 @@
 //
 
 import Foundation
+import Combine
+import SwiftUI
 
 class GeneralPrefsViewModel: ObservableObject {
     @Published var appSettings = Settings.app
     @Published var frameSettings = Settings.frame
-    @Published var photoSettings = Settings.photos
+    @Published var photoSettings = Settings.photos {
+        didSet {
+            autoSwitchPeriodString = String(photoSettings.autoSwitchPhotoPeriod.value)
+        }
+    }
+
+    @Published var autoSwitchPeriodString: String {
+        didSet {
+            guard var value = NumberFormatter().number(from: autoSwitchPeriodString) as? Int else {
+                autoSwitchPeriodString = String(photoSettings.autoSwitchPhotoPeriod.value)
+                return
+            }
+
+            // don't allow 0 value, clamp it to 1
+            if value == 0 {
+                value = 1
+                autoSwitchPeriodString = "1"
+            }
+
+            self.photoSettings.autoSwitchPhotoPeriod.value = value
+        }
+    }
+
+//    lazy var autoSwithPeriodBinding = Binding<String>(get: {
+//        String(self.photoSettings.autoSwitchPhotoPeriod.value)
+//    }, set: { str in
+//        print("New str: \(str)")
+//        guard let value = NumberFormatter().number(from: str) as? Int else { return }
+//        print("New val: \(value)")
+//
+//        self.photoSettings.autoSwitchPhotoPeriod.value = value
+//    })
 
     let newPhotoActions = NewPhotoAction.allCases.map { (action) -> String in
          switch action {
@@ -47,5 +80,6 @@ class GeneralPrefsViewModel: ObservableObject {
     }
 
     init() {
+        autoSwitchPeriodString = String(Settings.photos.autoSwitchPhotoPeriod.value)
     }
 }

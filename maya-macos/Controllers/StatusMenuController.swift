@@ -51,6 +51,13 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
             }
         }
         RunLoop.main.add(oneSecTimer, forMode: .common)
+
+        // If first launch, show tutorial screen
+        if Settings.app.firstLaunch {
+            NSApp.activate(ignoringOtherApps: true)
+            helpController.showWindow(nil)
+            Settings.app.firstLaunch = false
+        }
     }
 
     func setIcon() {
