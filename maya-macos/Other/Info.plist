@@ -40,16 +40,16 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2020 KK. All rights reserved.</string>
+	<string>Copyright © 2020 Konstantin Klitenik. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app uses photo library to show photos in the menu bar.</string>
 	<key>NSPrincipalClass</key>
 	<string>SentryCrashExceptionApplication</string>
 	<key>NSSupportsAutomaticTermination</key>
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app uses photo library to show photos in the menu bar.</string>
 </dict>
 </plist>

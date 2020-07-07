@@ -241,10 +241,10 @@
 		FF206B0522F35D05000C0FB3 /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				B5641E4C24B110D300AC95E3 /* help1c.mp4 */,
-				B5641E4B24B110D300AC95E3 /* help3c.mp4 */,
 				FF9B7CFB2317603A0073E77E /* AppSecrets.example.swift */,
 				FF9B7CFD231760AA0073E77E /* AppSecrets.swift */,
+				B5641E4C24B110D300AC95E3 /* help1c.mp4 */,
+				B5641E4B24B110D300AC95E3 /* help3c.mp4 */,
 				FF9072DB22BB04CE0052428E /* Info.plist */,
 				FF9072DC22BB04CE0052428E /* maya_macos.entitlements */,
 				FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */,
@@ -750,7 +750,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.4.0;
+				MARKETING_VERSION = 0.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos";
 				PRODUCT_NAME = Maya;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -773,7 +773,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.4.0;
+				MARKETING_VERSION = 0.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos";
 				PRODUCT_NAME = Maya;
 				PROVISIONING_PROFILE_SPECIFIER = "";
