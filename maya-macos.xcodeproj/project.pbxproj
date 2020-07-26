@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B527D2A724CD0940001731DB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B527D2A624CD0940001731DB /* StoreKit.framework */; };
+		B527D2AA24CD0995001731DB /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B527D2A924CD0995001731DB /* IAPManager.swift */; };
+		B527D2AC24CE662D001731DB /* IAPUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B527D2AB24CE662D001731DB /* IAPUtilities.swift */; };
+		B527D2AE24CFAA4D001731DB /* IAPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B527D2AD24CFAA4D001731DB /* IAPTests.swift */; };
+		B527D2B124D2498D001731DB /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B527D2B024D2498D001731DB /* StoreManager.swift */; };
+		B527D2B324D3A703001731DB /* UnlockButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B527D2B224D3A703001731DB /* UnlockButtons.swift */; };
 		B531AAF2247F346500F3C355 /* AppleSourceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531AAF1247F346500F3C355 /* AppleSourceDetailView.swift */; };
 		B531AAF4247F347A00F3C355 /* AppleSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531AAF3247F347A00F3C355 /* AppleSourceViewModel.swift */; };
 		B531AAF624809B0400F3C355 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B531AAF524809B0400F3C355 /* .swiftlint.yml */; };
@@ -93,6 +99,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B527D2A624CD0940001731DB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		B527D2A924CD0995001731DB /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
+		B527D2AB24CE662D001731DB /* IAPUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPUtilities.swift; sourceTree = "<group>"; };
+		B527D2AD24CFAA4D001731DB /* IAPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPTests.swift; sourceTree = "<group>"; };
+		B527D2AF24D0FFF6001731DB /* Maya.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Maya.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		B527D2B024D2498D001731DB /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		B527D2B224D3A703001731DB /* UnlockButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockButtons.swift; sourceTree = "<group>"; };
 		B531AAF1247F346500F3C355 /* AppleSourceDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleSourceDetailView.swift; sourceTree = "<group>"; };
 		B531AAF3247F347A00F3C355 /* AppleSourceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleSourceViewModel.swift; sourceTree = "<group>"; };
 		B531AAF524809B0400F3C355 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -166,6 +179,7 @@
 				FF32154123200EC60054DF2A /* Alamofire in Frameworks */,
 				FF9B7CFA23175F0B0073E77E /* OAuthSwift in Frameworks */,
 				FF39C03223171CF100203D7F /* KeychainAccess in Frameworks */,
+				B527D2A724CD0940001731DB /* StoreKit.framework in Frameworks */,
 				FF34717F22D63A780009CB40 /* SwiftyBeaver in Frameworks */,
 				FFC22B6822F2389200121828 /* ServiceManagement.framework in Frameworks */,
 				B533EC3224A03B53001A103D /* Sentry in Frameworks */,
@@ -190,6 +204,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B527D2A824CD096F001731DB /* IAP */ = {
+			isa = PBXGroup;
+			children = (
+				B527D2A924CD0995001731DB /* IAPManager.swift */,
+				B527D2AB24CE662D001731DB /* IAPUtilities.swift */,
+				B527D2B024D2498D001731DB /* StoreManager.swift */,
+			);
+			path = IAP;
+			sourceTree = "<group>";
+		};
 		FF206B0122F35C4A000C0FB3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +272,7 @@
 				FF9072DB22BB04CE0052428E /* Info.plist */,
 				FF9072DC22BB04CE0052428E /* maya_macos.entitlements */,
 				FF9072D322BB04CD0052428E /* maya_macos.xcdatamodeld */,
+				B527D2AF24D0FFF6001731DB /* Maya.playground */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -257,6 +282,7 @@
 			children = (
 				FF3E18FC23CA6D3200E5002B /* AboutView.swift */,
 				B531AAF82481BBEF00F3C355 /* ActivateButton.swift */,
+				B527D2B224D3A703001731DB /* UnlockButtons.swift */,
 				B5F269D12485D454000A5C53 /* HelpView.swift */,
 				FFD4C35C23CC11B2007D1A27 /* GeneralPrefsView.swift */,
 				FFDED61F23CF784B00C678EB /* GeneralPrefsViewModel.swift */,
@@ -303,6 +329,7 @@
 				FF3E18FE23CA6D3F00E5002B /* Views */,
 				FF206B0122F35C4A000C0FB3 /* Controllers */,
 				FF206B0322F35C64000C0FB3 /* Photo Providers */,
+				B527D2A824CD096F001731DB /* IAP */,
 				FF206B0222F35C5A000C0FB3 /* Utilities */,
 				FF9072D622BB04CE0052428E /* Assets.xcassets */,
 				FF206B0422F35CEE000C0FB3 /* XIB */,
@@ -319,6 +346,7 @@
 				FF9B7D0323182D5F0073E77E /* GoogePhotoProviderTests.swift */,
 				FF279CEF244CD77F004E47C3 /* LocalFolderProviderTests.swift */,
 				FF90732322BC13840052428E /* PhotoProviderTests.swift */,
+				B527D2AD24CFAA4D001731DB /* IAPTests.swift */,
 				FF9B7D0D231874880073E77E /* TestPlan.xctestplan */,
 				FF9072E722BB04CE0052428E /* Info.plist */,
 			);
@@ -350,6 +378,7 @@
 		FFC22B6622F2389200121828 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B527D2A624CD0940001731DB /* StoreKit.framework */,
 				FFC22B6722F2389200121828 /* ServiceManagement.framework */,
 			);
 			name = Frameworks;
@@ -533,6 +562,7 @@
 				FFAF7AF423CF667400763CC1 /* EnumCodable.swift in Sources */,
 				FFDED62423CF9E4E00C678EB /* LocalFolderSourceDetailView.swift in Sources */,
 				FFEBBE8422EF834F009411B8 /* TimePeriod.swift in Sources */,
+				B527D2AC24CE662D001731DB /* IAPUtilities.swift in Sources */,
 				FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */,
 				FFD3698322F385AA00EC7A85 /* PhotoProvider.swift in Sources */,
 				FF90731E22BBFF4D0052428E /* StatusMenuController.swift in Sources */,
@@ -544,7 +574,9 @@
 				FF9B7D09231859F90073E77E /* GooglePhotosAPI.swift in Sources */,
 				FF9B7D0F2318BE700073E77E /* GooglePhotoAsset.swift in Sources */,
 				B5F269D22485D454000A5C53 /* HelpView.swift in Sources */,
+				B527D2AA24CD0995001731DB /* IAPManager.swift in Sources */,
 				FF90732222BC12E10052428E /* ApplePhotoProvider.swift in Sources */,
+				B527D2B324D3A703001731DB /* UnlockButtons.swift in Sources */,
 				FFAAE72824211E6900DD3B3C /* GoogleSourceDetailView.swift in Sources */,
 				B531AAF92481BBEF00F3C355 /* ActivateButton.swift in Sources */,
 				FF9B7D0223181AF00073E77E /* Keychain.swift in Sources */,
@@ -561,6 +593,7 @@
 				FFB1234623D3A6CD0068A9A6 /* PhotoFrameView.swift in Sources */,
 				FFD4C35B23CC0E8A007D1A27 /* PreferencesView.swift in Sources */,
 				FF90732022BC12670052428E /* PhotoVendor.swift in Sources */,
+				B527D2B124D2498D001731DB /* StoreManager.swift in Sources */,
 				FF9B7CFE231760AA0073E77E /* AppSecrets.swift in Sources */,
 				FFAAE72A24211E8100DD3B3C /* GoogleSourceViewModel.swift in Sources */,
 				FFDD944B23057E2300891545 /* AboutWindowController.swift in Sources */,
@@ -575,6 +608,7 @@
 			files = (
 				FF279CF0244CD77F004E47C3 /* LocalFolderProviderTests.swift in Sources */,
 				FF90732422BC13840052428E /* PhotoProviderTests.swift in Sources */,
+				B527D2AE24CFAA4D001731DB /* IAPTests.swift in Sources */,
 				B5421E5A247DE5C700F02345 /* ApplePhotoProviderTests.swift in Sources */,
 				FF9B7D0423182D5F0073E77E /* GoogePhotoProviderTests.swift in Sources */,
 			);

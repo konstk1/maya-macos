@@ -154,6 +154,10 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
         helpController.showWindow(sender)
     }
 
+    @IBAction func restorePurchasesClicked(_ sender: NSMenuItem) {
+        StoreManager.shared.restorePurchases()
+    }
+
     @IBAction func sendFeedbackClicked(_ sender: NSMenuItem) {
         sendFeedback()
     }

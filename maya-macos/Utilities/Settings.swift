@@ -69,7 +69,7 @@ enum Settings {
         @PublishedUserDefault("PhotosSettings.autoSwitchPhoto", defaultValue: true)
         var autoSwitchPhoto: Bool
 
-        @PublishedUserDefault("PhotosSettings.autoSwitchPhotoPeriod", defaultValue: .minutes(10))
+        @PublishedUserDefault("PhotosSettings.autoSwitchPhotoPeriod", defaultValue: .minutes(20))
         var autoSwitchPhotoPeriod: TimePeriod
     }
 
@@ -95,6 +95,12 @@ enum Settings {
 
         @PublishedUserDefault("ApplePhotosProviderSettings.activeAlbumId", defaultValue: nil)
         var activeAlbumId: String?
+
+        @PublishedUserDefault("ApplePhotoProviderSettings.trailPurchased", defaultValue: nil)
+        var trialPurchasedData: [UInt8]?
+
+        @PublishedUserDefault("ApplePhotoProviderSettings.fullPurchased", defaultValue: nil)
+        var fullPurchasedData: [UInt8]?
     }
 }
 

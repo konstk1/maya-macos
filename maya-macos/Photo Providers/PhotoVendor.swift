@@ -17,12 +17,14 @@ import Combine
 enum PhotoVendorError: Error {
     case noActiveProvider
     case noPhotos
+    case trialExpired
     case providerError(error: PhotoProviderError)
 
     var localizedDescription: String {
         switch self {
         case .noActiveProvider: return "No active provider"
         case .noPhotos: return "No photos in active album"
+        case .trialExpired: return "Trial expired"
         case .providerError(let providerError): return "Provider error \(providerError.localizedDescription)"
         }
     }
@@ -106,7 +108,15 @@ final class PhotoVendor: ObservableObject {
             guard let self = self else { return }
             guard let activeProvider = self.activeProvider else {
                 log.warning("No active photo provider")
+                self.error = PhotoVendorError.noActiveProvider
                 promise(.failure(PhotoVendorError.noActiveProvider))
+                return
+            }
+
+            guard self.isProviderUnlocked(provider: activeProvider) else {
+                log.warning("Provider is not unlocked")
+                self.error = PhotoVendorError.trialExpired
+                promise(.failure(PhotoVendorError.trialExpired))
                 return
             }
 
@@ -166,7 +176,7 @@ final class PhotoVendor: ObservableObject {
     }
 
     /// Merge new asset list with current assets.  Preserve shown assets and re-shuffle old un-shown and new assets.
-    func processNewAssetList(_ assets: [PhotoAssetDescriptor]) {
+    private func processNewAssetList(_ assets: [PhotoAssetDescriptor]) {
         // just need to filter OUT any assets that have been shown
         // everything else is going to become unshown
         unshownPhotos = assets.filter { asset in
@@ -175,6 +185,20 @@ final class PhotoVendor: ObservableObject {
 
         if shufflePhotos {
             unshownPhotos.shuffle()
+        }
+    }
+
+    private func isProviderUnlocked(provider: PhotoProvider) -> Bool {
+        StoreManager.shared.refreshAllSourcesStatus()
+
+        switch provider {
+        case is LocalFolderPhotoProvider:
+            return true     // local folder always unlocked
+        case is ApplePhotoProvider:
+            return StoreManager.shared.applePhotosSourceStatus != .locked && StoreManager.shared.applePhotosSourceStatus != .freeTrialExpired
+        default:
+            log.error("Unexpected PhotoProvider: \(provider)")
+            return false
         }
     }
 }

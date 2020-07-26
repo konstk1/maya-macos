@@ -88,9 +88,11 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     private var observers: [NSKeyValueObservation] = []
     private var subs: Set<AnyCancellable> = []
 
-    var autoCloseWorkItem: DispatchWorkItem?
+    private var autoCloseWorkItem: DispatchWorkItem?
 
     override var windowNibName: NSNib.Name? { NSNib.Name("PhotoFrameController") }
+
+    private var lastTrialExpiredPopup = Date(timeIntervalSince1970: 0)
 
     // MARK: Functions
 
@@ -247,6 +249,14 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         case .some(PhotoVendorError.noPhotos):
             title = "No images found"
             action = "Configure photo soures in preferences"
+        case .some(PhotoVendorError.trialExpired):
+            title = "Photo source trial expired"
+            action = "Unlock this photo source in preferences"
+             // limit popup to once every six hours
+            if Date().timeIntervalSince(lastTrialExpiredPopup) > (6 * 3600) {
+                show(relativeTo: referenceWindow)
+                lastTrialExpiredPopup = Date()
+            }
         case .some:
             title = "An error occurred"
             action = "Please ensure your photo sources are configured in preferences"
