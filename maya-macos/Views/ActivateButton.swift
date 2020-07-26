@@ -10,21 +10,33 @@ import SwiftUI
 
 struct ActivateButton: View {
     var isActive: Bool
+    var isPurchased: Bool
+    var isTrialAvailable: Bool
     var action: () -> Void
+
+    private var buttonConfig: (text: String, icon: NSImage?, color: Color) {
+        if isPurchased {
+            return isActive ? ("Active", NSImage.checkbox, Color.mayaGreen) : ("Activate", NSImage.play, Color.mayaBlue)
+        } else {
+            return isTrialAvailable ? ("Try Free for 14 Days", nil, Color.mayaBlue) : ("Unlock", nil, Color.mayaBlue)
+        }
+    }
 
     var body: some View {
         Button(action: action) {
             HStack {
-                Image(nsImage: isActive ? NSImage.checkbox : NSImage.play)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 20, height: 20)
-                Text(isActive ? "Active" : "Activate")
+                if buttonConfig.icon != nil {
+                    Image(nsImage: buttonConfig.icon!)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20, height: 20)
+                }
+                Text(buttonConfig.text)
                     .font(.subheadline)
                     .foregroundColor(.white)
             }
             .frame(width: 140, height: 40, alignment: .center)
-            .background(RoundedRectangle(cornerRadius: 10).fill(isActive ? Color.mayaGreen : Color.mayaBlue))
+            .background(RoundedRectangle(cornerRadius: 10).fill(buttonConfig.color))
         }.buttonStyle(PlainButtonStyle())
     }
 }
@@ -32,8 +44,10 @@ struct ActivateButton: View {
 struct ActivateButton_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ActivateButton(isActive: false) {}.padding()
-            ActivateButton(isActive: true) {}.padding()
+            ActivateButton(isActive: false, isPurchased: true, isTrialAvailable: false) {}.padding()
+            ActivateButton(isActive: true, isPurchased: true, isTrialAvailable: true) {}.padding()
+            ActivateButton(isActive: true, isPurchased: false, isTrialAvailable: true) {}.padding()
+            ActivateButton(isActive: true, isPurchased: false, isTrialAvailable: false) {}.padding()
         }
     }
 }

@@ -49,6 +49,8 @@ extension Notification.Name {
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        StoreManager.shared.startObservingPaymentQueue()
+
         let runningApps = NSWorkspace.shared.runningApplications
         let isRunning = runningApps.contains { $0.bundleIdentifier == launcherAppId }
 
@@ -87,7 +89,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
-
+        StoreManager.shared.stopObservingPaymentQueue()
     }
 
     // MARK: - Core Data stack

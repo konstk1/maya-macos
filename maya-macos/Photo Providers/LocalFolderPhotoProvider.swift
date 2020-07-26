@@ -38,7 +38,7 @@ final class LocalFolderPhotoProvider: PhotoProvider {
         super.init()
 
         print("LocalPhotoProvider init")
-
+        
         guard let lastActiveFolder = Settings.localFolderProvider.recentFolders.first else { return }
 
         do {

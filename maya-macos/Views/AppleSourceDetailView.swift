@@ -11,6 +11,8 @@ import SwiftUI
 struct AppleSourceDetailView: View {
     @ObservedObject private var model: AppleSourceViewModel
 
+    private var storeManager = StoreManager.shared
+
     init(apple: ApplePhotoProvider) {
         log.info("Init AppleSourceDetailView")
         model = AppleSourceViewModel(apple: apple)
@@ -39,10 +41,27 @@ struct AppleSourceDetailView: View {
                 }
             }
 
-            Spacer()
+            ZStack(alignment: .bottom) {
+                Spacer()
+                if model.isPurchasing {
+                    Text("Purchasing...").foregroundColor(.primary)
+                }
+            }
 
-            ActivateButton(isActive: model.isActive, action: model.activateClicked)
-        }.padding(.bottom, 30)
+            if model.isPurchased {
+                ActivateButton(isActive: model.isActive, isPurchased: true, isTrialAvailable: false, action: model.activateClicked)
+            } else {
+                UnlockButtons(price: model.unlockPrice, isTrialAvailable: model.isTrialAvailable, onTrial: {
+                    self.model.purchaseTrial()
+                }, onUnlock: {
+                    self.model.purchaseFull()
+                })
+            }
+        }.padding(.bottom, 30).onAppear {
+            self.model.refreshIaps()
+        }.alert(isPresented: $model.isIapError) {
+            Alert(title: Text("IAP Error"), message: Text("IAP error has occured. Ensure you have internet access and try again."), dismissButton: .default(Text("OK")))
+        }
     }
 }
 

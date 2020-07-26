@@ -33,7 +33,7 @@ struct LocalFolderSourceDetailView: View {
 
             Spacer()
 
-            ActivateButton(isActive: model.isActive, action: model.activateClicked)
+            ActivateButton(isActive: model.isActive, isPurchased: true, isTrialAvailable: false, action: model.activateClicked)
         }.padding(.bottom, 30)
     }
 }
