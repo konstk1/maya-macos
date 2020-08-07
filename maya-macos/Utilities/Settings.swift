@@ -35,13 +35,8 @@ enum Settings {
         @PublishedUserDefault("AppSettings.firstLaunch", defaultValue: true)
         var firstLaunch: Bool
 
-        @PublishedUserDefault("AppSettings.openAtLogin", defaultValue: false)
-        var openAtLogin: Bool {
-            didSet {
-                // TODO: move this to app delegate
-                SMLoginItemSetEnabled(launcherAppId as CFString, openAtLogin)
-            }
-        }
+        @PublishedUserDefault("AppSettings.openAtLogin", defaultValue: true)
+        var openAtLogin: Bool
 
         @PublishedUserDefault("AppSettings.activeProvider", defaultValue: .none)
         var activeProvider: PhotoProviderType
