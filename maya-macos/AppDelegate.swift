@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 import ServiceManagement
 import OAuthSwift
 import SwiftyBeaver
@@ -47,6 +48,7 @@ extension Notification.Name {
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+    private var subs: Set<AnyCancellable> = []
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         StoreManager.shared.startObservingPaymentQueue()
@@ -68,7 +70,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         #endif
 
-        SMLoginItemSetEnabled(launcherAppId as CFString, Settings.app.openAtLogin)
+        Settings.app.$openAtLogin.sink { shouldOpenAtLogin in
+            log.info("Open at login: \(shouldOpenAtLogin)")
+            SMLoginItemSetEnabled(launcherAppId as CFString, shouldOpenAtLogin)
+        }.store(in: &subs)
 
         // if launcher is running, send notification to terminate it
         if isRunning {
