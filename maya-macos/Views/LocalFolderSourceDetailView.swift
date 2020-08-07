@@ -29,6 +29,9 @@ struct LocalFolderSourceDetailView: View {
                         print("New folder")
                     }.tag(5)
                 }.labelsHidden()
+                Text("Tip: Change or choose a new folder using dropdown above")
+                    .font(.system(size: 10))
+                    .foregroundColor(.gray)
             }.padding()
 
             Spacer()

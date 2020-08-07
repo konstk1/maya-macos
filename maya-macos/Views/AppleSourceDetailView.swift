@@ -27,6 +27,9 @@ struct AppleSourceDetailView: View {
                         Text(self.model.albumTitles[$0]).truncationMode(.middle)
                     }
                 }.labelsHidden()
+                Text("Tip: Change albums using dropdown above")
+                    .font(.system(size: 10))
+                    .foregroundColor(.gray)
             }.padding()
 
             Spacer()
