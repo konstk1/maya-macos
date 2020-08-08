@@ -29,11 +29,7 @@ final class ApplePhotoProvider: PhotoProvider {
         }
     }
 
-    @Published private(set) var authStatus: PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus() {
-        didSet {
-            print("Setting auth")
-        }
-    }
+    @Published private(set) var authStatus: PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
 
     override init() {
         super.init()

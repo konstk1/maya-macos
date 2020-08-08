@@ -18,7 +18,7 @@ struct AboutView: View {
 
     private let website: String = "https://konst.dev/maya"
 
-    @State private var logButtonTitle = "Copy Log Path"
+    @State private var showLogButton = false
 
     var body: some View {
         VStack {
@@ -34,19 +34,22 @@ struct AboutView: View {
                 }
             }
 
-            #if !DEBUG
-            Button(logButtonTitle) {
-                self.copyLogPathClicked()
-            }
-            #endif
-
-            VStack {
+            VStack(spacing: 10) {
                 Button(action: {
                     sendFeedback()
                 }) {
-                    Text("Send feedback").frame(width: 120, height: 30)
+                    Text("Send feedback").frame(width: 150, height: 30)
                         .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.helpText))
                         .contentShape(Rectangle())
+                }
+                if showLogButton {
+                    Button(action: {
+                        self.revealLogFileInFinder()
+                    }) {
+                        Text("Reveal log file").frame(width: 150, height: 20)
+                            .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.helpText))
+                            .contentShape(Rectangle())
+                    }
                 }
             }.buttonStyle(PlainButtonStyle()).padding(20)
 
@@ -70,31 +73,20 @@ struct AboutView: View {
             Text("Copyright © 2020 Konstantin Klitenik. All rights reserved.")
                 .font(.custom("San Francisco", size: 10))
                 .padding(.top, 10)
-        }.padding(25).fixedSize().onAppear {
-            self.logButtonTitle = "Copy Log Path"
-            print("On appear")
-        }.onDisappear {
-            print("On disappear")
-        }.background(Color.aboutBackground).foregroundColor(Color.helpText)
+        }.padding(25).fixedSize().background(Color.aboutBackground).foregroundColor(Color.helpText)
+            .gesture(TapGesture().modifiers(.command).onEnded { _ in
+                self.showLogButton = true
+            })
     }
 
-    func copyLogPathClicked() {
-        let pasteBoard = NSPasteboard.general
-        pasteBoard.declareTypes([.string], owner: nil)
-
+    func revealLogFileInFinder() {
         let fileDestinations = log.destinations.compactMap { $0 as? FileDestination }
 
-        var status = "Copied!"
-
-        if let logFilePath = fileDestinations.first?.logFileURL?.path {
-            if !pasteBoard.setString(logFilePath, forType: .string) {
-                status = "Copy Failed!"
-            }
+        if let logFileUrl = fileDestinations.first?.logFileURL {
+            NSWorkspace.shared.selectFile(logFileUrl.path, inFileViewerRootedAtPath: "")
         } else {
-            status = "No log file!"
+            log.error("No log file exists")
         }
-
-        logButtonTitle = status
     }
 }
 
