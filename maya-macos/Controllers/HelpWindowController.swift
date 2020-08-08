@@ -39,6 +39,5 @@ class HelpWindowController: NSWindowController, NSWindowDelegate {
     }
 
     func windowWillClose(_ notification: Notification) {
-        print("Closing window")
     }
 }

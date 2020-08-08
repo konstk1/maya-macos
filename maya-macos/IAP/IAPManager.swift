@@ -93,7 +93,6 @@ final class IAPManager: NSObject {
 
 extension IAPManager: SKProductsRequestDelegate {
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        print("Loaded products")
         products = response.products
 
         for prod in products {

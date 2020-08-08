@@ -147,7 +147,7 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     }
 
     override func mouseDown(with event: NSEvent) {
-        print("Frame clicked, cancelling auto close...")
+        log.verbose("Frame clicked, cancelling auto close...")
         autoCloseWorkItem?.cancel()
 
         // if image is fully zoomed out, move the window, otherwise let the scroll view handle scrolling
