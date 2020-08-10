@@ -1,0 +1,29 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:macos)
+
+platform :macos do
+  desc "Upload dSym to Sentry.io"
+  lane :build do
+    #gym # building your app
+    upload_symbols_to_sentry(
+        auth_token: '3248c7f96a8941fe94d2f91659a42857705c28ee638045b7960a808e36f6b3f0',
+        org_slug: 'konstdev',
+        project_slug: 'konstdev/maya',
+    )
+end
+end
+

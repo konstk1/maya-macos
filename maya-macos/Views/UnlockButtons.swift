@@ -52,8 +52,8 @@ struct UnlockButtons: View {
 struct UnlockButtons_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            UnlockButtons(price: "$3.99", isTrialAvailable: false, onTrial: {}, onUnlock: {}).padding()
-            UnlockButtons(price: "3.99$", isTrialAvailable: true, onTrial: {}, onUnlock: {}).padding()
+            UnlockButtons(price: "$2.99", isTrialAvailable: false, onTrial: {}, onUnlock: {}).padding()
+            UnlockButtons(price: "2.99$", isTrialAvailable: true, onTrial: {}, onUnlock: {}).padding()
         }
     }
 }
