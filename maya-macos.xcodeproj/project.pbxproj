@@ -23,6 +23,7 @@
 		B5641E4D24B110D300AC95E3 /* help3c.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B5641E4B24B110D300AC95E3 /* help3c.mp4 */; };
 		B5641E4E24B110D300AC95E3 /* help1c.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B5641E4C24B110D300AC95E3 /* help1c.mp4 */; };
 		B5A5A8C4245210CF003B282D /* OAuthSwiftAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B5A5A8C3245210CF003B282D /* OAuthSwiftAlamofire */; };
+		B5E6402124E0E0A500E34504 /* fastlane in Resources */ = {isa = PBXBuildFile; fileRef = B5E6402024E0E0A500E34504 /* fastlane */; };
 		B5F269D02485D42D000A5C53 /* HelpWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F269CF2485D42D000A5C53 /* HelpWindowController.swift */; };
 		B5F269D22485D454000A5C53 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F269D12485D454000A5C53 /* HelpView.swift */; };
 		FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */; };
@@ -114,6 +115,7 @@
 		B5641E4924B1101D00AC95E3 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		B5641E4B24B110D300AC95E3 /* help3c.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = help3c.mp4; sourceTree = "<group>"; };
 		B5641E4C24B110D300AC95E3 /* help1c.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = help1c.mp4; sourceTree = "<group>"; };
+		B5E6402024E0E0A500E34504 /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = "<group>"; };
 		B5F269CF2485D42D000A5C53 /* HelpWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpWindowController.swift; sourceTree = "<group>"; };
 		B5F269D12485D454000A5C53 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFrameController.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				B531AAF524809B0400F3C355 /* .swiftlint.yml */,
+				B5E6402024E0E0A500E34504 /* fastlane */,
 				FF9072D022BB04CD0052428E /* maya-macos */,
 				FF9072E422BB04CE0052428E /* maya-macosTests */,
 				FFC22B5722F2378300121828 /* maya-macos-launcher */,
@@ -508,6 +511,7 @@
 				B5641E4D24B110D300AC95E3 /* help3c.mp4 in Resources */,
 				FF9072D722BB04CE0052428E /* Assets.xcassets in Resources */,
 				FFEEFCB82300F0750023F581 /* SourcesViewController.xib in Resources */,
+				B5E6402124E0E0A500E34504 /* fastlane in Resources */,
 				FF14AD8D22BDB8B800C7518C /* PhotoFrameController.xib in Resources */,
 				B531AAF624809B0400F3C355 /* .swiftlint.yml in Resources */,
 				FF9072DA22BB04CE0052428E /* MainMenu.xib in Resources */,
@@ -784,7 +788,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.9.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos";
 				PRODUCT_NAME = Maya;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -807,7 +811,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.9.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kk.maya-macos";
 				PRODUCT_NAME = Maya;
 				PROVISIONING_PROFILE_SPECIFIER = "";
