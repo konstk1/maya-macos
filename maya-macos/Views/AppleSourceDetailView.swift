@@ -44,6 +44,16 @@ struct AppleSourceDetailView: View {
                 }
             }
 
+            if model.trialDaysLeft >= 0 {
+                Group {
+                    Text("Enjoy your free trial, you have \(model.trialDaysLeft) days remaining.")
+                    Text("No rush but if you'd like to unlock before trial expires:")
+                    Button("Unlock $2.99") {
+                        self.model.purchaseFull()
+                    }
+                }.font(.system(size: 12)).foregroundColor(.gray)
+            }
+
             ZStack(alignment: .bottom) {
                 Spacer()
                 if model.isPurchasing {
