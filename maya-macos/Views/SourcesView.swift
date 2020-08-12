@@ -55,7 +55,7 @@ struct SourcesView: View {
 //                .transition(.asymmetric(insertion: .move(edge: .top), removal: .move(edge: .bottom)))
         }.onAppear {
             self.selectedProviderIdx = self.photoVendor.activeProviderIndex ?? 0
-        }.frame(height: 250)
+        }.frame(height: 270)
     }
 }
 

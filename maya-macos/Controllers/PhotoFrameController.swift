@@ -48,6 +48,7 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     // Photo frame properties
     @IBOutlet weak var scrollView: PhotoScrollView!
     @IBOutlet weak var errorView: NSStackView!
+    @IBOutlet weak var freeTrialNoticeView: GradientView!
 
     // Error view outlets
     @IBOutlet weak var errorTitleLabel: NSTextField!
@@ -297,6 +298,10 @@ extension PhotoFrameWindowController: NSWindowDelegate {
             log.error("Window is nil")
             return
         }
+
+        // TODO: figure out how to best present this
+        freeTrialNoticeView.isHidden = true
+
         // reset zoom, if any
         scrollView.magnification = 1
 
@@ -331,8 +336,6 @@ extension PhotoFrameWindowController: NSWindowDelegate {
             windowOrigin.x = min(screenFrame.origin.x + screenFrame.size.width - windowSize.width, windowOrigin.x)
             windowOrigin.y = min(screenFrame.origin.y + screenFrame.size.height - windowSize.height, windowOrigin.y)
         }
-
-//        window.aspectRatio = windowSize + borderSize        // set aspect ratio to only allow diagonal resizing
 
         // makeKeyAndOrderFront() will trigger window move/resize events, where we save window position
         // since at this point the frame will be animating, we want to ignore those events and only

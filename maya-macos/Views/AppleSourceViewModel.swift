@@ -30,6 +30,7 @@ class AppleSourceViewModel: ObservableObject {
     @Published private(set) var isPurchasing: Bool = false
     @Published private(set) var isPurchased: Bool = false
     @Published private(set) var isTrialAvailable: Bool = false
+    @Published private(set) var trialDaysLeft: Int = -1
     @Published private(set) var unlockPrice: String
     @Published var isIapError: Bool = false
 
@@ -74,15 +75,19 @@ class AppleSourceViewModel: ObservableObject {
             case .locked:
                 self.isTrialAvailable = true
                 self.isPurchased = false
-            case .freeTrial(daysRemaining: _):
+                self.trialDaysLeft = -1
+            case .freeTrial(let daysRemaining):
                 self.isTrialAvailable = false
                 self.isPurchased = true
+                self.trialDaysLeft = daysRemaining
             case .freeTrialExpired:
                 self.isTrialAvailable = false
                 self.isPurchased = false
+                self.trialDaysLeft = -1
             case .purchased:
                 self.isTrialAvailable = false
                 self.isPurchased = true
+                self.trialDaysLeft = -1
             }
         }
 

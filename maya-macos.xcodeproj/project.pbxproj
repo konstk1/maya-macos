@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B524107B24E3730C00E6FDED /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B524107A24E3730C00E6FDED /* GradientView.swift */; };
 		B527D2A724CD0940001731DB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B527D2A624CD0940001731DB /* StoreKit.framework */; };
 		B527D2AA24CD0995001731DB /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B527D2A924CD0995001731DB /* IAPManager.swift */; };
 		B527D2AC24CE662D001731DB /* IAPUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B527D2AB24CE662D001731DB /* IAPUtilities.swift */; };
@@ -100,6 +101,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B524107A24E3730C00E6FDED /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		B527D2A624CD0940001731DB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B527D2A924CD0995001731DB /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
 		B527D2AB24CE662D001731DB /* IAPUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPUtilities.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				FFDED62123CF9C1D00C678EB /* SourcesView.swift */,
 				FFB1234523D3A6CD0068A9A6 /* PhotoFrameView.swift */,
 				B5641E4924B1101D00AC95E3 /* VideoPlayerView.swift */,
+				B524107A24E3730C00E6FDED /* GradientView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 				FFAF7AF423CF667400763CC1 /* EnumCodable.swift in Sources */,
 				FFDED62423CF9E4E00C678EB /* LocalFolderSourceDetailView.swift in Sources */,
 				FFEBBE8422EF834F009411B8 /* TimePeriod.swift in Sources */,
+				B524107B24E3730C00E6FDED /* GradientView.swift in Sources */,
 				B527D2AC24CE662D001731DB /* IAPUtilities.swift in Sources */,
 				FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */,
 				FFD3698322F385AA00EC7A85 /* PhotoProvider.swift in Sources */,
