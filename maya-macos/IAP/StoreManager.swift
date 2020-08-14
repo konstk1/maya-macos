@@ -44,7 +44,7 @@ final class StoreManager: ObservableObject {
     private init() {
         iapMgr = IAPManager(productIdentifiers: productIdentifiers)
 
-        applePhotosSourceStatus = StoreManager.getApplePhotosStatus()
+        applePhotosSourceStatus = .purchased // StoreManager.getApplePhotosStatus()
 
         iapMgr.productPublisher.sink { [weak self] _ in
             self?.eventPublisher.send(.productsUpdated)
@@ -66,7 +66,8 @@ final class StoreManager: ObservableObject {
             self?.eventPublisher.send(IAPEvent.failure(error: error))
         }.store(in: &subs)
 
-        iapMgr.fetchProducts()
+        // do nothing for now as there are no IAPs
+        // iapMgr.fetchProducts()
     }
 
     func refreshProducts() {
@@ -128,7 +129,8 @@ final class StoreManager: ObservableObject {
     }
 
     func refreshAllSourcesStatus() {
-        applePhotosSourceStatus = StoreManager.getApplePhotosStatus()
+        // as per apple guidelines, can't charge for apple photos so nothing here for now
+        // applePhotosSourceStatus = StoreManager.getApplePhotosStatus()
     }
 }
 
