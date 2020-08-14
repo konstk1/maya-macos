@@ -18,6 +18,7 @@ enum Settings {
     static let localFolderProvider = LocalFolderProviderSettings.shared
     static let googlePhotos = GooglePhotosProviderSettings.shared
     static let applePhotos = ApplePhotosProviderSettings.shared
+    static let appStoreReview = AppStoreReviewSettings.shared
 
     class ObservableSettings: ObservableObject {
         var notificationSubscription: AnyCancellable?
@@ -96,6 +97,16 @@ enum Settings {
 
         @PublishedUserDefault("ApplePhotoProviderSettings.fullPurchased", defaultValue: nil)
         var fullPurchasedData: [UInt8]?
+    }
+
+    class AppStoreReviewSettings: ObservableSettings {
+        fileprivate static let shared = AppStoreReviewSettings()
+
+        @PublishedUserDefault("AppStoreReviewSettings.lastReviewRequestDate", defaultValue: Date())
+        var lastReviewRequest: Date
+
+        @PublishedUserDefault("AppStoreReviewSettings.lastReviewVersion", defaultValue: "")
+        var lastReviewVersion: String
     }
 }
 

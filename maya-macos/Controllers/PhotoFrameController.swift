@@ -393,6 +393,9 @@ extension PhotoFrameWindowController: NSWindowDelegate {
             // clear out event monitor to indicate it's no longer installed
             self.globalEventMonitor = nil
         }
+
+        // request app store review (this function will apply constraints when the review is actually requested)
+        requestAppStoreReview()
     }
 
     func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {

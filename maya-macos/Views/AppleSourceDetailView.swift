@@ -11,8 +11,6 @@ import SwiftUI
 struct AppleSourceDetailView: View {
     @ObservedObject private var model: AppleSourceViewModel
 
-    private var storeManager = StoreManager.shared
-
     init(apple: ApplePhotoProvider) {
         log.info("Init AppleSourceDetailView")
         model = AppleSourceViewModel(apple: apple)
@@ -44,37 +42,8 @@ struct AppleSourceDetailView: View {
                 }
             }
 
-            if model.trialDaysLeft >= 0 {
-                Group {
-                    Text("Enjoy your free trial, you have \(model.trialDaysLeft) days remaining.")
-                    Text("No rush but if you'd like to unlock before trial expires:")
-                    Button("Unlock $2.99") {
-                        self.model.purchaseFull()
-                    }
-                }.font(.system(size: 12)).foregroundColor(.gray)
-            }
-
-            ZStack(alignment: .bottom) {
-                Spacer()
-                if model.isPurchasing {
-                    Text("Purchasing...").foregroundColor(.primary)
-                }
-            }
-
-            if model.isPurchased {
-                ActivateButton(isActive: model.isActive, isPurchased: true, isTrialAvailable: false, action: model.activateClicked)
-            } else {
-                UnlockButtons(price: model.unlockPrice, isTrialAvailable: model.isTrialAvailable, onTrial: {
-                    self.model.purchaseTrial()
-                }, onUnlock: {
-                    self.model.purchaseFull()
-                })
-            }
-        }.padding(.bottom, 30).onAppear {
-            self.model.refreshIaps()
-        }.alert(isPresented: $model.isIapError) {
-            Alert(title: Text("IAP Error"), message: Text("IAP error has occured. Ensure you have internet access and try again."), dismissButton: .default(Text("OK")))
-        }
+            ActivateButton(isActive: model.isActive, action: model.activateClicked)
+        }.padding(.bottom, 30)
     }
 }
 

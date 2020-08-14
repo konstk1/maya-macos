@@ -195,7 +195,7 @@ final class PhotoVendor: ObservableObject {
         case is LocalFolderPhotoProvider:
             return true     // local folder always unlocked
         case is ApplePhotoProvider:
-            return StoreManager.shared.applePhotosSourceStatus != .locked && StoreManager.shared.applePhotosSourceStatus != .freeTrialExpired
+            return true     // can't charge for apple photos as per apple guidelines
         default:
             log.error("Unexpected PhotoProvider: \(provider)")
             return false
