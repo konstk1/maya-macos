@@ -53,22 +53,22 @@ struct AboutView: View {
                 }
             }.buttonStyle(PlainButtonStyle()).padding(20)
 
-            HStack {
-                Text("Website:").bold()
-                Button(action: {
-                    let url = URL(string: self.website)!  // swiftlint:disable:this force_unwrapping
-                    NSWorkspace.shared.open(url)
-                }) {
-                    Text(self.website).underline().foregroundColor(.blue)
-                        .onHover { isHovering in
-                            if isHovering {
-                                NSCursor.pointingHand.push()
-                            } else {
-                                NSCursor.pop()
-                            }
-                        }
-                }.buttonStyle(PlainButtonStyle())
-            }
+//            HStack {
+//                Text("Website:").bold()
+//                Button(action: {
+//                    let url = URL(string: self.website)!  // swiftlint:disable:this force_unwrapping
+//                    NSWorkspace.shared.open(url)
+//                }) {
+//                    Text(self.website).underline().foregroundColor(.blue)
+//                        .onHover { isHovering in
+//                            if isHovering {
+//                                NSCursor.pointingHand.push()
+//                            } else {
+//                                NSCursor.pop()
+//                            }
+//                        }
+//                }.buttonStyle(PlainButtonStyle())
+//            }
 
             Text("Copyright © 2020 Konstantin Klitenik. All rights reserved.")
                 .font(.custom("San Francisco", size: 10))
