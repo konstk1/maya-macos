@@ -27,7 +27,7 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
 
     override func awakeFromNib() {
         setIcon()
-        statusItem.menu = statusMenu
+//        statusItem.menu = statusMenu
 
         NSEvent.addLocalMonitorForEvents(matching: mouseEventMask, handler: localEventHandler)
 
@@ -40,17 +40,15 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
             self?.preferencesClicked(NSMenuItem())
         }.store(in: &subs)
 
-        NSUserNotificationCenter.default.delegate = self
+        NotificationCenter.default.publisher(for: .aboutWindowRequested).sink { [weak self] _ in
+            self?.aboutClicked(NSMenuItem())
+        }.store(in: &subs)
 
-        let oneSecTimer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            if let timeUntil = self.photoFrame.nextPhotoAt?.timeIntervalSinceNow {
-                self.timeLeftLabel.title = "Next photo " + (timeUntil > 0 ? "in " + timeUntil.labelString : "ready")
-            } else {
-                self.timeLeftLabel.title = "Auto switch off"
-            }
-        }
-        RunLoop.main.add(oneSecTimer, forMode: .common)
+        NotificationCenter.default.publisher(for: .tutorialWindowRequested).sink { [weak self] _ in
+            self?.tutorialClicked(NSMenuItem())
+        }.store(in: &subs)
+
+        NSUserNotificationCenter.default.delegate = self
 
         // If first launch, show tutorial screen
         if Settings.app.firstLaunch {
@@ -135,10 +133,6 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
         photoFrame.close()
     }
 
-    @IBAction func cantWaitClicked(_ sender: Any) {
-        photoFrame.forceNext()
-    }
-
     @IBAction func aboutClicked(_ sender: NSMenuItem) {
         NSApp.activate(ignoringOtherApps: true)
         aboutController.showWindow(sender)
@@ -152,10 +146,6 @@ class StatusMenuController: NSObject, NSUserNotificationCenterDelegate {
     @IBAction func tutorialClicked(_ sender: NSMenuItem) {
         NSApp.activate(ignoringOtherApps: true)
         helpController.showWindow(sender)
-    }
-
-    @IBAction func restorePurchasesClicked(_ sender: NSMenuItem) {
-        StoreManager.shared.restorePurchases()
     }
 
     @IBAction func sendFeedbackClicked(_ sender: NSMenuItem) {

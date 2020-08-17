@@ -1,5 +1,5 @@
 //
-//  StoreManagerswift
+//  StoreManager.swift
 //  maya-macos
 //
 //  Created by Konstantin Klitenik on 7/29/20.
@@ -102,7 +102,6 @@ final class StoreManager: ObservableObject {
     }
 
     private static func checkPurchase(identifier: ProductId) -> Date? {
-        // TODO: get value from UserDefaults
         var data: [UInt8]?
 
         switch identifier {

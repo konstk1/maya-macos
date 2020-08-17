@@ -27,6 +27,14 @@ func - (lhs: NSSize, rhs: CGFloat) -> NSSize {
     return NSSize(width: lhs.width - rhs, height: lhs.height - rhs)
 }
 
+func + (lhs: NSSize, rhs: NSSize) -> NSSize {
+    return NSSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
+}
+
+func - (lhs: NSSize, rhs: NSSize) -> NSSize {
+    return NSSize(width: lhs.width - rhs.width, height: lhs.height - rhs.height)
+}
+
 extension NSImageView {
     var contentImageSize: NSSize {
         guard let image = image else { return bounds.size }
@@ -59,7 +67,7 @@ extension TimeInterval {
         } else if m > 0 {
             return "\(m)m \(s)s"
         } else {
-            return "\(s) sec"
+            return "\(s)s"
         }
         // swiftlint:enable identifier_name
     }

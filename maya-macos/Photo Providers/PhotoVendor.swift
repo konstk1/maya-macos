@@ -169,7 +169,6 @@ final class PhotoVendor: ObservableObject {
             guard let self = self else { return }
             self.processNewAssetList(assets)
             if shouldVend {
-                // TODO: how to manage subscription
                 self.vendImage(shouldRefresh: false)
             }
         })

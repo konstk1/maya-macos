@@ -36,7 +36,7 @@ struct AppleSourceDetailView: View {
                 VStack {
                     Text("Allow Maya access to Photos in Security & Privacy")
                     Button("Security & Privacy") {
-                        let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Photos")!
+                        let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Photos")! // swiftlint:disable:this force_unwrapping
                         NSWorkspace.shared.open(url)
                     }
                 }

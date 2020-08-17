@@ -12,6 +12,8 @@ import Combine
 extension NSNotification.Name {
     static let photoFrameStatus = NSNotification.Name("photoFrameStatus")
     static let prefsWindowRequested = NSNotification.Name("prefsWindowRequested")
+    static let aboutWindowRequested = NSNotification.Name("aboutWindowRequested")
+    static let tutorialWindowRequested = NSNotification.Name("tutorialWindowRequested")
 }
 
 enum PhotoFrameStatus {
@@ -37,18 +39,24 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         }
     }
 
+    // Other controllers
+    private lazy var prefWinController = PrefsWindowController()
+    private lazy var aboutController = AboutWindowController()
+    private lazy var helpController = HelpWindowController()
+
     private(set) var nextPhotoAt: Date?
 
     // Photo vendor properties
     private let photoVendor = PhotoVendor.shared
-    // TODO: replace this with another placeholder image
     private var currentPhoto: NSImage = #imageLiteral(resourceName: "Maya Logo")
     private var vendTimer: Timer?
 
     // Photo frame properties
+    @IBOutlet weak var titleBarView: NSView!
+    @IBOutlet weak var timeLeftLabel: NSTextField!
     @IBOutlet weak var scrollView: PhotoScrollView!
     @IBOutlet weak var errorView: NSStackView!
-    @IBOutlet weak var freeTrialNoticeView: GradientView!
+    @IBOutlet weak var effectsView: NSVisualEffectView!
 
     // Error view outlets
     @IBOutlet weak var errorTitleLabel: NSTextField!
@@ -59,7 +67,7 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     private var shouldPopupOnVend = false
     private var shouldAutoClose = true
 
-    private let borderSize: CGFloat = 10.0
+    private let borderSize = NSSize(width: 10, height: 22+5)
 
     // Window properties
     // TODO: move this to Settings
@@ -80,9 +88,9 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     private var pendingAnimationCount = 0
     private var animationStartFrame: NSRect {
         if let frame = referenceWindow?.frame {
-            return NSRect(x: frame.midX, y: frame.midY, width: borderSize, height: borderSize)
+            return NSRect(x: frame.midX, y: frame.midY, width: borderSize.width, height: borderSize.height)
         } else {
-            return NSRect(x: 0, y: 0, width: borderSize, height: borderSize)
+            return NSRect(x: 0, y: 0, width: borderSize.width, height: borderSize.height)
         }
     }
 
@@ -137,14 +145,36 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         guard let window = window else { return }
         window.backgroundColor = .clear
 
+        let cornerRadius: CGFloat = 3
+
+        effectsView.layer?.cornerRadius = cornerRadius + 1
+
         photoView = PhotoView()
         photoView.imageScaling = .scaleProportionallyUpOrDown
 
         scrollView.documentView = photoView
         scrollView.postsBoundsChangedNotifications = true
+        scrollView.wantsLayer = true
+        scrollView.layer?.cornerRadius = cornerRadius
 
 //        window.isMovableByWindowBackground = true
         window.delegate = self
+
+        let oneSecTimer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            let isNarrow = self.titleBarView.frame.width > 200
+            var text = "Auto switch off"
+
+            if let timeUntil = self.nextPhotoAt?.timeIntervalSinceNow {
+                text = (timeUntil > 0 ? timeUntil.labelString : "ready")
+                if isNarrow {
+                    text = "Next photo " + text
+                }
+            }
+
+            self.timeLeftLabel.stringValue = text
+        }
+        RunLoop.main.add(oneSecTimer, forMode: .common)
     }
 
     override func mouseDown(with event: NSEvent) {
@@ -195,11 +225,6 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
         if Settings.frame.closeByOutsideClick {
             close()
         }
-    }
-
-    @IBAction func preferencesClicked(_ sender: NSButton) {
-        NotificationCenter.default.post(name: .prefsWindowRequested, object: nil)
-        close()
     }
 
     // MARK: PhotoVendor handling
@@ -289,6 +314,33 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     func handleNotificationAction() {
 
     }
+
+    // MARK: @IBActions
+    @IBAction func nextImageClicked(_ sender: NSButton) {
+        forceNext()
+    }
+
+    @IBAction func aboutClicked(_ sender: NSMenuItem) {
+        NotificationCenter.default.post(name: .aboutWindowRequested, object: nil)
+    }
+
+    @IBAction func preferencesClicked(_ sender: NSMenuItem) {
+        close()
+        NotificationCenter.default.post(name: .prefsWindowRequested, object: nil)
+    }
+
+    @IBAction func tutorialClicked(_ sender: NSMenuItem) {
+        close()
+        NotificationCenter.default.post(name: .tutorialWindowRequested, object: nil)
+    }
+
+    @IBAction func sendFeedbackClicked(_ sender: NSMenuItem) {
+        sendFeedback()
+    }
+
+    @IBAction func quitClicked(_ sender: NSMenuItem) {
+        NSApplication.shared.terminate(self)
+    }
 }
 
 // MARK: - Window related methods
@@ -298,9 +350,6 @@ extension PhotoFrameWindowController: NSWindowDelegate {
             log.error("Window is nil")
             return
         }
-
-        // TODO: figure out how to best present this
-        freeTrialNoticeView.isHidden = true
 
         // reset zoom, if any
         scrollView.magnification = 1
@@ -342,14 +391,18 @@ extension PhotoFrameWindowController: NSWindowDelegate {
         // take action when there are no pending animations
         pendingAnimationCount += 1
 
+        // we'll want to skip animating from menu bar icon if the window is already visible (user likely hit next)
+        // in this case, we'll just animate from current to new size
+        if !window.isVisible {
+            // start with frame at status icon and animate to desired location and size
+            window.setFrame(animationStartFrame, display: true)
+            window.alphaValue = 0
+        }
+
         // show window on top of everything
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
         window.level = .statusBar       // always keep on top
-
-        // start with frame at status icon and animate to desired location and size
-        window.setFrame(animationStartFrame, display: true)
-        window.alphaValue = 0
 
         NSAnimationContext.runAnimationGroup({ context in
             context.duration = 0.2
