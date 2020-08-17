@@ -16,25 +16,14 @@
         <customObject id="Z2C-Po-7RN" customClass="StatusMenuController" customModule="Maya" customModuleProvider="target">
             <connections>
                 <outlet property="statusMenu" destination="oLX-DL-IQq" id="IKZ-xW-Ubt"/>
-                <outlet property="timeLeftLabel" destination="pHx-4v-Ziq" id="6lb-J6-WoA"/>
             </connections>
         </customObject>
         <menu id="oLX-DL-IQq">
             <items>
-                <menuItem title="01m:05s until new photo" enabled="NO" id="pHx-4v-Ziq">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
-                <menuItem title="Can't wait!" id="BbW-Wz-WbC">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="cantWaitClicked:" target="Z2C-Po-7RN" id="Fju-ZM-O7V"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="SeU-xH-tSx"/>
                 <menuItem title="Preferences..." id="2Gx-ON-7PB">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="preferencesClicked:" target="Z2C-Po-7RN" id="vkb-9M-n8D"/>
+                        <action selector="preferencesClicked:" target="Z2C-Po-7RN" id="c25-ii-qaC"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Help" id="ZO7-IP-hPv">
@@ -44,13 +33,13 @@
                             <menuItem title="Tutorial" id="kMM-Y1-4JF">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="tutorialClicked:" target="Z2C-Po-7RN" id="AZv-xe-XSr"/>
+                                    <action selector="tutorialClicked:" target="Z2C-Po-7RN" id="uCl-jy-BTi"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Send feedback..." id="76W-eL-kXS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="sendFeedbackClicked:" target="Z2C-Po-7RN" id="Iqb-Tr-i4C"/>
+                                    <action selector="sendFeedbackClicked:" target="Z2C-Po-7RN" id="Bj5-ou-Fww"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -60,13 +49,13 @@
                 <menuItem title="About" id="IsF-x1-ZKh">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="aboutClicked:" target="Z2C-Po-7RN" id="IdG-8h-ClW"/>
+                        <action selector="aboutClicked:" target="Z2C-Po-7RN" id="Z1K-jQ-8xN"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Quit" id="1Y8-0A-PHl">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="quitClicked:" target="Z2C-Po-7RN" id="ovt-8J-iUa"/>
+                        <action selector="quitClicked:" target="Z2C-Po-7RN" id="NjS-Wy-DCC"/>
                     </connections>
                 </menuItem>
             </items>

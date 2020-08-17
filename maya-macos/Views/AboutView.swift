@@ -56,7 +56,7 @@ struct AboutView: View {
 //            HStack {
 //                Text("Website:").bold()
 //                Button(action: {
-//                    let url = URL(string: self.website)!  // swiftlint:disable:this force_unwrapping
+//                    let url = URL(string: self.website)!
 //                    NSWorkspace.shared.open(url)
 //                }) {
 //                    Text(self.website).underline().foregroundColor(.blue)

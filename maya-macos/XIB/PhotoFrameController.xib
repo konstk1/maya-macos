@@ -8,12 +8,15 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PhotoFrameController">
             <connections>
+                <outlet property="effectsView" destination="0cy-Fj-Mg8" id="zEu-BE-Yi3"/>
                 <outlet property="errorActionButton" destination="yyQ-RK-oOF" id="TlK-lU-gyT"/>
                 <outlet property="errorSuggestedActionLabel" destination="GHS-Sn-N9O" id="pB5-ta-YoN"/>
                 <outlet property="errorTitleLabel" destination="ZOW-bM-wh5" id="ycd-Su-kNG"/>
                 <outlet property="errorView" destination="WYv-cp-SF0" id="rJ0-TP-l0u"/>
                 <outlet property="freeTrialNoticeView" destination="V5p-5i-gxo" id="RM9-kQ-ZA0"/>
                 <outlet property="scrollView" destination="8Xk-5q-n8s" id="ObG-aQ-vJm"/>
+                <outlet property="timeLeftLabel" destination="zy8-oS-tto" id="f95-wu-f88"/>
+                <outlet property="titleBarView" destination="V5p-5i-gxo" id="LiO-Wr-0ax"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -29,18 +32,18 @@
                 <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <visualEffectView wantsLayer="YES" blendingMode="behindWindow" material="ultraDark" state="followsWindowActiveState" id="0cy-Fj-Mg8">
+                    <visualEffectView wantsLayer="YES" blendingMode="behindWindow" material="ultraDark" state="active" id="0cy-Fj-Mg8">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </visualEffectView>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" allowsMagnification="YES" maxMagnification="3" minMagnification="1" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="8Xk-5q-n8s" customClass="PhotoScrollView" customModule="Maya" customModuleProvider="target">
-                        <rect key="frame" x="5" y="5" width="390" height="290"/>
+                        <rect key="frame" x="5" y="5" width="390" height="273"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="M21-Q9-BZt">
-                            <rect key="frame" x="0.0" y="0.0" width="390" height="290"/>
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="273"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view id="AtZ-PX-uXz">
-                                    <rect key="frame" x="0.0" y="0.0" width="390" height="290"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="273"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </subviews>
@@ -107,42 +110,112 @@
                             <real value="3.4028234663852886e+38"/>
                         </customSpacing>
                     </stackView>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="V5p-5i-gxo" customClass="GradientView" customModule="Maya" customModuleProvider="target">
-                        <rect key="frame" x="5" y="5" width="390" height="30"/>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="V5p-5i-gxo" userLabel="Title Bar View">
+                        <rect key="frame" x="0.0" y="278" width="400" height="22"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zy8-oS-tto">
-                                <rect key="frame" x="273" y="5" width="117" height="15"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Free trial 9 days left" id="wcm-s2-3zX">
-                                    <font key="font" metaFont="system" size="12"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zy8-oS-tto" userLabel="Next photo label">
+                                <rect key="frame" x="289" y="4" width="108" height="15"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Next photo in 1:05" id="wcm-s2-3zX">
+                                    <font key="font" metaFont="label" size="12"/>
                                     <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.43990796232876711" colorSpace="custom" customColorSpace="sRGB"/>
                                 </textFieldCell>
                             </textField>
+                            <button toolTip="Next image" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yEb-vu-oeX">
+                                <rect key="frame" x="53" y="1" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="eCU-HW-CzW"/>
+                                    <constraint firstAttribute="width" constant="20" id="kR0-TQ-3co"/>
+                                </constraints>
+                                <buttonCell key="cell" type="smallSquare" title="Next image" alternateTitle="Next image" bezelStyle="smallSquare" image="NSTouchBarSkipAheadTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="4dt-cn-5lv">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <color key="contentTintColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="nextImageClicked:" target="-2" id="9XU-rT-Yjp"/>
+                                </connections>
+                            </button>
+                            <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="vmr-OV-79C">
+                                <rect key="frame" x="5" y="3" width="38" height="18"/>
+                                <popUpButtonCell key="cell" type="smallSquare" title="Icon" bezelStyle="smallSquare" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" preferredEdge="maxX" id="BwD-j0-MxC" userLabel="Cell">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <menu key="menu" id="c0b-IS-V2J">
+                                        <items>
+                                            <menuItem title="Icon" state="on" image="NSSmartBadgeTemplate" hidden="YES" id="C2p-S1-JrO"/>
+                                            <menuItem title="Preferences..." id="hsF-2K-fME">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                                <connections>
+                                                    <action selector="preferencesClicked:" target="-2" id="P5V-kJ-cEo"/>
+                                                </connections>
+                                            </menuItem>
+                                            <menuItem title="Help" id="oJG-lT-1MT">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                                <menu key="submenu" id="vgb-fx-bHn">
+                                                    <items>
+                                                        <menuItem title="Tutorial" id="27k-MP-Xk7">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                            <connections>
+                                                                <action selector="tutorialClicked:" target="-2" id="gcy-TM-l1g"/>
+                                                            </connections>
+                                                        </menuItem>
+                                                        <menuItem title="Send feedback..." id="Fl2-hC-d9f">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                            <connections>
+                                                                <action selector="sendFeedbackClicked:" target="-2" id="Ux5-0U-5Cq"/>
+                                                            </connections>
+                                                        </menuItem>
+                                                    </items>
+                                                </menu>
+                                            </menuItem>
+                                            <menuItem isSeparatorItem="YES" id="d13-Uf-5Iv"/>
+                                            <menuItem title="About" id="yNQ-ax-0EV">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                                <connections>
+                                                    <action selector="aboutClicked:" target="-2" id="LR2-ZY-Q8k"/>
+                                                </connections>
+                                            </menuItem>
+                                            <menuItem title="Quit" id="qP2-i4-UFI">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                                <connections>
+                                                    <action selector="quitClicked:" target="-2" id="DCj-dG-ZBi"/>
+                                                </connections>
+                                            </menuItem>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <color key="contentTintColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </popUpButton>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="zy8-oS-tto" secondAttribute="trailing" constant="2" id="6qV-1a-MS8"/>
-                            <constraint firstAttribute="height" constant="30" id="BSB-zV-PWE"/>
-                            <constraint firstAttribute="bottom" secondItem="zy8-oS-tto" secondAttribute="bottom" constant="5" id="PP9-Yd-8yf"/>
+                            <constraint firstItem="yEb-vu-oeX" firstAttribute="centerY" secondItem="V5p-5i-gxo" secondAttribute="centerY" id="5HA-ZO-QmO"/>
+                            <constraint firstAttribute="height" constant="22" id="BSB-zV-PWE"/>
+                            <constraint firstItem="yEb-vu-oeX" firstAttribute="leading" secondItem="vmr-OV-79C" secondAttribute="trailing" constant="10" id="PZh-e8-ytr"/>
+                            <constraint firstItem="vmr-OV-79C" firstAttribute="leading" secondItem="V5p-5i-gxo" secondAttribute="leading" constant="5" id="ca1-iz-pn7"/>
+                            <constraint firstItem="vmr-OV-79C" firstAttribute="centerY" secondItem="V5p-5i-gxo" secondAttribute="centerY" constant="-1" id="fkI-V6-E9m"/>
+                            <constraint firstItem="zy8-oS-tto" firstAttribute="centerY" secondItem="V5p-5i-gxo" secondAttribute="centerY" id="jq8-Mm-mfV"/>
+                            <constraint firstAttribute="trailing" secondItem="zy8-oS-tto" secondAttribute="trailing" constant="5" id="reE-JW-xOt"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="bottomColor">
-                                <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.3943439640410959" colorSpace="custom" customColorSpace="sRGB"/>
-                            </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="color" keyPath="topColor">
-                                <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="value" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="bottomColor">
+                                <color key="value" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </customView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="8Xk-5q-n8s" firstAttribute="bottom" secondItem="V5p-5i-gxo" secondAttribute="bottom" id="5Wx-KR-VKv"/>
+                    <constraint firstAttribute="trailing" secondItem="V5p-5i-gxo" secondAttribute="trailing" id="DLx-9H-Uit"/>
                     <constraint firstAttribute="trailing" secondItem="8Xk-5q-n8s" secondAttribute="trailing" constant="5" id="DfT-zk-HCM"/>
-                    <constraint firstItem="V5p-5i-gxo" firstAttribute="leading" secondItem="8Xk-5q-n8s" secondAttribute="leading" id="Jco-oq-Qq4"/>
-                    <constraint firstItem="8Xk-5q-n8s" firstAttribute="trailing" secondItem="V5p-5i-gxo" secondAttribute="trailing" id="NnF-Zs-wOI"/>
-                    <constraint firstItem="8Xk-5q-n8s" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="5" id="Xya-bn-lpK"/>
                     <constraint firstItem="8Xk-5q-n8s" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="5" id="ddH-5b-eTw"/>
+                    <constraint firstItem="V5p-5i-gxo" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="eCc-zz-I92"/>
                     <constraint firstItem="WYv-cp-SF0" firstAttribute="centerY" secondItem="se5-gp-TjO" secondAttribute="centerY" id="hhr-tK-rTv"/>
+                    <constraint firstItem="8Xk-5q-n8s" firstAttribute="top" secondItem="V5p-5i-gxo" secondAttribute="bottom" id="in3-9e-b2C"/>
                     <constraint firstItem="WYv-cp-SF0" firstAttribute="centerX" secondItem="se5-gp-TjO" secondAttribute="centerX" id="mqV-tf-gM2"/>
+                    <constraint firstItem="V5p-5i-gxo" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="r3u-nI-44J"/>
                     <constraint firstAttribute="bottom" secondItem="8Xk-5q-n8s" secondAttribute="bottom" constant="5" id="tqn-wd-1sZ"/>
                 </constraints>
             </view>
@@ -154,6 +227,8 @@
     </objects>
     <resources>
         <image name="Maya Logo" width="219" height="133"/>
+        <image name="NSSmartBadgeTemplate" width="14" height="14"/>
+        <image name="NSTouchBarSkipAheadTemplate" width="22" height="30"/>
         <namedColor name="MayaBlue">
             <color red="0.043137254901960784" green="0.76078431372549016" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

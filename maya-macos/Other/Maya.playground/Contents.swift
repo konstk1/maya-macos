@@ -1,3 +1,5 @@
+// swiftlint:disable all
+
 import Cocoa
 import Combine
 
@@ -8,8 +10,6 @@ let s1 = p1.sink { val in
     print("p1: \(val)")
     p2.send(val)
 }
-
-
 
 let s2 = p2.sink { val in
     print("p2: \(val)")
