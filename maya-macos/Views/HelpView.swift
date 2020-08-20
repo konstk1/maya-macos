@@ -15,6 +15,8 @@ struct HelpView: View {
     private let numPages = 3
     @State private var navDirection = NavDirection.none
 
+    @ObservedObject private var settings = Settings.app
+
     enum NavDirection {
         case none, forward, back
     }
@@ -47,7 +49,7 @@ struct HelpView: View {
 
 //                Spacer()
                 // Text
-                helpBody(for: currentPage).padding(EdgeInsets(top: currentPage == 0 ? 5 : 35, leading: 30, bottom: 0, trailing: 0))
+                helpBody(for: currentPage).padding(EdgeInsets(top: currentPage == 0 ? 5 : 35, leading: 30, bottom: 0, trailing: 30))
                     .foregroundColor(.helpText)
                     //            .font(.custom("San Francisco", size: 16))
                     //            .font(.system(size: 16, weight: .regular, design: .default))
@@ -167,6 +169,13 @@ struct HelpView: View {
             Text("Drag").italic() + Text(" or ") + Text("two-finger pan").italic() + Text(" to move around ") + Text("zoomed in").italic() + Text(" image.")
             Text("Drag sides").italic() + Text(" of the frame to resize.")
             Text("Drag zoomed out image").italic() + Text(" to move the frame.")
+//            Spacer().frame(height: 0)
+            VStack(alignment: .leading) {
+                Text("Tip: Would you like to launch Maya app automatically when you login?").italic().fixedSize(horizontal: false, vertical: true)
+                Toggle(isOn: $settings.openAtLogin) {
+                    Text("Open Maya at login").italic()
+                }.toggleStyle(SwitchToggleStyle())
+            }.padding().overlay(RoundedRectangle(cornerRadius: 5).stroke(lineWidth: 1))
         }
     }
 }

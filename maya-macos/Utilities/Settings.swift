@@ -36,7 +36,7 @@ enum Settings {
         @PublishedUserDefault("AppSettings.firstLaunch", defaultValue: true)
         var firstLaunch: Bool
 
-        @PublishedUserDefault("AppSettings.openAtLogin", defaultValue: true)
+        @PublishedUserDefault("AppSettings.openAtLogin", defaultValue: false)
         var openAtLogin: Bool
 
         @PublishedUserDefault("AppSettings.activeProvider", defaultValue: .none)
