@@ -15,10 +15,10 @@ Install _fastlane_ using
 or alternatively using `brew install fastlane`
 
 # Available Actions
-## macos
-### macos build
+## Mac
+### mac sentry
 ```
-fastlane macos build
+fastlane mac sentry
 ```
 Upload dSym to Sentry.io
 

@@ -13,16 +13,17 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-default_platform(:macos)
+default_platform(:mac)
 
-platform :macos do
+platform :mac do
   desc "Upload dSym to Sentry.io"
-  lane :build do
-    #gym # building your app
-    upload_symbols_to_sentry(
+  lane :sentry do
+    # download_dsyms
+    sentry_upload_dsym(
         auth_token: '3248c7f96a8941fe94d2f91659a42857705c28ee638045b7960a808e36f6b3f0',
         org_slug: 'konstdev',
         project_slug: 'konstdev/maya',
+        dsym_path: '/Users/konstantin/Library/Developer/Xcode/Archives/2020-08-20/maya-macos 8-20-20, 10.58 AM.xcarchive/dSYMs/Maya.app.dSYM'
     )
 end
 end

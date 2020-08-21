@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if which sentry-cli >/dev/null; then
+
+
+#export DWARF_DSYM_FOLDER_PATH="/Users/konstantin/Library/Developer/Xcode/Archives/2020-08-20/maya-macos 8-20-20, 10.58 AM.xcarchive/dSYMs/"
+export DWARF_DSYM_FOLDER_PATH=./
+
+ERROR=$(sentry-cli upload-dif "$DWARF_DSYM_FOLDER_PATH" 2>&1 >/dev/null)
+
+if [ ! $? -eq 0 ]; then
+    echo "warning: sentry-cli - $ERROR"
+fi
+else
+    echo "warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases"
+fi
+
