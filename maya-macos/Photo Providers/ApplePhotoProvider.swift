@@ -164,6 +164,14 @@ extension ApplePhotoProvider: PHPhotoLibraryChangeObserver {
 }
 
 struct ApplePhotoAsset: PhotoAssetDescriptor {
+    var location: CLLocation? {
+        asset.location
+    }
+
+    var creationDate: Date? {
+        asset.creationDate
+    }
+
     var asset: PHAsset
     var description: String { "Apple asset type \(asset.localIdentifier) (\(asset.pixelWidth)x\(asset.pixelHeight))" }
 

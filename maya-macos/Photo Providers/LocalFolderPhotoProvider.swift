@@ -8,6 +8,7 @@
 
 import Cocoa
 import Combine
+import CoreLocation
 
 final class LocalFolderPhotoProvider: PhotoProvider {
     /// List of recently used folders
@@ -175,6 +176,15 @@ final class LocalFolderPhotoProvider: PhotoProvider {
 struct LocalPhotoAsset: PhotoAssetDescriptor {
     var photoURL: URL
     var description: String { photoURL.path }
+
+    var location: CLLocation? {
+        // TODO: implement this
+        return nil
+    }
+    var creationDate: Date? {
+        // TODO: implement this
+        return nil
+    }
 
     func fetchImage(using provider: PhotoProvider) -> Future<NSImage, PhotoProviderError> {
         let photoURL = self.photoURL

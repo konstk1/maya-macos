@@ -58,6 +58,9 @@ class PhotoFrameWindowController: NSWindowController, ObservableObject {
     @IBOutlet weak var errorView: NSStackView!
     @IBOutlet weak var effectsView: NSVisualEffectView!
 
+    @IBOutlet weak var metadataView: GradientView!
+    @IBOutlet weak var photoDateLabel: NSTextField!
+
     // Error view outlets
     @IBOutlet weak var errorTitleLabel: NSTextField!
     @IBOutlet weak var errorSuggestedActionLabel: NSTextField!

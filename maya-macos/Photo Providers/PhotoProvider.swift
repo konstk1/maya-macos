@@ -8,6 +8,7 @@
 
 import Cocoa
 import Combine
+import CoreLocation
 
 class PhotoProvider: NSObject, ObservableObject {
     let id = UUID()
@@ -43,6 +44,8 @@ class PhotoProvider: NSObject, ObservableObject {
 }
 
 protocol PhotoAssetDescriptor: CustomStringConvertible {
+    var location: CLLocation? { get }
+    var creationDate: Date? { get }
     // fetches an image for underlying photo asset
     func fetchImage(using provider: PhotoProvider) -> Future<NSImage, PhotoProviderError>
 }

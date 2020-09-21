@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,6 +15,8 @@
                 <outlet property="errorTitleLabel" destination="ZOW-bM-wh5" id="ycd-Su-kNG"/>
                 <outlet property="errorView" destination="WYv-cp-SF0" id="rJ0-TP-l0u"/>
                 <outlet property="freeTrialNoticeView" destination="V5p-5i-gxo" id="RM9-kQ-ZA0"/>
+                <outlet property="metadataView" destination="q1i-Yh-c2s" id="RdQ-HE-NUn"/>
+                <outlet property="photoDateLabel" destination="QPz-6Y-Y9g" id="ARf-bQ-3LV"/>
                 <outlet property="scrollView" destination="8Xk-5q-n8s" id="ObG-aQ-vJm"/>
                 <outlet property="timeLeftLabel" destination="zy8-oS-tto" id="f95-wu-f88"/>
                 <outlet property="titleBarView" destination="V5p-5i-gxo" id="LiO-Wr-0ax"/>
@@ -116,7 +119,7 @@
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zy8-oS-tto" userLabel="Next photo label">
                                 <rect key="frame" x="289" y="4" width="108" height="15"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Next photo in 1:05" id="wcm-s2-3zX">
-                                    <font key="font" metaFont="label" size="12"/>
+                                    <font key="font" metaFont="cellTitle"/>
                                     <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.43990796232876711" colorSpace="custom" customColorSpace="sRGB"/>
                                 </textFieldCell>
@@ -140,7 +143,7 @@
                                 <rect key="frame" x="5" y="3" width="38" height="18"/>
                                 <popUpButtonCell key="cell" type="smallSquare" title="Icon" bezelStyle="smallSquare" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" preferredEdge="maxX" id="BwD-j0-MxC" userLabel="Cell">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="c0b-IS-V2J">
                                         <items>
                                             <menuItem title="Icon" state="on" image="NSSmartBadgeTemplate" hidden="YES" id="C2p-S1-JrO"/>
@@ -197,12 +200,30 @@
                             <constraint firstItem="zy8-oS-tto" firstAttribute="centerY" secondItem="V5p-5i-gxo" secondAttribute="centerY" id="jq8-Mm-mfV"/>
                             <constraint firstAttribute="trailing" secondItem="zy8-oS-tto" secondAttribute="trailing" constant="5" id="reE-JW-xOt"/>
                         </constraints>
+                    </customView>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="q1i-Yh-c2s" userLabel="Metadata View" customClass="GradientView" customModule="Maya" customModuleProvider="target">
+                        <rect key="frame" x="5" y="5" width="390" height="22"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QPz-6Y-Y9g" userLabel="Next photo label">
+                                <rect key="frame" x="284" y="4" width="108" height="15"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Next photo in 1:05" id="ArB-gF-Pon">
+                                    <font key="font" metaFont="cellTitle"/>
+                                    <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.43990796230000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="QPz-6Y-Y9g" secondAttribute="trailing" id="Iaw-vh-tM6"/>
+                            <constraint firstItem="QPz-6Y-Y9g" firstAttribute="centerY" secondItem="q1i-Yh-c2s" secondAttribute="centerY" id="eVT-ce-BXe"/>
+                            <constraint firstAttribute="height" constant="22" id="zTO-4n-FeN"/>
+                        </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="topColor">
-                                <color key="value" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="value" red="0.20000000000000001" green="0.21176470588235294" blue="0.24705882352941178" alpha="0.0" colorSpace="custom" customColorSpace="displayP3"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="color" keyPath="bottomColor">
-                                <color key="value" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="value" red="0.20000000000000001" green="0.21176470588235294" blue="0.24705882352941178" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </customView>
@@ -210,6 +231,9 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="V5p-5i-gxo" secondAttribute="trailing" id="DLx-9H-Uit"/>
                     <constraint firstAttribute="trailing" secondItem="8Xk-5q-n8s" secondAttribute="trailing" constant="5" id="DfT-zk-HCM"/>
+                    <constraint firstItem="q1i-Yh-c2s" firstAttribute="leading" secondItem="8Xk-5q-n8s" secondAttribute="leading" id="EVB-Uk-yzh"/>
+                    <constraint firstItem="q1i-Yh-c2s" firstAttribute="trailing" secondItem="8Xk-5q-n8s" secondAttribute="trailing" id="KiT-Un-nkC"/>
+                    <constraint firstItem="q1i-Yh-c2s" firstAttribute="bottom" secondItem="8Xk-5q-n8s" secondAttribute="bottom" id="an2-3d-70o"/>
                     <constraint firstItem="8Xk-5q-n8s" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="5" id="ddH-5b-eTw"/>
                     <constraint firstItem="V5p-5i-gxo" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="eCc-zz-I92"/>
                     <constraint firstItem="WYv-cp-SF0" firstAttribute="centerY" secondItem="se5-gp-TjO" secondAttribute="centerY" id="hhr-tK-rTv"/>

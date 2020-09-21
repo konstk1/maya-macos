@@ -8,10 +8,21 @@
 
 import Cocoa
 import Combine
+import CoreLocation
 
 struct GooglePhotoAsset: PhotoAssetDescriptor {
     var photoId: String
     var description: String { "/* TODO: Implement this */" }
+
+    var location: CLLocation? {
+        // TODO: implement this
+        return nil
+    }
+
+    var creationDate: Date? {
+        // TODO: implement this
+        return nil
+    }
 
     func fetchImage(using provider: PhotoProvider) -> Future<NSImage, PhotoProviderError> {
         guard let provider = provider as? GooglePhotoProvider else {

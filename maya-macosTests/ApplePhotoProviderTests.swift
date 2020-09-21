@@ -65,6 +65,10 @@ class ApplePhotoProviderTests: XCTestCase {
 
         let asset = ApplePhotoAsset(asset: photo)
 
+        // location can be nil, date should not be nil
+//        XCTAssertNotNil(asset.location)
+        XCTAssertNotNil(asset.creationDate)
+
         let sub = asset.fetchImage(using: apple).sink(receiveCompletion: { _ in }, receiveValue: { image in
             print("Image size \(image.size)")
             XCTAssertGreaterThan(image.size.height, 100, "Incorrect height")
@@ -74,5 +78,13 @@ class ApplePhotoProviderTests: XCTestCase {
 
         waitForExpectations(timeout: 3.0, handler: nil)
         sub.cancel()
+    }
+
+    func testMetadata() {
+        let album = apple.listAlbums().first!
+        let photos = apple.listPhotos(for: album)
+
+        let asset = photos.first { $0.location != nil }
+        print(asset!.location)
     }
 }
