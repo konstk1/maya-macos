@@ -30,7 +30,6 @@
 		FF14AD8C22BDB8B800C7518C /* PhotoFrameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF14AD8A22BDB8B800C7518C /* PhotoFrameController.swift */; };
 		FF14AD8D22BDB8B800C7518C /* PhotoFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF14AD8B22BDB8B800C7518C /* PhotoFrameController.xib */; };
 		FF279CF0244CD77F004E47C3 /* LocalFolderProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF279CEF244CD77F004E47C3 /* LocalFolderProviderTests.swift */; };
-		FF32154123200EC60054DF2A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FF32154023200EC60054DF2A /* Alamofire */; };
 		FF34717F22D63A780009CB40 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = FF34717E22D63A780009CB40 /* SwiftyBeaver */; };
 		FF34718422DF82F70009CB40 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF34718322DF82F70009CB40 /* Utilities.swift */; };
 		FF39C02D2316F66E00203D7F /* GooglePhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39C02C2316F66E00203D7F /* GooglePhotoProvider.swift */; };
@@ -46,7 +45,6 @@
 		FF90732222BC12E10052428E /* ApplePhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732122BC12E10052428E /* ApplePhotoProvider.swift */; };
 		FF90732422BC13840052428E /* PhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732322BC13840052428E /* PhotoProviderTests.swift */; };
 		FF90732622BD493B0052428E /* LocalFolderPhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF90732522BD493B0052428E /* LocalFolderPhotoProvider.swift */; };
-		FF9B7CFA23175F0B0073E77E /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FF9B7CF923175F0B0073E77E /* OAuthSwift */; };
 		FF9B7CFE231760AA0073E77E /* AppSecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9B7CFD231760AA0073E77E /* AppSecrets.swift */; };
 		FF9B7D0223181AF00073E77E /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9B7D0123181AF00073E77E /* Keychain.swift */; };
 		FF9B7D0423182D5F0073E77E /* GoogePhotoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9B7D0323182D5F0073E77E /* GoogePhotoProviderTests.swift */; };
@@ -75,6 +73,8 @@
 		FFEBBE8022EF5CC7009411B8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE7F22EF5CC7009411B8 /* Settings.swift */; };
 		FFEBBE8422EF834F009411B8 /* TimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEBBE8322EF834F009411B8 /* TimePeriod.swift */; };
 		FFEEFCB82300F0750023F581 /* SourcesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFEEFCB62300F0750023F581 /* SourcesViewController.xib */; };
+		FFFC170025898DDF0085F620 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FFFC16FF25898DDF0085F620 /* Alamofire */; };
+		FFFC170925898E190085F620 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FFFC170825898E190085F620 /* OAuthSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,8 +180,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF32154123200EC60054DF2A /* Alamofire in Frameworks */,
-				FF9B7CFA23175F0B0073E77E /* OAuthSwift in Frameworks */,
+				FFFC170925898E190085F620 /* OAuthSwift in Frameworks */,
+				FFFC170025898DDF0085F620 /* Alamofire in Frameworks */,
 				FF39C03223171CF100203D7F /* KeychainAccess in Frameworks */,
 				B527D2A724CD0940001731DB /* StoreKit.framework in Frameworks */,
 				FF34717F22D63A780009CB40 /* SwiftyBeaver in Frameworks */,
@@ -411,10 +411,10 @@
 			packageProductDependencies = (
 				FF34717E22D63A780009CB40 /* SwiftyBeaver */,
 				FF39C03123171CF100203D7F /* KeychainAccess */,
-				FF9B7CF923175F0B0073E77E /* OAuthSwift */,
-				FF32154023200EC60054DF2A /* Alamofire */,
 				B5A5A8C3245210CF003B282D /* OAuthSwiftAlamofire */,
 				B533EC3124A03B53001A103D /* Sentry */,
+				FFFC16FF25898DDF0085F620 /* Alamofire */,
+				FFFC170825898E190085F620 /* OAuthSwift */,
 			);
 			productName = "maya-macos";
 			productReference = FF9072CE22BB04CD0052428E /* Maya.app */;
@@ -489,10 +489,10 @@
 			packageReferences = (
 				FF34717D22D63A780009CB40 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				FF39C03023171CF100203D7F /* XCRemoteSwiftPackageReference "KeychainAccess" */,
-				FF9B7CF823175F0B0073E77E /* XCRemoteSwiftPackageReference "OAuthSwift" */,
-				FF32153F23200EC60054DF2A /* XCRemoteSwiftPackageReference "Alamofire" */,
 				B5A5A8C2245210CE003B282D /* XCRemoteSwiftPackageReference "OAuthSwiftAlamofire" */,
 				B533EC3024A03B53001A103D /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				FFFC16FE25898DDF0085F620 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				FFFC170725898E190085F620 /* XCRemoteSwiftPackageReference "OAuthSwift" */,
 			);
 			productRefGroup = FF9072CF22BB04CD0052428E /* Products */;
 			projectDirPath = "";
@@ -977,14 +977,6 @@
 				kind = branch;
 			};
 		};
-		FF32153F23200EC60054DF2A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
 		FF34717D22D63A780009CB40 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyBeaver/SwiftyBeaver";
@@ -1001,12 +993,20 @@
 				minimumVersion = 3.2.0;
 			};
 		};
-		FF9B7CF823175F0B0073E77E /* XCRemoteSwiftPackageReference "OAuthSwift" */ = {
+		FFFC16FE25898DDF0085F620 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/OAuthSwift/OAuthSwift";
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.0;
+				minimumVersion = 5.4.0;
+			};
+		};
+		FFFC170725898E190085F620 /* XCRemoteSwiftPackageReference "OAuthSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/OAuthSwift/OAuthSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1022,11 +1022,6 @@
 			package = B5A5A8C2245210CE003B282D /* XCRemoteSwiftPackageReference "OAuthSwiftAlamofire" */;
 			productName = OAuthSwiftAlamofire;
 		};
-		FF32154023200EC60054DF2A /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FF32153F23200EC60054DF2A /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
 		FF34717E22D63A780009CB40 /* SwiftyBeaver */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FF34717D22D63A780009CB40 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */;
@@ -1037,9 +1032,14 @@
 			package = FF39C03023171CF100203D7F /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
 		};
-		FF9B7CF923175F0B0073E77E /* OAuthSwift */ = {
+		FFFC16FF25898DDF0085F620 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FF9B7CF823175F0B0073E77E /* XCRemoteSwiftPackageReference "OAuthSwift" */;
+			package = FFFC16FE25898DDF0085F620 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		FFFC170825898E190085F620 /* OAuthSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFFC170725898E190085F620 /* XCRemoteSwiftPackageReference "OAuthSwift" */;
 			productName = OAuthSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
