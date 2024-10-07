@@ -20,10 +20,10 @@ platform :mac do
   lane :sentry do
     # download_dsyms
     sentry_upload_dsym(
-        auth_token: '3248c7f96a8941fe94d2f91659a42857705c28ee638045b7960a808e36f6b3f0',
-        org_slug: 'konstdev',
-        project_slug: 'konstdev/maya',
-        dsym_path: '/Users/konstantin/Library/Developer/Xcode/Archives/2020-08-20/maya-macos 8-20-20, 10.58 AM.xcarchive/dSYMs/Maya.app.dSYM'
+        auth_token: '',
+        org_slug: '',
+        project_slug: '',
+        dsym_path: ''
     )
 end
 end
